@@ -4,6 +4,7 @@
 #include "Engine/Drivers/DisplayDriver/Display.h"
 #include "Engine/Canvas/Canvas.h"
 #include "Engine/Logger/Logger.h"
+#include "Engine/Nodes/Node.h"
 
 #include <vector>
 
@@ -14,23 +15,34 @@ it has a canvas and a display.
 class Renderer {
 protected:
     Display& display;
-    std::vector<Canvas*> layers;
+    Canvas& canvas;
+
+    Node* scene;
+    //std::vector<Canvas*> layers;
 public:
-    Renderer(Display& display)
-        : display(display)  {
+    Renderer(Display& display, Canvas& canvas)
+        : display(display), canvas(canvas)  {
         
         Logger::log("Renderer initialized.");
     }
     
     virtual void Render() = 0;
 
-    void add_layer(Canvas *layer){
+    void set_scene(Node* scene){
+        if(scene == nullptr){
+            return;
+        }
+
+        this->scene = scene;
+    }
+
+    /*void add_layer(Canvas *layer){
         layers.push_back(layer);
     }
 
     void remove_layer(Canvas& layer){
         
-    }
+    }*/
 };
 
 #endif
