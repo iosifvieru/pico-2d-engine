@@ -6,7 +6,6 @@
 class BasicRenderer : public Renderer {
 public:
     BasicRenderer(Display& display, Canvas& canvas);
-
     void Render() override;
 };
 

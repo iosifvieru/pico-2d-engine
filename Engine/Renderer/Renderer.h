@@ -16,7 +16,6 @@ class Renderer {
 protected:
     Display& display;
     Canvas& canvas;
-
     Node* scene;
     //std::vector<Canvas*> layers;
 public:
@@ -35,14 +34,6 @@ public:
 
         this->scene = scene;
     }
-
-    /*void add_layer(Canvas *layer){
-        layers.push_back(layer);
-    }
-
-    void remove_layer(Canvas& layer){
-        
-    }*/
 };
 
 #endif

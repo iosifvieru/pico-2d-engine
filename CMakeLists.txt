@@ -41,6 +41,8 @@ add_executable(pico-game-engine
         Engine/Canvas/BufferedCanvas.cpp
         Engine/Renderer/BasicRenderer.cpp
         Engine/Nodes/SpriteNode.cpp
+        Engine/Nodes/SceneNode.cpp
+        Engine/Nodes/InputNode.cpp
         )
 
 pico_set_program_name(pico-game-engine "pico-game-engine")
@@ -54,6 +56,7 @@ pico_enable_stdio_usb(pico-game-engine 1)
 target_link_libraries(pico-game-engine
         pico_stdlib
         hardware_spi
+        pico_multicore
         )
 
 # Add the standard include files to the build

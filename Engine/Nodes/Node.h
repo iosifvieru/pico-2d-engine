@@ -13,9 +13,6 @@ this node is an abstract class that will be implemented by different other compo
 */
 class Node {
 protected:
-    /* list of components shared across every implementation. */
-    std::vector<Node*> nodes;
-
     /* positions */
     uint16_t x;
     uint16_t y;
@@ -30,45 +27,10 @@ public:
 
     };
 
-    void add_node(Node* node){
-        if(node == nullptr){
-            return;
-        }
+    virtual void update() = 0;
+    virtual void render(Canvas& canvas) = 0; 
 
-        /* adds it to the nodes vector */
-        nodes.push_back(node);
-    }
-
-    void remove_node(Node* node){
-        if(node == nullptr){
-            return;
-        }
-
-        /* should remove the node but not yet :) */
-    }
-
-    virtual void update() {
-        for (Node* node : nodes) {
-            if (node) {
-                node->update();
-            }
-        }
-    }
-
-    virtual void render(Canvas& canvas) {
-        for (Node* node : nodes) {
-            if (node) {
-                node->render(canvas);
-            }
-        }
-    }
-    
-    virtual ~Node() {
-        for (Node* node : nodes) {
-            delete node;
-        }
-        nodes.clear();
-    }
+    virtual ~Node() = default;
 
     void set_x(uint16_t x){
         this->x = x;

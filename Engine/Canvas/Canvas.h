@@ -42,7 +42,7 @@ public:
     /* draws a sprite to a certain x, y position. */
     virtual void draw_sprite(uint16_t x, uint16_t y, uint16_t sprite_width, uint16_t sprite_height, const uint16_t* sprite) = 0;
 
-    virtual void clear_sprite(uint16_t x, uint16_t y, uint16_t sprite_width, uint16_t sprite_height) = 0;
+    virtual void draw_sprite(uint16_t x, uint16_t y, uint16_t scale_factor, uint16_t sprite_width, uint16_t sprite_height, const uint16_t* sprite) = 0;
 
     /* draw a line to the canvas */
     virtual void draw_line(uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end, uint16_t color) = 0;

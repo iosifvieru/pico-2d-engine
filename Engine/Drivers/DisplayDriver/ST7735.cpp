@@ -80,7 +80,7 @@ ST7735::ST7735(
         this->rst = rst;
         this->dc = dc;
 
-        spi_init(spi0, 10000* 1000);
+        spi_init(spi0, 10000* 2000);
         gpio_set_function(sck_pin, GPIO_FUNC_SPI);
         gpio_set_function(mosi_pin, GPIO_FUNC_SPI);
 

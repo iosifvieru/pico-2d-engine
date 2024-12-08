@@ -1,6 +1,8 @@
 #include "BufferedCanvas.h"
 #include "Engine/Logger/Logger.h"
 
+#include <string.h>
+
 /* constructor */
 BufferedCanvas::BufferedCanvas(uint16_t width, uint16_t height) : Canvas(width, height){
     this->buffer = new uint16_t[width * height];
@@ -27,9 +29,10 @@ uint16_t* BufferedCanvas::get_buffer(){
 void BufferedCanvas::fill(uint16_t color){
 
     // TODO: maybe a better way to do this.
-    for(int i = 0; i < this->height * this->width; i++){
+    /*for(int i = 0; i < this->height * this->width; i++){
         this->buffer[i] = color;
-    }
+    }*/
+   memset(this->buffer, color, width*height * sizeof(uint16_t));
 }
 
 void BufferedCanvas::set_pixel(uint16_t x, uint16_t y, uint16_t color){
@@ -73,16 +76,25 @@ void BufferedCanvas::draw_sprite(
             }
         }
     }
-};
+}
 
-void BufferedCanvas::clear_sprite(uint16_t x, uint16_t y, uint16_t sprite_width, uint16_t sprite_height) {
-    for (uint16_t j = 0; j < sprite_height; ++j) {
-        for (uint16_t i = 0; i < sprite_width; ++i) {
+void BufferedCanvas::draw_sprite(
+    uint16_t x, uint16_t y, 
+    uint16_t scale_factor, uint16_t sprite_width, uint16_t sprite_height, 
+    const uint16_t* sprite) {
+        
+    for (uint16_t j = 0; j < sprite_height * scale_factor; ++j) {
+        for (uint16_t i = 0; i < sprite_width * scale_factor; ++i) {
+            uint16_t orig_x = i / scale_factor;
+            uint16_t orig_y = j / scale_factor;
+
             uint16_t canvas_x = x + i;
             uint16_t canvas_y = y + j;
 
             if (canvas_x < width && canvas_y < height) {
-                buffer[canvas_y * width + canvas_x] = 0x0000;
+                uint16_t color = sprite[orig_y * sprite_width + orig_x];
+
+                buffer[canvas_y * width + canvas_x] = color;
             }
         }
     }

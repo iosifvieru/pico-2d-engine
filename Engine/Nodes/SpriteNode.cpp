@@ -11,6 +11,7 @@ SpriteNode::SpriteNode(uint16_t x, uint16_t y, uint16_t width, uint16_t height, 
 
     this->width = width;
     this->height = height;
+    
     // logging?
 }
 
@@ -19,11 +20,14 @@ SpriteNode::~SpriteNode(){
 }
 
 void SpriteNode::render(Canvas& canvas){
-    canvas.draw_sprite(this->x, this->y, width, height, sprite);
-
-    Node::render(canvas);
+    if(scale_factor == 1){
+        canvas.draw_sprite(this->x, this->y, width, height, sprite);
+    } else {
+        canvas.draw_sprite(this->x, this->y, this->scale_factor, width, height, sprite);
+    }
+    
 }
 
 void SpriteNode::update(){
-    Node::update();
+    //
 }
