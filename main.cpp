@@ -28,7 +28,9 @@ int main() {
     BasicRenderer renderer = BasicRenderer(display, *canvas);
     
     InputNode input = InputNode(0, 0);
-    Player player = Player(&SpriteNode(0, 0, 2, 2, test2), input);
+    
+    SpriteNode playerSprite = SpriteNode(0, 0, 2, 2, test2);
+    Player player = Player(&playerSprite, input);
 
     renderer.set_scene(&scene);
 

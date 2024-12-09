@@ -8,8 +8,6 @@ private:
     const uint16_t* sprite;
     uint16_t width, height;
 
-    uint16_t scale_factor = 1;
-
     /* x, y are inherited */
 public:
     SpriteNode(uint16_t x, uint16_t y, uint16_t width, uint16_t height, const uint16_t* sprite);
@@ -18,10 +16,6 @@ public:
 
     void update() override;
     void render(Canvas& canvas) override;
-
-    void set_scale_factor(uint16_t sf){
-        this->scale_factor = sf;
-    }
 };
 
 #endif
