@@ -31,10 +31,10 @@ uint16_t* BufferedCanvas::get_buffer(){
 void BufferedCanvas::fill(uint16_t color){
 
     // TODO: maybe a better way to do this.
-    /*for(int i = 0; i < this->height * this->width; i++){
+    for(int i = 0; i < this->height * this->width; i++){
         this->buffer[i] = color;
-    }*/
-   memset(this->buffer, color, width*height * sizeof(uint16_t));
+    }
+   //memset(this->buffer, color, width*height * sizeof(uint16_t));
 }
 
 /* sets a pixel's color */

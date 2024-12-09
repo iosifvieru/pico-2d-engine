@@ -3,25 +3,35 @@
 #include "pico/stdlib.h"
 #include "Display.h"
 
+/* SPI defines */
 #define SCK 18
 #define MOSI 19
 #define CS 17
 #define RST 21
 #define DC 20
 
+/* 
+    ST7735 address defines 
+    via datasheet -> https://www.displayfuture.com/Display/datasheet/controller/ST7735.pdf
+*/
 #define ST7735_CASET 0x2A
 #define ST7735_RASET 0x2B
 #define ST7735_RAMWR 0x2C
+#define ST7735_SLPOUT 0x11
+#define ST7735_MADCTL 0x36
+#define ST7735_COLMOD 0x3A
+#define ST7735_DISPON 0x29
 
 #define X_START 2
 #define Y_START 1
 
-#define ST7735_WIDTH 130
-#define ST7735_HEIGHT 129
+#define ST7735_WIDTH 129
+#define ST7735_HEIGHT 130
 
 /*
 Implements Display interface.
 */
+
 class ST7735: public Display {
 private:
     uint8_t sck_pin;
