@@ -38,6 +38,7 @@ pico_sdk_init()
 add_executable(pico-game-engine 
         main.cpp 
         Engine/Drivers/DisplayDriver/ST7735.cpp
+        Engine/Canvas/BasicCanvas.cpp
         Engine/Canvas/BufferedCanvas.cpp
         Engine/Renderer/BasicRenderer.cpp
         Engine/Nodes/SpriteNode.cpp

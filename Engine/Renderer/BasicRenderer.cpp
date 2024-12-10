@@ -1,5 +1,5 @@
 #include "BasicRenderer.h"
-#include "Engine/Canvas/BufferedCanvas.h"
+#include "Engine/Canvas/BasicCanvas.h"
 
 #include <string.h>
 

@@ -8,6 +8,7 @@ private:
     const uint16_t* sprite;
     uint16_t width, height;
 
+    int rotationAngle = 0;
     /* x, y are inherited */
 public:
     SpriteNode(uint16_t x, uint16_t y, uint16_t width, uint16_t height, const uint16_t* sprite);

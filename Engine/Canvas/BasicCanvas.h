@@ -1,29 +1,17 @@
-#ifndef _BUFFERED_CANVAS_H_
-#define _BUFFERED_CANVAS_H_
+#ifndef _BASIC_CANVAS_H_
+#define _BASIC_CANVAS_H_
 
 #include "Canvas.h"
 
 /*
-Double BufferedCanvas.
+BasicCanvas with only one buffer.
 */
-class BufferedCanvas : public Canvas {
+class BasicCanvas : public Canvas {
 private:
-    uint16_t* back_buffer;
-    uint16_t* front_buffer;
-
+    uint16_t* buffer;
 public:
-    ~BufferedCanvas();
-    BufferedCanvas(uint16_t width, uint16_t height);
-
-    /*
-    Canvas interface implementation
-    */
-
-    void swap_buffers() {
-        uint16_t* copy = back_buffer;
-        back_buffer = front_buffer;
-        front_buffer = copy;
-    }
+    BasicCanvas(uint16_t width, uint16_t height);
+    ~BasicCanvas();
 
     /* returns the canvas buffer */
     uint16_t* get_buffer();
@@ -31,13 +19,13 @@ public:
     /* fills the canvas with a certain color */
     void fill(uint16_t color) override;
 
-    void clear_pixel(uint16_t x, uint16_t y) override {};
+    void clear_pixel(uint16_t x, uint16_t y) override;
 
     /* sets a certain pixel's color */
     void set_pixel(uint16_t x, uint16_t y, uint16_t color) override;
 
     /* gets the color of a pixel */
-    uint16_t get_pixel(uint16_t x, uint16_t y) override { return 0; };
+    uint16_t get_pixel(uint16_t x, uint16_t y) override;
 
     /* draws a sprite to a certain x, y position. */
     void draw_sprite(uint16_t x, uint16_t y, uint16_t sprite_width, uint16_t sprite_height, const uint16_t* sprite) override;
@@ -45,7 +33,7 @@ public:
     /* draw a line to the canvas */
     void draw_line(uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end, uint16_t color) override {};
 
-    void clear() override {};
+    void clear() override;
 };
 
 #endif
