@@ -40,10 +40,8 @@ add_executable(pico-game-engine
         Engine/Drivers/DisplayDriver/ST7735.cpp
         Engine/Canvas/BasicCanvas.cpp
         Engine/Canvas/BufferedCanvas.cpp
-        Engine/Renderer/BasicRenderer.cpp
-        Engine/Nodes/SpriteNode.cpp
-        Engine/Nodes/SceneNode.cpp
-        Engine/Nodes/InputNode.cpp
+        Engine/Systems/RenderSystem.cpp
+        Engine/Entity/Entity.cpp
         )
 
 pico_set_program_name(pico-game-engine "pico-game-engine")
