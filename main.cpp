@@ -6,88 +6,53 @@
 #include "Engine/Drivers/DisplayDriver/ST7735.h"
 #include "Engine/Canvas/BufferedCanvas.h"
 #include "Engine/Canvas/BasicCanvas.h"
+
 #include "Engine/Nodes/RenderNode.h"
+#include "Engine/Nodes/MovementNode.h"
+
 #include "Engine/Systems/RenderSystem.h"
+#include "Engine/Systems/MovementSystem.h"
 
 #include "Engine/Entity/Entity.h"
+#include "Engine/Engine.h"
 
 int main() { 
     stdio_init_all();
 
-    uint16_t test[64] = {
-        0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211,
-        0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211,
-        0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211,
-        0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211,
-        0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211,
-        0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211,
-        0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211,
-        0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211, 0xF211
+    uint16_t test[4] = {
+        0xF211, 0xF211, 
+        0xF211, 0xF211
     };
 
     Display& display = ST7735::getInstance();
     Canvas *canvas = new BufferedCanvas(display.get_width(), display.get_height());
     
     RenderSystem r(*canvas, display);
+    MovementSystem mv_system;
 
-    SpriteComponent sp;
-    sp.width = 8;
-    sp.height = 8;
-    sp.sprite = test;
+    PositionComponent player_position(50, 20, 0, 0);
 
-    PositionComponent p;
-    p.x = 10;
-    p.y = 10;
+    RenderNode render_node_1(
+        &player_position, new SpriteComponent(2, 2, test)
+    );
+    
+    VelocityComponent player_velocity(10, 0);
 
-    PositionComponent p2;
-    p2.x = 0;
-    p2.y = 0;
+    MovementNode player_movement(&player_position, &player_velocity);
 
-    RenderNode test_node;
-    test_node.position = &p;
-    test_node.sprite = &sp;
+    Entity player;
+    player.add_component("RenderNode", &render_node_1);
+    player.add_component("MovementNode", &player_movement);
 
-    RenderNode test_node2;
-    test_node2.position = &p2;
-    test_node2.sprite = &sp;
+    Engine engine;
+    engine.add_entity(&player);
 
-    Entity e;
-    e.add_component("RenderNode", &test_node2);
-
-    Entity e2;
-    e2.add_component("RenderNode", &test_node);
-
-    PositionComponent p4;
-    p4.x = 55;
-    p4.y = 40;
-
-    RenderNode rn1;
-    rn1.position = &p4;
-    rn1.sprite = &sp;
-
-    Entity e4;
-    e4.add_component("RenderNode", &rn1);
-
-    r.addEntity(&e);
-    //r.addEntity(&e2);
-    //r.addEntity(&e4);
+    engine.add_system(&r);
+    engine.add_system(&mv_system);
 
     for(;;){
-    
-        p.x++;
-        p.x %= 128;
-
-        p2.x++;
-        p2.x %=128;
-
-        p4.x++;
-        p4.x %= 128;
-
-        /* updating the render. */
-        r.update();
-
-
-        sleep_ms(50);
+        player_position.x %= 128;
+        engine.update();
     }
 
     return 0;

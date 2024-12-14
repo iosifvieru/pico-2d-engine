@@ -9,6 +9,8 @@ public:
     PositionComponent* position = nullptr;
     SpriteComponent* sprite = nullptr;
 
+    RenderNode() {};
+    RenderNode(PositionComponent* position, SpriteComponent* sprite) : position(position), sprite(sprite) {};
     ~RenderNode() override = default;
 };
 

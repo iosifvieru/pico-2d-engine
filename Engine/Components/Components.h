@@ -1,6 +1,8 @@
 #ifndef _COMPONENTS_H_
 #define _COMPONENTS_H_
 
+#include "pico/stdlib.h"
+
 /*
 in this file all the components will be defined for now.
 */
@@ -16,12 +18,31 @@ struct PositionComponent : public Component {
     uint16_t y = 0;
     uint16_t z = 0;
     uint16_t angle = 0;
+
+    PositionComponent() {};
+    PositionComponent(uint16_t x, uint16_t y, uint16_t z, uint16_t angle) 
+        : x(x), y(y), z(z), angle(angle) {};
 };
 
 struct SpriteComponent : public Component {
-    uint8_t width;
-    uint16_t height;
-    uint16_t* sprite;
+    uint8_t width = 0;
+    uint8_t height = 0;
+    uint16_t* sprite = nullptr;
+
+    SpriteComponent() {};
+    SpriteComponent(uint8_t width, uint8_t height, uint16_t* sprite){
+        this->width = width;
+        this->height = height;
+        this->sprite = sprite;
+    }
+};
+
+struct VelocityComponent : public Component {
+    uint16_t v_x = 0;
+    uint16_t v_y = 0;
+
+    VelocityComponent(uint8_t x, uint8_t y) : v_x(x), v_y(y) {};
+    VelocityComponent() {};
 };
 
 #endif

@@ -9,10 +9,12 @@ RenderSystem::~RenderSystem(){
     //
 }
 
-void RenderSystem::update(){
+void RenderSystem::update(std::vector<Entity*> entities){
+    /* clears the canvas*/
     canvas.fill(0x0000);
 
-    for(auto& entity : this->entities){
+    /* redraws everything. */
+    for(auto& entity : entities){
         if(entity->has_component("RenderNode")){
             RenderNode *rn = (RenderNode*) entity->get_component("RenderNode");
 
@@ -27,5 +29,6 @@ void RenderSystem::update(){
         }
     }
 
+    /* flushes to display. */
     display.flush(canvas.get_buffer());
 }

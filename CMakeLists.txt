@@ -41,7 +41,9 @@ add_executable(pico-game-engine
         Engine/Canvas/BasicCanvas.cpp
         Engine/Canvas/BufferedCanvas.cpp
         Engine/Systems/RenderSystem.cpp
+        Engine/Engine.cpp
         Engine/Entity/Entity.cpp
+        Engine/Systems/MovementSystem.cpp
         )
 
 pico_set_program_name(pico-game-engine "pico-game-engine")
