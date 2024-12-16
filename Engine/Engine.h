@@ -10,11 +10,21 @@ private:
     std::vector<System*> systems;
     std::vector<Entity*> entities;
 
-public:
     Engine();
     ~Engine();
 
     Engine(const Engine& e) = delete;
+
+    static Engine* instance;
+    
+public:
+    static Engine& getInstance() {
+        if(instance == nullptr){
+            instance = new Engine();
+        }
+
+        return *instance;
+    }
     
     /* adds an entity to the list. */
     void add_entity(Entity* entity);

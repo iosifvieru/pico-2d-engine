@@ -7,6 +7,8 @@
 
 #include "Engine/Drivers/InputDriver/Keyboard.h"
 
+#include "Games/Projectile.h"
+
 #define W_KEY 15
 #define S_KEY 13
 #define A_KEY 8
@@ -32,6 +34,12 @@ public:
 
         this->add_component(render_node);
         this->add_component(movement);
+        
+        Keyboard& keyboard = Keyboard::getInstance();
+        keyboard.config(W_KEY);
+        keyboard.config(S_KEY);
+        keyboard.config(A_KEY);
+        keyboard.config(D_KEY);
     };
 
     ~Player(){
@@ -56,6 +64,19 @@ public:
 
         if(keyboard.is_pressed(A_KEY)){
             movement_node->velocity->v_x = -5;
+        }
+
+        /* testing out firing key. */
+        if(keyboard.is_pressed(W_KEY)){
+            if(Entity::no_entities < MAX_NO_ENTITIES) {
+                PositionComponent player_pos = *movement_node->position;
+                
+                /* creating a projectile and adding it to the engine. */
+                Projectile* projectile1 = new Projectile(player_pos.x - 2, player_pos.y);
+                Projectile* projectile2 = new Projectile(player_pos.x + 2, player_pos.y);
+                Engine::getInstance().add_entity(projectile1);
+                Engine::getInstance().add_entity(projectile2);
+            }
         }
     }
 };

@@ -6,6 +6,7 @@
 #include "Engine/Nodes/Node.h"
 #include "pico/stdlib.h"
 
+#define MAX_NO_ENTITIES 10000
 
 class Entity {
 private:

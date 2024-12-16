@@ -5,10 +5,15 @@
 #include "Engine/Nodes/RenderNode.h"
 #include "Engine/Nodes/MovementNode.h"
 
+#define projectile_velocity_value -1
+
 uint16_t projectile_texture[4] = {
     0xFFFF, 0xFFFF,
     0xFFFF, 0xFFFF
 };
+
+SpriteComponent* projectile_sprite = new SpriteComponent(2, 2, projectile_texture);
+VelocityComponent* projectile_velocity = new VelocityComponent(0, projectile_velocity_value);
 
 class Projectile : public Entity {
 private:
@@ -16,11 +21,8 @@ private:
 public:
     Projectile(uint16_t x, uint16_t y) : Entity() {
         PositionComponent* projectile_position = new PositionComponent(x, y, 0, 0);
-        SpriteComponent* projectile_sprite = new SpriteComponent(2, 2, projectile_texture);
         
         RenderNode* render_node = new RenderNode(projectile_position, projectile_sprite);
-
-        VelocityComponent* projectile_velocity = new VelocityComponent(0, -1);
         MovementNode* movement = new MovementNode(projectile_position, projectile_velocity);
 
         this->add_component(render_node);
