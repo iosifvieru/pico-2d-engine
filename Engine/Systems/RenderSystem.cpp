@@ -18,7 +18,7 @@ void RenderSystem::update(std::vector<Entity*> entities){
         if(entity->has_component("RenderNode")){
             RenderNode *rn = (RenderNode*) entity->get_component("RenderNode");
 
-            if(rn == nullptr){
+            if(rn == nullptr || rn->is_visible == false){
                 continue;
             }
 

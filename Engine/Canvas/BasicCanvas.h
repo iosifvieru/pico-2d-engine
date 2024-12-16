@@ -5,6 +5,8 @@
 
 /*
 BasicCanvas with only one buffer.
+
+this is some old code i left here.
 */
 class BasicCanvas : public Canvas {
 private:

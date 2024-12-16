@@ -15,6 +15,11 @@
 
 #include "Engine/Entity/Entity.h"
 #include "Engine/Engine.h"
+#include "Engine/Drivers/InputDriver/Keyboard.h"
+
+#include "Games/Player.h"
+#include "Games/Enemy.h"
+#include "Games/Projectile.h"
 
 int main() { 
     stdio_init_all();
@@ -24,35 +29,56 @@ int main() {
         0xF211, 0xF211
     };
 
+    uint16_t texture_test[4] = {
+        0xB22F, 0x31FB,
+        0xFF11, 0x119b
+    };
+
+    Keyboard& keyboard = Keyboard::getInstance();
+
     Display& display = ST7735::getInstance();
     Canvas *canvas = new BufferedCanvas(display.get_width(), display.get_height());
     
     RenderSystem r(*canvas, display);
     MovementSystem mv_system;
-
-    PositionComponent player_position(50, 20, 0, 0);
-
-    RenderNode render_node_1(
-        &player_position, new SpriteComponent(2, 2, test)
-    );
-    
-    VelocityComponent player_velocity(10, 0);
-
-    MovementNode player_movement(&player_position, &player_velocity);
-
-    Entity player;
-    player.add_component("RenderNode", &render_node_1);
-    player.add_component("MovementNode", &player_movement);
-
     Engine engine;
+    
+    
+    for(int k = 0; k < 20; k++){
+        for(int j = 0; j < 10; j++){
+            Enemy *enemy = new Enemy(k * 10, j * 5);
+            engine.add_entity(enemy);
+        }
+    }
+
+    Player player;
+    PositionComponent* player_position = ((MovementNode*) player.get_component("MovementNode"))->position;
+
     engine.add_entity(&player);
 
     engine.add_system(&r);
     engine.add_system(&mv_system);
 
+    /* keyboard test */
+    keyboard.config(8);
+    keyboard.config(14);
+    keyboard.config(15);
+    keyboard.config(13);
+
     for(;;){
-        player_position.x %= 128;
+        player.update();
+
+        /* for now */
+        if(keyboard.is_pressed(15)){
+            if(Entity::no_entities < 250) {
+                Projectile* projectile = new Projectile(player_position->x, player_position->y);
+                engine.add_entity(projectile);
+            }
+        }
+
         engine.update();
+
+        sleep_ms(16);
     }
 
     return 0;

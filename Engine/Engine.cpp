@@ -37,4 +37,11 @@ void Engine::update(){
     for(auto& system : this->systems){
         system->update(this->entities);
     }
+
+    for(auto& entity : this->entities){
+        if(entity == nullptr){
+            return;
+        }
+        entity->update();
+    }
 }

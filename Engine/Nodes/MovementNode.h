@@ -12,6 +12,10 @@ public:
     MovementNode() {};
     MovementNode(PositionComponent* position, VelocityComponent* velocity) : position(position), velocity(velocity) {};
     ~MovementNode() override = default;
+
+    std::string get_component_name() {
+        return "MovementNode";
+    }
 };
 
 #endif
