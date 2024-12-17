@@ -18,7 +18,7 @@ public:
         }
     };
 
-    std::string get_component_name() {
+    std::string get_component_name() override {
         return "MovementNode";
     }
 };

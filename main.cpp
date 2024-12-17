@@ -16,6 +16,8 @@
 #include "Engine/Entity/Entity.h"
 #include "Engine/Engine.h"
 #include "Engine/Drivers/InputDriver/Keyboard.h"
+#include "Engine/Nodes/SquareCollider.h"
+#include "Engine/Systems/CollisionSystem.h"
 
 #include "Games/Player.h"
 #include "Games/Enemy.h"
@@ -25,12 +27,13 @@ int main() {
     stdio_init_all();
 
     Keyboard& keyboard = Keyboard::getInstance();
-
     Display& display = ST7735::getInstance();
     Canvas *canvas = new BufferedCanvas(display.get_width(), display.get_height());
-    
     RenderSystem r(*canvas, display);
+    
     MovementSystem mv_system;
+    CollisionSystem collision_system;
+
     Engine& engine = Engine::getInstance();
 
     Player player;
@@ -38,6 +41,12 @@ int main() {
 
     engine.add_system(&mv_system);
     engine.add_system(&r);
+    engine.add_system(&collision_system);
+
+    Enemy e(30, 30);
+
+    engine.add_entity(&e);
+
     for(;;){
         engine.update();
 

@@ -43,6 +43,7 @@ public:
     /* draw a line to the canvas */
     void draw_line(uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end, uint16_t color);
 
+    void draw_rect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color);
     void clear() override {
         this->fill(0x0000);
     };

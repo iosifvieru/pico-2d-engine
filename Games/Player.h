@@ -6,7 +6,7 @@
 #include "Engine/Entity/Entity.h"
 #include "Engine/Nodes/RenderNode.h"
 #include "Engine/Nodes/MovementNode.h"
-
+#include "Engine/Nodes/SquareCollider.h"
 #include "Engine/Drivers/InputDriver/Keyboard.h"
 
 #include "Games/Projectile.h"
@@ -36,8 +36,14 @@ public:
         VelocityComponent* player_velocity = new VelocityComponent(0, 0);
         MovementNode* movement = new MovementNode(player_position, player_velocity);
 
+        SquareCollider* sq = new SquareCollider(new SquareComponent(
+            player_position->x, player_position->y, 
+            player_position->x + player_sprite->width, player_position->y + player_sprite->height
+            ));
+
         this->add_component(render_node);
         this->add_component(movement);
+        this->add_component(sq);
         
         Keyboard& keyboard = Keyboard::getInstance();
         keyboard.config(W_KEY);
@@ -64,17 +70,27 @@ public:
 
 
         if(keyboard.is_pressed(D_KEY)){
-            movement_node->velocity->v_x = 10;
+            movement_node->velocity->v_x = 5;
         }
 
         if(keyboard.is_pressed(A_KEY)){
-            movement_node->velocity->v_x = -10;
+            movement_node->velocity->v_x = -5;
         }
 
         if(keyboard.is_pressed(S_KEY)){
-            PositionComponent* p1 = new PositionComponent(movement_node->position->x, movement_node->position->y + 2, 0, 0);
+            PositionComponent* p1 = new PositionComponent(movement_node->position->x, movement_node->position->y, 0, 0);
             Engine::getInstance().add_entity(new Projectile(p1->x, p1->y));
         }
+
+        /* test */
+        SquareCollider* sq = (SquareCollider*) this->get_component("SquareCollider");
+        if(sq == nullptr) return;
+
+        sq->square_collider->min_x = movement_node->position->x;
+        sq->square_collider->min_y = movement_node->position->y;
+
+        sq->square_collider->max_x = sq->square_collider->min_x + 2;
+        sq->square_collider->max_y = sq->square_collider->min_y + 2;
     }
 };
 

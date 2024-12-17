@@ -45,6 +45,7 @@ add_executable(pico-game-engine
         Engine/Entity/Entity.cpp
         Engine/Systems/MovementSystem.cpp
         Engine/Drivers/InputDriver/Keyboard.cpp
+        Engine/Systems/CollisionSystem.cpp
         )
 
 pico_set_program_name(pico-game-engine "pico-game-engine")

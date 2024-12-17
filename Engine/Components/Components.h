@@ -57,4 +57,21 @@ struct VelocityComponent : public Component {
     }
 };
 
+struct SquareComponent : public Component {
+    uint16_t min_x = 0;
+    uint16_t min_y = 0;
+    uint16_t max_x = 0;
+    uint16_t max_y = 0;
+
+    SquareComponent() {};
+    ~SquareComponent() {};
+
+    SquareComponent(uint16_t min_x, uint16_t min_y, uint16_t max_x, uint16_t max_y){
+        this->min_x = min_x;
+        this->min_y = min_y;
+        this->max_x = max_x;
+        this->max_y = max_y;
+    }
+};
+
 #endif
