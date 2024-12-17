@@ -21,8 +21,6 @@ public:
     /* fills the canvas with a certain color */
     void fill(uint16_t color) override;
 
-    void clear_pixel(uint16_t x, uint16_t y) override;
-
     /* sets a certain pixel's color */
     void set_pixel(uint16_t x, uint16_t y, uint16_t color) override;
 

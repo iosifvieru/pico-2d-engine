@@ -34,8 +34,6 @@ public:
     /* sets a certain pixel's color */
     virtual void set_pixel(uint16_t x, uint16_t y, uint16_t color) = 0;
 
-    virtual void clear_pixel(uint16_t x, uint16_t y) = 0;
-
     /* gets the color of a pixel */
     virtual uint16_t get_pixel(uint16_t x, uint16_t y) = 0;
 

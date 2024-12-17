@@ -1,6 +1,8 @@
 #ifndef _PLAYER_H_
 #define _PLAYER_H_
 
+#include "Engine/Logger/Logger.h"
+
 #include "Engine/Entity/Entity.h"
 #include "Engine/Nodes/RenderNode.h"
 #include "Engine/Nodes/MovementNode.h"
@@ -22,6 +24,8 @@ uint16_t player_texture[4] = {
 class Player : public Entity {
 public:
     Player() : Entity(){
+        Logger::log("Player()");
+
         /* renderable part */
         PositionComponent* player_position = new PositionComponent(60, 120, 0, 0);
         SpriteComponent* player_sprite = new SpriteComponent(2, 2, player_texture);
@@ -43,7 +47,8 @@ public:
     };
 
     ~Player(){
-
+        Logger::log("~Player()");
+        Engine::getInstance().remove_entity(this);
     };
 
     void update() override {
@@ -59,24 +64,16 @@ public:
 
 
         if(keyboard.is_pressed(D_KEY)){
-            movement_node->velocity->v_x = 5;
+            movement_node->velocity->v_x = 10;
         }
 
         if(keyboard.is_pressed(A_KEY)){
-            movement_node->velocity->v_x = -5;
+            movement_node->velocity->v_x = -10;
         }
 
-        /* testing out firing key. */
-        if(keyboard.is_pressed(W_KEY)){
-            if(Entity::no_entities < MAX_NO_ENTITIES) {
-                PositionComponent player_pos = *movement_node->position;
-                
-                /* creating a projectile and adding it to the engine. */
-                Projectile* projectile1 = new Projectile(player_pos.x - 2, player_pos.y);
-                Projectile* projectile2 = new Projectile(player_pos.x + 2, player_pos.y);
-                Engine::getInstance().add_entity(projectile1);
-                Engine::getInstance().add_entity(projectile2);
-            }
+        if(keyboard.is_pressed(S_KEY)){
+            PositionComponent* p1 = new PositionComponent(movement_node->position->x, movement_node->position->y + 2, 0, 0);
+            Engine::getInstance().add_entity(new Projectile(p1->x, p1->y));
         }
     }
 };

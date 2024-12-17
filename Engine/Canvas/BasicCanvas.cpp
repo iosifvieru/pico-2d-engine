@@ -92,8 +92,3 @@ void BasicCanvas::clear() {
 
    this->fill(0x0000);
 }
-
-/* clears a pixel */
-void BasicCanvas::clear_pixel(uint16_t x, uint16_t y){
-    this->buffer[x * width + y] = 0x0000;
-}

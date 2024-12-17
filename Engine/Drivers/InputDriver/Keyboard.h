@@ -3,6 +3,9 @@
 
 #include "Engine/Drivers/InputDriver/Input.h"
 #include "pico/stdlib.h"
+#include <unordered_map>
+
+#define debounce_ms 150
 
 class Keyboard: public Input {
 private:
@@ -11,6 +14,9 @@ private:
 
     /* instance */
     static Keyboard* instance;
+
+    std::unordered_map<uint8_t, uint32_t> lastPressTimes;
+
 public:
     void config(uint8_t button_pin);
     bool is_pressed(uint8_t button_pin);

@@ -9,16 +9,17 @@ RenderSystem::~RenderSystem(){
     //
 }
 
-void RenderSystem::update(std::vector<Entity*> entities){
+void RenderSystem::update(std::list<Entity*> entities){
     /* clears the canvas*/
     canvas.fill(0x0000);
 
     /* redraws everything. */
     for(auto& entity : entities){
+        if(entity == nullptr) continue;
         if(entity->has_component("RenderNode")){
             RenderNode *rn = (RenderNode*) entity->get_component("RenderNode");
 
-            if(rn == nullptr || rn->is_visible == false){
+            if(rn == nullptr){
                 continue;
             }
 

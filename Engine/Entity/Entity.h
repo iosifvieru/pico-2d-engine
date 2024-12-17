@@ -1,7 +1,7 @@
 #ifndef _ENTITY_H_
 #define _ENTITY_H_
 
-#include <vector>
+#include <list>
 #include <string>
 #include "Engine/Nodes/Node.h"
 #include "pico/stdlib.h"
@@ -10,23 +10,33 @@
 
 class Entity {
 private:
-    std::vector<Node*> nodes;
+    /* components */
+    std::list<Node*> nodes;
+
 public:
     Entity();
     ~Entity();
     
     Entity(const Entity& e) = delete;
 
+    /* static variable counting the entity number. */
     static uint16_t no_entities;
 
+    /* adds a component to the entity */
     void add_component(Node* node);
-    void remove_component(std::string component_name);
+
+    /* removes a component. */
+    void remove_component(Node* node);
+
+    /* returns a certain component. */
     Node* get_component(std::string component_name);
 
+    /* returns true / false if the entity has a certain component. */
     bool has_component(std::string component_name);
 
+    /* updates the entity */
     virtual void update() = 0;
+
+
 };
-
-
 #endif

@@ -4,6 +4,7 @@
 #include "Engine/Entity/Entity.h"
 #include "Engine/Nodes/RenderNode.h"
 #include "Engine/Nodes/MovementNode.h"
+#include <memory>
 
 #define enemy_velocity_speed 2
 

@@ -1,5 +1,6 @@
 #include "Engine.h"
 
+#include <algorithm>
 
 Engine* Engine::instance = nullptr;
 
@@ -20,7 +21,11 @@ void Engine::add_entity(Entity* entity){
 }
 
 void Engine::remove_entity(Entity* entity){
-    return;
+    if(entity == nullptr){
+        return;
+    }
+
+    deleted_entities.push_back(entity);
 }
 
 void Engine::add_system(System* system){
@@ -40,11 +45,20 @@ void Engine::update(){
     for(auto& system : this->systems){
         system->update(this->entities);
     }
-
+    
     for(auto& entity : this->entities){
-        if(entity == nullptr){
-            return;
-        }
         entity->update();
     }
+    
+    delete_entities();
+}
+
+void Engine::delete_entities(){
+    for (Entity* entity : deleted_entities) {
+        if(entity == nullptr) continue;
+        this->entities.remove(entity);
+        delete entity;
+        entity = nullptr;
+    }
+    deleted_entities.clear();
 }

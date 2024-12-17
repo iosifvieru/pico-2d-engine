@@ -6,7 +6,7 @@
 
 class MovementSystem : public System {
 public:
-    void update(std::vector<Entity*> entities) override;
+    void update(std::list<Entity*> entities) override;
 };
 
 #endif

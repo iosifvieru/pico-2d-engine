@@ -2,7 +2,8 @@
 #define SYSTEM_H_
 
 #include "Engine/Entity/Entity.h"
-#include <vector>
+#include <list>
+#include <memory>
 
 /*  
     interface for system.
@@ -10,7 +11,7 @@
 */
 class System {
 public:
-    virtual void update(std::vector<Entity*> entities) = 0;
+    virtual void update(std::list<Entity*> entities) = 0;
     virtual ~System() = default;
 };
 

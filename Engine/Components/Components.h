@@ -22,6 +22,10 @@ struct PositionComponent : public Component {
     PositionComponent() {};
     PositionComponent(uint16_t x, uint16_t y, uint16_t z, uint16_t angle) 
         : x(x), y(y), z(z), angle(angle) {};
+
+    ~PositionComponent() {
+        
+    }
 };
 
 struct SpriteComponent : public Component {
@@ -35,6 +39,10 @@ struct SpriteComponent : public Component {
         this->height = height;
         this->sprite = sprite;
     }
+
+    ~SpriteComponent(){
+        // not deleting the sprite
+    }
 };
 
 struct VelocityComponent : public Component {
@@ -43,6 +51,10 @@ struct VelocityComponent : public Component {
 
     VelocityComponent(int8_t x, int8_t y) : v_x(x), v_y(y) {};
     VelocityComponent() {};
+
+    ~VelocityComponent() {
+
+    }
 };
 
 #endif

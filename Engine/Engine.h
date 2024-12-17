@@ -2,13 +2,17 @@
 #define _ENGINE_H_
 
 #include <vector>
+
+#include <list>
 #include "Engine/Entity/Entity.h"
 #include "Engine/Systems/System.h"
 
 class Engine {
 private:
     std::vector<System*> systems;
-    std::vector<Entity*> entities;
+    std::list<Entity*> entities;
+    
+    std::vector<Entity*> deleted_entities;
 
     Engine();
     ~Engine();
@@ -16,6 +20,8 @@ private:
     Engine(const Engine& e) = delete;
 
     static Engine* instance;
+
+    void delete_entities();
     
 public:
     static Engine& getInstance() {
@@ -35,6 +41,7 @@ public:
     void remove_system(System* system);
 
     void update();
+
 };
 
 #endif

@@ -32,22 +32,16 @@ int main() {
     RenderSystem r(*canvas, display);
     MovementSystem mv_system;
     Engine& engine = Engine::getInstance();
-    
-    for(int k = 0; k < 5; k++){
-        for(int j = 0; j < 10; j++){
-            Enemy *enemy = new Enemy(k * 10, j * 5);
-            engine.add_entity(enemy);
-        }
-    }
 
     Player player;
     engine.add_entity(&player);
 
-    engine.add_system(&r);
     engine.add_system(&mv_system);
-
+    engine.add_system(&r);
     for(;;){
         engine.update();
+
+        sleep_ms(16);
     }
 
     return 0;

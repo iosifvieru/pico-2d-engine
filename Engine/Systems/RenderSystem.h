@@ -1,7 +1,7 @@
 #ifndef _RENDER_SYSTEM_H_
 #define _RENDER_SYSTEM_H_
 
-#include <vector>
+#include <list>
 #include "Engine/Systems/System.h"
 #include "Engine/Canvas/Canvas.h"
 #include "Engine/Nodes/RenderNode.h"
@@ -21,7 +21,7 @@ public:
     ~RenderSystem();
 
     /* system interface implementation */
-    void update(std::vector<Entity*> entities) override;
+    void update(std::list<Entity*> entities) override;
 };
 
 #endif

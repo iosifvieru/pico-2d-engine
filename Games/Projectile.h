@@ -12,41 +12,34 @@ uint16_t projectile_texture[4] = {
     0xFFFF, 0xFFFF
 };
 
-SpriteComponent* projectile_sprite = new SpriteComponent(2, 2, projectile_texture);
-VelocityComponent* projectile_velocity = new VelocityComponent(0, projectile_velocity_value);
-
 class Projectile : public Entity {
 private:
-    int lifespan = 100;
+    int lifespan = 50;
+    RenderNode* renderNode;
+    MovementNode* movementNode;
+
 public:
     Projectile(uint16_t x, uint16_t y) : Entity() {
-        PositionComponent* projectile_position = new PositionComponent(x, y, 0, 0);
-        
-        RenderNode* render_node = new RenderNode(projectile_position, projectile_sprite);
-        MovementNode* movement = new MovementNode(projectile_position, projectile_velocity);
+        PositionComponent* pos = new PositionComponent(x, y, 0, 0);
+        SpriteComponent* sprite = new SpriteComponent(2, 2, projectile_texture);
 
-        this->add_component(render_node);
-        this->add_component(movement);
+        renderNode = new RenderNode(pos, sprite);
+        movementNode = new MovementNode(pos, new VelocityComponent(0, -2));
+
+        this->add_component(renderNode);
+        this->add_component(movementNode);
     };
     ~Projectile() {
-
+        delete renderNode;
+        delete movementNode;
     };
 
     void update() override {
-        /*
-        should detect colision and stuff.
-        */
+        lifespan--;
 
-       lifespan--;
-
-       if(lifespan <= 0){
-            RenderNode* rn = (RenderNode*)this->get_component("RenderNode");
-            if(rn == nullptr){
-                return;
-            }
-
-            rn->is_visible = false;
-       }
+        if(lifespan <= 0){
+            Engine::getInstance().remove_entity(this);
+        }
     }
 };
 
