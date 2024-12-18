@@ -2,6 +2,7 @@
 #include <time.h>
 #include <stdio.h>
 #include <string.h>
+#include <random>
 
 #include "Engine/Drivers/DisplayDriver/ST7735.h"
 #include "Engine/Canvas/BufferedCanvas.h"
@@ -39,18 +40,19 @@ int main() {
     Player player;
     engine.add_entity(&player);
 
+    engine.add_system(&collision_system);
     engine.add_system(&mv_system);
     engine.add_system(&r);
-    engine.add_system(&collision_system);
 
-    Enemy e(30, 30);
-
-    engine.add_entity(&e);
+    for(int i = 0 ; i < 30; i++){
+        Enemy* e = new Enemy(random() % 120 + 5, random() % 30 + 5);
+        engine.add_entity(e);
+    }
 
     for(;;){
         engine.update();
 
-        sleep_ms(16);
+        sleep_ms(17);
     }
 
     return 0;

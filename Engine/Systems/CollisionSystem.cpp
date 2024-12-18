@@ -9,7 +9,7 @@ void CollisionSystem::update(std::list<Entity*> entities) {
         SquareCollider* collider1 = (SquareCollider*)entity1->get_component("SquareCollider");
         if (collider1 == nullptr) continue;
 
-        for (auto it2 = std::next(it1); it2 != entities.end(); ++it2) {
+        for (auto it2 = entities.begin(); it2 != entities.end(); ++it2) {
             Entity* entity2 = *it2;
             if (!entity2->has_component("SquareCollider")) continue;
 
@@ -20,6 +20,7 @@ void CollisionSystem::update(std::list<Entity*> entities) {
 
             collider1->is_visible = collider1->has_collided(collider2);
             collider2->is_visible = collider1->is_visible;
+            
         }
     }
 }

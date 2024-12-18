@@ -56,6 +56,8 @@ void Engine::update(){
 void Engine::delete_entities(){
     for (Entity* entity : deleted_entities) {
         if(entity == nullptr) continue;
+
+        entity->nodes.clear();
         this->entities.remove(entity);
         delete entity;
         entity = nullptr;

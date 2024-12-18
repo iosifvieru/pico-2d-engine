@@ -78,7 +78,7 @@ public:
         }
 
         if(keyboard.is_pressed(S_KEY)){
-            PositionComponent* p1 = new PositionComponent(movement_node->position->x, movement_node->position->y, 0, 0);
+            PositionComponent* p1 = new PositionComponent(movement_node->position->x, movement_node->position->y - 4, 0, 0);
             Engine::getInstance().add_entity(new Projectile(p1->x, p1->y));
         }
 

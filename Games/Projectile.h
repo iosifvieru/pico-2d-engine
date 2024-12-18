@@ -55,11 +55,11 @@ public:
         sq->square_collider->max_x = sq->square_collider->min_x + renderNode->sprite->width;
         sq->square_collider->max_y = sq->square_collider->min_y + renderNode->sprite->height;
 
-        if(lifespan <= 0){
+        if(sq->is_visible == 1){
             Engine::getInstance().remove_entity(this);
         }
 
-        if(sq->is_visible == 1){
+        if(lifespan <= 0){
             Engine::getInstance().remove_entity(this);
         }
     }

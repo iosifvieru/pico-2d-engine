@@ -11,13 +11,13 @@
 class Entity {
 private:
     /* components */
-    std::list<Node*> nodes;
-
 public:
     Entity();
     ~Entity();
-    
+    std::list<Node*> nodes;
+
     Entity(const Entity& e) = delete;
+
 
     /* static variable counting the entity number. */
     static uint16_t no_entities;

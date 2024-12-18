@@ -15,7 +15,7 @@ uint16_t enemy_texture[9] = {
 };
 
 SpriteComponent* enemy_sprite = new SpriteComponent(3, 3, enemy_texture);
-VelocityComponent* enemy_velocity = new VelocityComponent(enemy_velocity_speed, 0);
+VelocityComponent* enemy_velocity = new VelocityComponent(0, 0);
 
 class Enemy : public Entity {
 private:
@@ -60,6 +60,10 @@ public:
 
         sq->square_collider->max_x = sq->square_collider->min_x + 2;
         sq->square_collider->max_y = sq->square_collider->min_y + 2;
+
+        if(sq->is_visible == true){
+            Engine::getInstance().remove_entity(this);
+        }
     }
 };
 
