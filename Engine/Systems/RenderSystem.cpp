@@ -2,6 +2,7 @@
 #include "Engine/Logger/Logger.h"
 #include "Engine/Components/PositionComponent.h"
 #include "Engine/Components/SpriteComponent.h"
+#include "Engine/Components/SquareComponent.h"
 
 RenderSystem::RenderSystem(Canvas& canvas, Display& display): canvas(canvas), display(display) {
     //
@@ -28,24 +29,14 @@ void RenderSystem::update(std::list<Entity*> entities){
         
         canvas.draw_sprite(p->x, p->y, sprite->width, sprite->height, sprite->sprite);
 
-        /* hardcoding some stuff for now. */
-        /*
-        if(entity->has_component("SquareCollider")){
-            SquareCollider *sq = (SquareCollider*) entity->get_component("SquareCollider");
+        SquareComponent* collision_border = (SquareComponent*) entity->get_component("SquareComponent");
+        if(collision_border == nullptr) continue;
 
-            if(sq == nullptr){
-                continue;
-            }
-
-            if(sq->is_visible == false){
-                continue;
-            }
-
-            SquareComponent sqc = *sq->square_collider;
-            
-            canvas.draw_rect(sqc.max_x, sqc.max_y, sqc.min_x, sqc.min_y, 0x001f);
-            //canvas.draw_rect(50, 50, 100, 100, 0xffff);
-        } */
+        if(collision_border->is_visible == false) continue;
+        
+        canvas.draw_rect(collision_border->get_x(), collision_border->get_y(),
+                collision_border->get_max_x(), collision_border->get_max_y(),
+                0x07c0);
     }
 
     /* flushes to display. */

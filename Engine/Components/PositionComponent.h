@@ -12,8 +12,11 @@ public:
 
     PositionComponent() {};
     PositionComponent(uint16_t x, uint16_t y, uint16_t z, uint16_t angle) 
-        : x(x), y(y), z(z), angle(angle) {
-
+        {
+            this->x = x;
+            this->y = y;
+            this->z = z;
+            this->angle = angle;
             Logger::log("PositionComponent()");
         };
 

@@ -42,13 +42,13 @@ void Engine::remove_system(System* system){
     return;
 }
 
-void Engine::update(){
-    for(auto& system : this->systems){
-        system->update(this->entities);
-    }
-    
+void Engine::update(){    
     for(auto& entity : this->entities){
         entity->update();
+    }
+    
+    for(auto& system : this->systems){
+        system->update(this->entities);
     }
     
     delete_entities();

@@ -36,17 +36,23 @@ int main() {
     
     keyboard.config(13);
 
-    //engine.add_system(&collision_system);
     engine.add_system(&mv_system);
     engine.add_system(&r);
+    engine.add_system(&collision_system);
 
     TestEntity* test_entity = new TestEntity();
     engine.add_entity(test_entity);
 
+    Enemy* static_enemy2 = new Enemy(100, 50);
+    static_enemy2->set_velocity(0, 0);
+    static_enemy2->set_lifespan(9999); 
+    static_enemy2->collision->set_width(20);
+    static_enemy2->collision->set_height(50);
+
+    engine.add_entity(static_enemy2);
+
     for(;;){
-
         engine.update();
-
         sleep_ms(16);
     }
 

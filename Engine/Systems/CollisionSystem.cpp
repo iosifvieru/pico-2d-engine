@@ -1,26 +1,56 @@
 #include "Engine/Systems/CollisionSystem.h"
+#include "Engine/Components/PositionComponent.h"
+#include "Engine/Components/SquareComponent.h"
 
+#include "Engine/Logger/Logger.h"
+
+/*
+this is the update function of the collision system.
+this function iterates through every entity and checking if two collide.
+*/
 void CollisionSystem::update(std::list<Entity*> entities) {
-    /*
-    for (auto it1 = entities.begin(); it1 != entities.end(); ++it1) {
-        Entity* entity1 = *it1;
-        if (!entity1->has_component("SquareCollider")) continue;
+    for(auto& entity1 : entities){
+        /* pointer to square component. */
+        SquareComponent* square_component1 = (SquareComponent*) entity1->get_component("SquareComponent");
+        if(square_component1 == nullptr) continue;
 
-        SquareCollider* collider1 = (SquareCollider*)entity1->get_component("SquareCollider");
-        if (collider1 == nullptr) continue;
+        /* pointer to position component. */
+        PositionComponent* position1 = (PositionComponent*) entity1->get_component("PositionComponent");
+        if(position1 == nullptr) continue;
 
-        for (auto it2 = entities.begin(); it2 != entities.end(); ++it2) {
-            Entity* entity2 = *it2;
-            if (!entity2->has_component("SquareCollider")) continue;
+        /* resetting all the flags. */
+        square_component1->collided = false;
 
-            if (entity1 == entity2) continue;
+        /* TODO:
+            find a better way to check for collisions.
+            so far the implementation is a O(n^2)..
+            which is really slow.. but for now it looks good.
+        */
+        for(auto& entity2: entities){
+            /* skipping if comparing the entity with itself. */
+            if(entity1 == entity2) continue;
 
-            SquareCollider* collider2 = (SquareCollider*)entity2->get_component("SquareCollider");
-            if (collider2 == nullptr) continue;
+            SquareComponent* square_component2 = (SquareComponent*) entity2->get_component("SquareComponent");
+            if(square_component2 == nullptr) continue;
 
-            collider1->is_visible = collider1->has_collided(collider2);
-            collider2->is_visible = collider1->is_visible;
+            /*
+            COLLISION BUG FIXED!!!!!!!
+
+            the problem was that i was not breaking the loop and i was further
+            checking for collisions, setting the collided variable to false
+            because the implementation looked like this:
             
+            square_component1->collided = square_component1->has_collided(...);
+
+            */
+            if(square_component1->has_collided(*square_component2)){
+                square_component1->collided = true;
+                break;
+            }
         }
-    }*/
+        
+        /* modifing the collision square's position. */
+        square_component1->set_x(position1->x);
+        square_component1->set_y(position1->y);
+    }
 }

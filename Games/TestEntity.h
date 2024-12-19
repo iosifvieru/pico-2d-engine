@@ -7,6 +7,7 @@
 #include "Engine/Components/PositionComponent.h"
 #include "Engine/Components/SpriteComponent.h"
 #include "Engine/Components/VelocityComponent.h"
+#include "Engine/Components/SquareComponent.h"
 
 #include "Engine/Engine.h"
 #include "Games/Enemy.h"
@@ -20,15 +21,21 @@ private:
     PositionComponent* position;
     SpriteComponent* sprite;
     VelocityComponent* velocity;
+    SquareComponent* collision;
 public:
     TestEntity(){
         position = new PositionComponent(50, 125, 0, 0);
         sprite = new SpriteComponent(2, 2, player_texture);
         velocity = new VelocityComponent(0, 0);
 
+        collision = new SquareComponent(position->x, position->y, 
+                    sprite->width, sprite->height
+        );
+
         this->add_component(position);
         this->add_component(sprite);
         this->add_component(velocity);
+        this->add_component(collision);
 
         Keyboard::getInstance().config(8);
         Keyboard::getInstance().config(14);
@@ -49,7 +56,7 @@ public:
         }
 
         if(Keyboard::getInstance().is_pressed(13)){
-            Enemy* projectile = new Enemy(this->position->x , this->position->y + 2);
+            Enemy* projectile = new Enemy(this->position->x , this->position->y - 4);
             Engine::getInstance().add_entity(projectile);
         }
     };
