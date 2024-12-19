@@ -9,6 +9,7 @@
 #include "Engine/Components/VelocityComponent.h"
 
 #include "Engine/Engine.h"
+#include "Games/Enemy.h"
 
 uint16_t player_texture[4] = {
     0x15AF, 0xAFFF, 0x1FBB, 0x10AA
@@ -21,7 +22,7 @@ private:
     VelocityComponent* velocity;
 public:
     TestEntity(){
-        position = new PositionComponent(50, 50, 0, 0);
+        position = new PositionComponent(50, 125, 0, 0);
         sprite = new SpriteComponent(2, 2, player_texture);
         velocity = new VelocityComponent(0, 0);
 
@@ -48,7 +49,8 @@ public:
         }
 
         if(Keyboard::getInstance().is_pressed(13)){
-            Engine::getInstance().remove_entity(this);
+            Enemy* projectile = new Enemy(this->position->x , this->position->y + 2);
+            Engine::getInstance().add_entity(projectile);
         }
     };
 };

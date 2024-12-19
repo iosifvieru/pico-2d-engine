@@ -14,35 +14,35 @@ Entity::~Entity(){
     Logger::log("~Entity()");
     no_entities--;
     
-    for(auto* node: nodes) {
+    for(auto* node: this->components) {
         if(node == nullptr) continue;
         delete node;
     }
 
-    this->nodes.clear();
+    this->components.clear();
 }
 
-void Entity::add_component(Component* node) {
-    if(node == nullptr){
+void Entity::add_component(Component* components) {
+    if(components == nullptr){
         Logger::log("add_component -> node is null.");
         return;
     }
 
-    this->nodes.push_back(node);
+    this->components.push_back(components);
     Logger::log("Nod adaugat cu succes.");
 
 }
 
-void Entity::remove_component(Component* node) {
-    if (node == nullptr) {
+void Entity::remove_component(Component* components) {
+    if (components == nullptr) {
         return;
     }
 
-    this->nodes.remove(node);
+    this->components.remove(components);
 }
 
 Component* Entity::get_component(std::string component_name) {
-    for(auto& node : this->nodes){
+    for(auto& node : this->components){
         if(node->get_component_name() == component_name){
             return node;
         }
@@ -52,7 +52,7 @@ Component* Entity::get_component(std::string component_name) {
 }
 
 bool Entity::has_component(std::string component_name){
-    for(auto& node : this->nodes){
+    for(auto& node : this->components){
         if(node->get_component_name() == component_name){
             return true;
         }

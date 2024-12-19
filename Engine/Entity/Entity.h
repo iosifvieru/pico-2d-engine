@@ -12,7 +12,7 @@
 class Entity {
 private:
     /* components */
-    std::list<Component*> nodes;
+    std::list<Component*> components;
 public:
 
     Entity();
@@ -24,10 +24,10 @@ public:
     static uint16_t no_entities;
 
     /* adds a component to the entity */
-    void add_component(Component* node);
+    void add_component(Component* components);
 
     /* removes a component. */
-    void remove_component(Component* node);
+    void remove_component(Component* components);
 
     /* returns a certain component. */
     Component* get_component(std::string component_name);
