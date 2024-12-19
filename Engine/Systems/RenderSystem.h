@@ -4,7 +4,6 @@
 #include <list>
 #include "Engine/Systems/System.h"
 #include "Engine/Canvas/Canvas.h"
-#include "Engine/Nodes/RenderNode.h"
 #include "Engine/Drivers/DisplayDriver/Display.h"
 
 /* 

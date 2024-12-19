@@ -26,6 +26,7 @@ void Engine::remove_entity(Entity* entity){
     }
 
     deleted_entities.push_back(entity);
+    Logger::log("Am sters nod. ");
 }
 
 void Engine::add_system(System* system){
@@ -54,13 +55,15 @@ void Engine::update(){
 }
 
 void Engine::delete_entities(){
-    for (Entity* entity : deleted_entities) {
+    for (auto* entity : deleted_entities) {
         if(entity == nullptr) continue;
 
-        entity->nodes.clear();
+        Logger::log("SUNT IN DELETE ENTITIES.");
         this->entities.remove(entity);
         delete entity;
         entity = nullptr;
     }
     deleted_entities.clear();
+
+    Logger::log("IES DIN DELETE ENTITIES.");
 }

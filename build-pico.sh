@@ -57,14 +57,14 @@ done
 # cmake
 if $QUIET; then
     if $LOGGING; then
-        cmake -B build -S . -G Ninja -D_LOG_=ON 2>&1
+        cmake -B build -S . -G Ninja D_LOG_=ON 2>&1
     else
         cmake -B build -S . -G Ninja 2>&1
     fi
     cmake build/ > /dev/null 2>&1
 else
     if $LOGGING; then
-        cmake -B build -S . -G Ninja -D_LOG_=ON 2>&1
+        cmake -B build -S . -G Ninja D_LOG_=ON 2>&1
     else
         cmake -B build -S . -G Ninja 2>&1
     fi

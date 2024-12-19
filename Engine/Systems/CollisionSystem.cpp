@@ -1,7 +1,7 @@
 #include "Engine/Systems/CollisionSystem.h"
-#include "Engine/Nodes/SquareCollider.h"
 
 void CollisionSystem::update(std::list<Entity*> entities) {
+    /*
     for (auto it1 = entities.begin(); it1 != entities.end(); ++it1) {
         Entity* entity1 = *it1;
         if (!entity1->has_component("SquareCollider")) continue;
@@ -22,5 +22,5 @@ void CollisionSystem::update(std::list<Entity*> entities) {
             collider2->is_visible = collider1->is_visible;
             
         }
-    }
+    }*/
 }

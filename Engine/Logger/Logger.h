@@ -4,6 +4,8 @@
 #include <stdarg.h>
 #include <cstdio>
 
+//#define _LOG_ 1
+
 class Logger {
 public:
 

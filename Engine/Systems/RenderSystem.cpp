@@ -1,5 +1,7 @@
-#include "RenderSystem.h"
-#include "Engine/Nodes/SquareCollider.h"
+#include "Engine/Systems/RenderSystem.h"
+#include "Engine/Logger/Logger.h"
+#include "Engine/Components/PositionComponent.h"
+#include "Engine/Components/SpriteComponent.h"
 
 RenderSystem::RenderSystem(Canvas& canvas, Display& display): canvas(canvas), display(display) {
     //
@@ -17,20 +19,17 @@ void RenderSystem::update(std::list<Entity*> entities){
     /* redraws everything. */
     for(auto& entity : entities){
         if(entity == nullptr) continue;
-        if(entity->has_component("RenderNode")){
-            RenderNode *rn = (RenderNode*) entity->get_component("RenderNode");
 
-            if(rn == nullptr){
-                continue;
-            }
+        PositionComponent* p = (PositionComponent*) entity->get_component("PositionComponent");
+        if(p == nullptr) continue;
 
-            PositionComponent p = *rn->position;
-            SpriteComponent sprite = *rn->sprite;
-            
-            canvas.draw_sprite(p.x, p.y, sprite.width, sprite.height, sprite.sprite);
-        }
+        SpriteComponent* sprite = (SpriteComponent*) entity->get_component("SpriteComponent");
+        if(sprite == nullptr) continue;
+        
+        canvas.draw_sprite(p->x, p->y, sprite->width, sprite->height, sprite->sprite);
 
         /* hardcoding some stuff for now. */
+        /*
         if(entity->has_component("SquareCollider")){
             SquareCollider *sq = (SquareCollider*) entity->get_component("SquareCollider");
 
@@ -46,7 +45,7 @@ void RenderSystem::update(std::list<Entity*> entities){
             
             canvas.draw_rect(sqc.max_x, sqc.max_y, sqc.min_x, sqc.min_y, 0x001f);
             //canvas.draw_rect(50, 50, 100, 100, 0xffff);
-        }
+        } */
     }
 
     /* flushes to display. */

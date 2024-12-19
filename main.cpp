@@ -8,21 +8,18 @@
 #include "Engine/Canvas/BufferedCanvas.h"
 #include "Engine/Canvas/BasicCanvas.h"
 
-#include "Engine/Nodes/RenderNode.h"
-#include "Engine/Nodes/MovementNode.h"
-
-#include "Engine/Systems/RenderSystem.h"
 #include "Engine/Systems/MovementSystem.h"
 
 #include "Engine/Entity/Entity.h"
 #include "Engine/Engine.h"
 #include "Engine/Drivers/InputDriver/Keyboard.h"
-#include "Engine/Nodes/SquareCollider.h"
+#include "Engine/Systems/RenderSystem.h"
 #include "Engine/Systems/CollisionSystem.h"
 
-#include "Games/Player.h"
-#include "Games/Enemy.h"
-#include "Games/Projectile.h"
+#include "Engine/Components/PositionComponent.h"
+#include "Engine/Components/SpriteComponent.h"
+
+#include "Games/TestEntity.h"
 
 int main() { 
     stdio_init_all();
@@ -36,24 +33,23 @@ int main() {
     CollisionSystem collision_system;
 
     Engine& engine = Engine::getInstance();
+    
+    keyboard.config(13);
 
-    Player player;
-    engine.add_entity(&player);
-
-    engine.add_system(&collision_system);
+    //engine.add_system(&collision_system);
     engine.add_system(&mv_system);
     engine.add_system(&r);
 
-    for(int i = 0 ; i < 30; i++){
-        Enemy* e = new Enemy(random() % 120 + 5, random() % 30 + 5);
-        engine.add_entity(e);
-    }
+    TestEntity* test_entity = new TestEntity();
+    engine.add_entity(test_entity);
 
     for(;;){
+
         engine.update();
 
-        sleep_ms(17);
+        sleep_ms(16);
     }
+
 
     return 0;
 }
