@@ -10,7 +10,9 @@
 #include "Engine/Components/SquareComponent.h"
 
 #include "Engine/Engine.h"
-#include "Games/Enemy.h"
+#include "Games/Projectile.h"
+
+#include "Games/Assets.h"
 
 uint16_t player_texture[4] = {
     0x15AF, 0xAFFF, 0x1FBB, 0x10AA
@@ -24,8 +26,8 @@ private:
     SquareComponent* collision;
 public:
     TestEntity(){
-        position = new PositionComponent(50, 125, 0, 0);
-        sprite = new SpriteComponent(2, 2, player_texture);
+        position = new PositionComponent(50, 100, 0, 0);
+        sprite = new SpriteComponent(16, 16, aircraft);
         velocity = new VelocityComponent(0, 0);
 
         collision = new SquareComponent(position->x, position->y, 
@@ -56,7 +58,7 @@ public:
         }
 
         if(Keyboard::getInstance().is_pressed(13)){
-            Enemy* projectile = new Enemy(this->position->x , this->position->y - 4);
+            Projectile* projectile = new Projectile(position->x + (sprite->width-1) / 2, position->y - 7, -3);
             Engine::getInstance().add_entity(projectile);
         }
     };

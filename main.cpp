@@ -2,7 +2,6 @@
 #include <time.h>
 #include <stdio.h>
 #include <string.h>
-#include <random>
 
 #include "Engine/Drivers/DisplayDriver/ST7735.h"
 #include "Engine/Canvas/BufferedCanvas.h"
@@ -20,7 +19,11 @@
 #include "Engine/Components/SpriteComponent.h"
 
 #include "Games/TestEntity.h"
+#include "Games/Enemy.h"
 
+#include <stdlib.h>
+
+#define FRAME_TIME_US (1000000 / 60)
 int main() { 
     stdio_init_all();
 
@@ -43,19 +46,16 @@ int main() {
     TestEntity* test_entity = new TestEntity();
     engine.add_entity(test_entity);
 
-    Enemy* static_enemy2 = new Enemy(100, 50);
-    static_enemy2->set_velocity(0, 0);
-    static_enemy2->set_lifespan(9999); 
-    static_enemy2->collision->set_width(20);
-    static_enemy2->collision->set_height(50);
+    for(int i = 0; i < 200; i++){
+        int x = (rand() % 120) + 5;
+        int y = (rand() % 100) + 5;
 
-    engine.add_entity(static_enemy2);
-
-    for(;;){
-        engine.update();
-        sleep_ms(16);
+        Enemy* enemy = new Enemy(x, y);
+        engine.add_entity(enemy);
     }
 
-
+    for (;;) {
+        engine.update();
+    }
     return 0;
 }

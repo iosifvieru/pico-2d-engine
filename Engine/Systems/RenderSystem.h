@@ -1,7 +1,7 @@
 #ifndef _RENDER_SYSTEM_H_
 #define _RENDER_SYSTEM_H_
 
-#include <list>
+#include <vector>
 #include "Engine/Systems/System.h"
 #include "Engine/Canvas/Canvas.h"
 #include "Engine/Drivers/DisplayDriver/Display.h"
@@ -20,7 +20,7 @@ public:
     ~RenderSystem();
 
     /* system interface implementation */
-    void update(std::list<Entity*> entities) override;
+    void update(std::vector<Entity*> entities) override;
 };
 
 #endif

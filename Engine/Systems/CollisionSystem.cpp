@@ -8,7 +8,7 @@
 this is the update function of the collision system.
 this function iterates through every entity and checking if two collide.
 */
-void CollisionSystem::update(std::list<Entity*> entities) {
+void CollisionSystem::update(std::vector<Entity*> entities) {
     for(auto& entity1 : entities){
         /* pointer to square component. */
         SquareComponent* square_component1 = (SquareComponent*) entity1->get_component("SquareComponent");

@@ -22,23 +22,24 @@ Entity::~Entity(){
     this->components.clear();
 }
 
-void Entity::add_component(Component* components) {
-    if(components == nullptr){
+void Entity::add_component(Component* component) {
+    if(component == nullptr){
         Logger::log("add_component -> node is null.");
         return;
     }
 
-    this->components.push_back(components);
+    this->components.push_back(component);
     Logger::log("Nod adaugat cu succes.");
 
 }
 
-void Entity::remove_component(Component* components) {
-    if (components == nullptr) {
+void Entity::remove_component(Component* component) {
+    if (component == nullptr) {
         return;
     }
 
-    this->components.remove(components);
+    //this->components.remove(components);
+    components.erase(std::remove(components.begin(), components.end(), component), components.end());
 }
 
 Component* Entity::get_component(std::string component_name) {

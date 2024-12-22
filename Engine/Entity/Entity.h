@@ -1,7 +1,7 @@
 #ifndef _ENTITY_H_
 #define _ENTITY_H_
 
-#include <list>
+#include <vector>
 #include <string>
 
 #include "Engine/Components/Component.h"
@@ -12,13 +12,22 @@
 class Entity {
 private:
     /* components */
-    std::list<Component*> components;
+    std::vector<Component*> components;
+
+    bool flag = true;
 public:
 
     Entity();
     ~Entity();
 
     Entity(const Entity& e) = delete;
+
+    bool is_flagged() { return this->flag; }
+    void set_flag(bool value) { 
+        this->flag = value; 
+        printf("am setat pe %d", value);
+    }
+    
 
     /* static variable counting the entity number. */
     static uint16_t no_entities;

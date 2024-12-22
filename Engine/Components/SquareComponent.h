@@ -3,6 +3,8 @@
 
 #include "Engine/Components/Component.h"
 
+
+/* square collider component. */
 class SquareComponent : public Component {
 private:
     uint16_t x = 0;

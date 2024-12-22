@@ -58,12 +58,13 @@ void Engine::delete_entities(){
     for (auto* entity : deleted_entities) {
         if(entity == nullptr) continue;
 
-        Logger::log("SUNT IN DELETE ENTITIES.");
-        this->entities.remove(entity);
+        //Logger::log("SUNT IN DELETE ENTITIES.");
+        //this->entities.remove(entity);
+        entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end());
         delete entity;
         entity = nullptr;
     }
     deleted_entities.clear();
 
-    Logger::log("IES DIN DELETE ENTITIES.");
+   // Logger::log("IES DIN DELETE ENTITIES.");
 }

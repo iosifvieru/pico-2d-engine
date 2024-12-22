@@ -24,6 +24,9 @@ BufferedCanvas::BufferedCanvas(uint16_t width, uint16_t height) : Canvas(width, 
         Logger::log("[BufferedCanvas] Eroare la alocarea memoriei pentru front_buffer.");
         exit(EXIT_FAILURE);
     }
+
+    std::fill(back_buffer, back_buffer + width * height, 0x0000);
+    std::fill(front_buffer, front_buffer + width * height, 0x0000);
 }
 
 /* destructor */
@@ -51,6 +54,8 @@ void BufferedCanvas::draw_sprite(uint16_t x, uint16_t y, uint16_t sprite_width, 
             if (canvas_x < width && canvas_y < height) {
                 uint16_t color = sprite[j * sprite_width + i];
 
+                if(color == 0xFFFF) continue;
+
                 this->back_buffer[canvas_y * width + canvas_x] = color;
             }
         }
@@ -61,23 +66,23 @@ void BufferedCanvas::draw_sprite(uint16_t x, uint16_t y, uint16_t sprite_width, 
 void BufferedCanvas::fill(uint16_t color){
 
     // TODO: maybe a better way to do this.
-    for(int i = 0; i < this->height * this->width; i++){
-        this->back_buffer[i] = color;
-    }
-
+    //for(int i = 0; i < this->height * this->width; i++){
+    //    this->back_buffer[i] = color;
+    //}
+    std::fill(back_buffer, back_buffer + width * height, color);
 }
 
 /* sets a color to a pixel */
 void BufferedCanvas::set_pixel(uint16_t x, uint16_t y, uint16_t color) {
-    if(x > width || x < 0){
+    if(x >= width || x <= 0){
         return;
     }
 
-    if(y > height || y < 0){
+    if(y >= height || y <= 0){
         return;
     }
 
-    this->back_buffer[x * width + y] = color;
+    this->back_buffer[y * width + x] = color;
 }
 
 /* 
@@ -86,6 +91,8 @@ void BufferedCanvas::set_pixel(uint16_t x, uint16_t y, uint16_t color) {
     TODO: implement the functionality.
 */
 void BufferedCanvas::draw_line(uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end, uint16_t color) {
+
+
     int dx = abs((int)x_end - (int)x_start);
     int dy = abs((int)y_end - (int)y_start);
 
@@ -94,7 +101,8 @@ void BufferedCanvas::draw_line(uint16_t x_start, uint16_t y_start, uint16_t x_en
     int err = dx - dy;
 
     while(true){
-        this->back_buffer[y_start * width + x_start] = color;
+        //this->back_buffer[y_start * width + x_start] = color;
+        this->set_pixel(x_start, y_start, color);
         if(x_start == x_end && y_start == y_end) break;
 
         int e2 = 2 * err;
