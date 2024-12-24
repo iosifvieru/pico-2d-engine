@@ -38,7 +38,7 @@ public:
     void remove_component(Component* components);
 
     /* returns a certain component. */
-    Component* get_component(std::string component_name);
+    Component* get_component(const char* component_name);
 
     /* returns true / false if the entity has a certain component. */
     bool has_component(std::string component_name);

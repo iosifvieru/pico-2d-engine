@@ -6,6 +6,8 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+set(PICO_SDK_FETCH_FROM_GIT ON)
+
 # Initialise pico_sdk from installed location
 # (note this can come from environment, CMake cache etc)
 
@@ -46,7 +48,7 @@ add_executable(pico-game-engine
         Engine/Systems/MovementSystem.cpp
         Engine/Drivers/InputDriver/Keyboard.cpp
         Engine/Systems/CollisionSystem.cpp
-        Games/Game.cpp
+        Games/universe-invader/Game.cpp
         )
 
 pico_set_program_name(pico-game-engine "pico-game-engine")
@@ -69,4 +71,3 @@ target_include_directories(pico-game-engine PRIVATE
 )
 
 pico_add_extra_outputs(pico-game-engine)
-

@@ -9,7 +9,6 @@ class Engine {
 private:
     std::vector<System*> systems;
     std::vector<Entity*> entities;
-    
     std::vector<Entity*> deleted_entities;
 
     Engine();
@@ -34,7 +33,7 @@ public:
     void add_entity(Entity* entity);
     void remove_entity(Entity* entity);
 
-    std::vector<Entity*> get_entities(){
+    const std::vector<Entity*>& get_entities() const{
         return this->entities;
     }
 

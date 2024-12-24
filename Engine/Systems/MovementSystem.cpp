@@ -3,8 +3,8 @@
 #include "Engine/Components/PositionComponent.h"
 
 void MovementSystem::update(const std::vector<Entity*>& entities){
+    Logger::log("Am intrat in movement system.");
     for(const auto& entity: entities){
-
         PositionComponent* p = (PositionComponent*) (entity->get_component("PositionComponent"));
         if(p == nullptr) continue;
 
@@ -34,4 +34,5 @@ void MovementSystem::update(const std::vector<Entity*>& entities){
             mvm->position->y += mvm->velocity->v_y;
         }*/
     }
+    Logger::log("IEs din MOvement system.");
 }

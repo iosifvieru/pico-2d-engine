@@ -11,8 +11,8 @@
 #include "Engine/Systems/RenderSystem.h"
 #include "Engine/Systems/CollisionSystem.h"
 #include "Engine/Systems/MovementSystem.h"
-#include "Games/CustomSystems/ShootingSystem.h"
-#include "Games/CustomSystems/ProjectileSystem.h"
+#include "Games/universe-invader/CustomSystems/ShootingSystem.h"
+#include "Games/universe-invader/CustomSystems/ProjectileSystem.h"
 
 // entity
 #include "Engine/Entity/Entity.h"
@@ -23,7 +23,8 @@
 #include "Engine/Components/VelocityComponent.h"
 
 #include "Engine/Engine.h"
-#include "Games/Game.h"
+#include "Games/universe-invader/Game.h"
+#include "Games/universe-invader/CustomSystems/CollisionHandler.h"
 
 
 int main() { 
@@ -43,23 +44,30 @@ int main() {
     CollisionSystem collision_system;
     ShootingSystem shooting_system;
     ProjectileSystem projectile_system;
+    CollisionHandler collision_handler;
 
     Engine& engine = Engine::getInstance();
 
+    engine.add_system(&shooting_system);
+    engine.add_system(&projectile_system);
     engine.add_system(&mv_system);
     engine.add_system(&collision_system);
     engine.add_system(&r);
-    engine.add_system(&shooting_system);
-    engine.add_system(&projectile_system);
+    engine.add_system(&collision_handler);
 
     game_init();
+    
+    create_enemy(120, 50);
+    create_enemy(100, 120);
 
-    for(int i = 0; i < 20; i++){
-        create_enemy(rand() % 120, rand() % 50);
-    }
+    create_enemy(100, 20);
+    create_enemy(100, 30);
+    create_enemy(100, 40);
 
     create_player(100, 100);
 
+    create_enemy(50, 30);
+    
     for (;;) {
 
         engine.update();

@@ -2,6 +2,7 @@
 #include "Engine/Logger/Logger.h"
 
 #include <algorithm>
+#include "string.h"
 
 uint16_t Entity::no_entities = 0;
 
@@ -25,12 +26,12 @@ Entity::~Entity(){
 
 void Entity::add_component(Component* component) {
     if(component == nullptr){
-        Logger::log("add_component -> node is null.");
+        //Logger::log("add_component -> node is null.");
         return;
     }
 
     this->components.push_back(component);
-    Logger::log("Nod adaugat cu succes.");
+    //Logger::log("Nod adaugat cu succes.");
 
 }
 
@@ -43,18 +44,23 @@ void Entity::remove_component(Component* component) {
     components.erase(std::remove(components.begin(), components.end(), component), components.end());
 }
 
-Component* Entity::get_component(std::string component_name) {
+Component* Entity::get_component(const char* component_name) {
+   // Logger::log("Sunt in get_component");
     for(const auto& component : this->components){
-        if(component->get_component_name() == component_name){
+        if(component == nullptr) continue;
+        //if(component->get_component_name() == component_name){
+        if(strcmp(component->get_component_name(), component_name) == 0){
+            Logger::log("Am gasit componenta");
             return component;
         }
     }
-
+    //Logger::log("Returnez nullptr/");
     return nullptr;
 }
 
 bool Entity::has_component(std::string component_name){
     for(const auto& component : this->components){
+        if(component == nullptr) continue;
         if(component->get_component_name() == component_name){
             return true;
         }

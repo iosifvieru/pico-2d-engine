@@ -47,7 +47,7 @@ public:
         } else {
             this->sprite = nullptr;
         } */
-
+        Logger::log("SpriteComponent operator=");
         return *this;
     }
 
