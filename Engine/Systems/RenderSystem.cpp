@@ -13,12 +13,12 @@ RenderSystem::~RenderSystem(){
     //
 }
 
-void RenderSystem::update(std::vector<Entity*> entities){
+void RenderSystem::update(const std::vector<Entity*>& entities){
     /* clears the canvas*/
     canvas.fill(0x0000);
 
     /* redraws everything. */
-    for(auto& entity : entities){
+    for(const auto& entity : entities){
         if(entity == nullptr || (entity->is_flagged() == false)) continue;
 
         PositionComponent* p = (PositionComponent*) entity->get_component("PositionComponent");

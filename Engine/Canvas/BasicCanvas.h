@@ -16,7 +16,7 @@ public:
     ~BasicCanvas();
 
     /* returns the canvas buffer */
-    uint16_t* get_buffer();
+    const uint16_t* get_buffer();
 
     /* fills the canvas with a certain color */
     void fill(uint16_t color) override;

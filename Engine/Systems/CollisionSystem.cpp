@@ -7,9 +7,11 @@
 /*
 this is the update function of the collision system.
 this function iterates through every entity and checking if two collide.
+
+it is only responsible for detecting collision. it DOES NOT handle it in some way.
 */
-void CollisionSystem::update(std::vector<Entity*> entities) {
-    for(auto& entity1 : entities){
+void CollisionSystem::update(const std::vector<Entity*>& entities) {
+    for(const auto& entity1 : entities){
         /* pointer to square component. */
         SquareComponent* square_component1 = (SquareComponent*) entity1->get_component("SquareComponent");
         if(square_component1 == nullptr) continue;
@@ -26,7 +28,7 @@ void CollisionSystem::update(std::vector<Entity*> entities) {
             so far the implementation is a O(n^2)..
             which is really slow.. but for now it looks good.
         */
-        for(auto& entity2: entities){
+        for(const auto& entity2: entities){
             /* skipping if comparing the entity with itself. */
             if(entity1 == entity2) continue;
 

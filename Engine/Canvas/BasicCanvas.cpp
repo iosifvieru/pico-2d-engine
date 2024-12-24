@@ -23,7 +23,7 @@ BasicCanvas::~BasicCanvas(){
 }
 
 /* returns the pointer to the buffer. */
-uint16_t* BasicCanvas::get_buffer(){
+const uint16_t* BasicCanvas::get_buffer(){
     return this->buffer;
 }
 

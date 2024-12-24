@@ -2,7 +2,7 @@
 #define _POSITION_COMPONENT_H_
 
 #include "Engine/Components/Component.h"
-
+#include "pico/stdlib.h"
 
 class PositionComponent : public Component {
 public:
@@ -40,7 +40,7 @@ public:
         return *this;
     }
 
-    std::string get_component_name() {
+    const char* get_component_name() {
         return "PositionComponent";
     }
 };

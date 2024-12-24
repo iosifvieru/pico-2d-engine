@@ -11,7 +11,7 @@
 */
 class System {
 public:
-    virtual void update(std::vector<Entity*> entities) = 0;
+    virtual void update(const std::vector<Entity*>& entities) = 0;
     virtual ~System() = default;
 };
 

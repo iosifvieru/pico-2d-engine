@@ -20,13 +20,11 @@ public:
     */
 
     void swap_buffers() {
-        uint16_t* copy = back_buffer;
-        back_buffer = front_buffer;
-        front_buffer = copy;
+        std::swap(back_buffer, front_buffer);
     }
 
     /* returns the canvas buffer */
-    uint16_t* get_buffer();
+    const uint16_t* get_buffer();
 
     /* fills the canvas with a certain color */
     void fill(uint16_t color) override;

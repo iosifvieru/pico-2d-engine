@@ -42,29 +42,23 @@ void Engine::remove_system(System* system){
     return;
 }
 
-void Engine::update(){    
-    for(auto& entity : this->entities){
-        entity->update();
-    }
-    
-    for(auto& system : this->systems){
+void Engine::update(){
+    for(const auto& system : this->systems){
         system->update(this->entities);
     }
     
     delete_entities();
 }
 
-void Engine::delete_entities(){
-    for (auto* entity : deleted_entities) {
-        if(entity == nullptr) continue;
-
-        //Logger::log("SUNT IN DELETE ENTITIES.");
-        //this->entities.remove(entity);
-        entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end());
-        delete entity;
-        entity = nullptr;
+void Engine::delete_entities() {
+    for (auto it = deleted_entities.begin(); it != deleted_entities.end(); ) {
+        Entity* entity = *it; 
+        if (entity != nullptr) {
+            entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end()); 
+            delete entity; 
+        }
+        it = deleted_entities.erase(it); 
     }
     deleted_entities.clear();
 
-   // Logger::log("IES DIN DELETE ENTITIES.");
 }

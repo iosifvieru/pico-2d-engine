@@ -25,7 +25,7 @@ public:
 
     ~VelocityComponent() {};
 
-    std::string get_component_name() {
+    const char* get_component_name() {
         return "VelocityComponent";
     }
 };

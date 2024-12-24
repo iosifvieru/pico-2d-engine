@@ -9,6 +9,7 @@
 #include "BufferedCanvas.h"
 #include "Engine/Logger/Logger.h"
 #include <math.h>
+#include <algorithm>
 
 /* constructor */
 BufferedCanvas::BufferedCanvas(uint16_t width, uint16_t height) : Canvas(width, height){
@@ -36,9 +37,9 @@ BufferedCanvas::~BufferedCanvas(){
 }
 
 /* swaps the buffers and returns the front buffer */
-uint16_t* BufferedCanvas::get_buffer(){
+const uint16_t* BufferedCanvas::get_buffer(){
     /* swap */
-    this->swap_buffers();
+    std::swap(back_buffer, front_buffer);
     return this->front_buffer;
 }
 

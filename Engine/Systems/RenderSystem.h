@@ -20,7 +20,7 @@ public:
     ~RenderSystem();
 
     /* system interface implementation */
-    void update(std::vector<Entity*> entities) override;
+    void update(const std::vector<Entity*>& entities) override;
 };
 
 #endif

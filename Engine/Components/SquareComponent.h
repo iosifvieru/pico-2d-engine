@@ -12,7 +12,7 @@ private:
     uint16_t width = 0;
     uint16_t height = 0;
 public:
-    bool is_visible = false;
+    bool is_visible = true;
     bool collided = false;
 
     SquareComponent() {};
@@ -88,7 +88,7 @@ public:
         return true;
     }
 
-    std::string get_component_name() {
+    const char* get_component_name() {
         return "SquareComponent";
     }
 };

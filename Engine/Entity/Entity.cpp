@@ -14,9 +14,10 @@ Entity::~Entity(){
     Logger::log("~Entity()");
     no_entities--;
     
-    for(auto* node: this->components) {
-        if(node == nullptr) continue;
-        delete node;
+    for(auto* component: this->components) {
+        /* if a component is shared that's on you. */
+        if(component == nullptr || (component->is_shared() == true)) continue;
+        delete component;
     }
 
     this->components.clear();
@@ -43,9 +44,9 @@ void Entity::remove_component(Component* component) {
 }
 
 Component* Entity::get_component(std::string component_name) {
-    for(auto& node : this->components){
-        if(node->get_component_name() == component_name){
-            return node;
+    for(const auto& component : this->components){
+        if(component->get_component_name() == component_name){
+            return component;
         }
     }
 
@@ -53,8 +54,8 @@ Component* Entity::get_component(std::string component_name) {
 }
 
 bool Entity::has_component(std::string component_name){
-    for(auto& node : this->components){
-        if(node->get_component_name() == component_name){
+    for(const auto& component : this->components){
+        if(component->get_component_name() == component_name){
             return true;
         }
     }

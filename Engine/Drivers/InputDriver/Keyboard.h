@@ -21,7 +21,7 @@ public:
     void config(uint8_t button_pin);
     bool is_pressed(uint8_t button_pin);
 
-    /* returns the ST7735 instance */
+    /* returns the Keyboard instance */
     static Keyboard& getInstance(){
         if(instance == nullptr){
             instance = new Keyboard();

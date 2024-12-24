@@ -26,7 +26,7 @@ public:
     }
 
     /* returns the canvas buffer */
-    virtual uint16_t* get_buffer() = 0;
+    virtual const uint16_t* get_buffer() = 0;
 
     /* fills the canvas with a certain color */
     virtual void fill(uint16_t color) = 0;

@@ -25,10 +25,9 @@ public:
     bool is_flagged() { return this->flag; }
     void set_flag(bool value) { 
         this->flag = value; 
-        printf("am setat pe %d", value);
+        //printf("am setat pe %d", value);
     }
     
-
     /* static variable counting the entity number. */
     static uint16_t no_entities;
 
@@ -43,8 +42,5 @@ public:
 
     /* returns true / false if the entity has a certain component. */
     bool has_component(std::string component_name);
-
-    /* updates the entity */
-    virtual void update() = 0;
 };
 #endif
