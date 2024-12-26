@@ -29,6 +29,12 @@ public:
         return *instance;
     }
     
+    void init(){
+        this->systems.reserve(10);
+        //this->entities.reserve(600);
+
+    };
+
     /* adds an entity to the list. */
     void add_entity(Entity* entity);
     void remove_entity(Entity* entity);

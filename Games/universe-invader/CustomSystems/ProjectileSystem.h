@@ -3,13 +3,15 @@
 
 #include "Engine/Systems/System.h"
 #include "Games/universe-invader/CustomComponents/ProjectileComponent.h"
+
+#include "Engine/Components/PositionComponent.h"
 #include "Engine/Engine.h"
 
 #include "Engine/Logger/Logger.h"
+#include "Games//universe-invader/Game.h"
 
 class ProjectileSystem : public System {
     void update(const std::vector<Entity*>& entities){
-        //Logger::log("Am intrat in projectile system.");
         for(const auto& entity : entities){
             if(entity == nullptr) continue;
 
@@ -22,8 +24,6 @@ class ProjectileSystem : public System {
                 Engine::getInstance().remove_entity(entity);
             }
         }
-
-        //Logger::log("Ies din projectile system.");
     }
 };
 

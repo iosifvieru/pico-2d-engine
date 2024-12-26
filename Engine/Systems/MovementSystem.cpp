@@ -13,14 +13,10 @@ void MovementSystem::update(const std::vector<Entity*>& entities){
 
         if((p->x + velocity->v_x) != p->x){
             p->x += velocity->v_x;
-            
-            /* entity moved so it needs redraw */
-            entity->set_flag(true);
         }
         
         if((p->y + velocity->v_y) != p->y) {
             p->y += velocity->v_y;
-            entity->set_flag(true);
         }
         /* 
         if(entity->has_component("MovementNode")){

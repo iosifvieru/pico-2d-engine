@@ -25,7 +25,10 @@
 #include "Engine/Engine.h"
 #include "Games/universe-invader/Game.h"
 #include "Games/universe-invader/CustomSystems/CollisionHandler.h"
+#include "Games/universe-invader/CustomSystems/EnemySystem.h"
+#include "Games/universe-invader/CustomSystems/InputSystem.h"
 
+#include "Engine/Random.h"
 
 int main() { 
     stdio_init_all();
@@ -40,13 +43,16 @@ int main() {
     BufferedCanvas canvas = BufferedCanvas(display.get_width(), display.get_height());    
 
     RenderSystem r(canvas, display);
+    InputSystem input_system;
     MovementSystem mv_system;
     CollisionSystem collision_system;
     ShootingSystem shooting_system;
     ProjectileSystem projectile_system;
     CollisionHandler collision_handler;
+    EnemySystem ems;
 
     Engine& engine = Engine::getInstance();
+    engine.init();
 
     engine.add_system(&shooting_system);
     engine.add_system(&projectile_system);
@@ -54,23 +60,18 @@ int main() {
     engine.add_system(&collision_system);
     engine.add_system(&r);
     engine.add_system(&collision_handler);
+    engine.add_system(&ems);
+    engine.add_system(&input_system);
 
     game_init();
     
-    create_enemy(120, 50);
-    create_enemy(100, 120);
-
-    create_enemy(100, 20);
-    create_enemy(100, 30);
-    create_enemy(100, 40);
-
     create_player(100, 100);
 
-    create_enemy(50, 30);
-    
-    for (;;) {
+    create_enemy(100, 20);
 
+    for (;;) {
         engine.update();
     }
+
     return 0;
 }

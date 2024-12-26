@@ -2,6 +2,8 @@
     This is a buffered canvas.
 
     It is responsible with managing a double buffered canvas.
+
+    the color 0x0000 is ignored for now for PNG like behaviour.
 */
 
 #include <iostream>
@@ -48,16 +50,22 @@ const uint16_t* BufferedCanvas::get_buffer(){
 */
 void BufferedCanvas::draw_sprite(uint16_t x, uint16_t y, uint16_t sprite_width, uint16_t sprite_height, const uint16_t* sprite){
     for (uint16_t j = 0; j < sprite_height; ++j) {
+        uint16_t canvas_y = y + j;
+        if (canvas_y >= height) break;
+
         for (uint16_t i = 0; i < sprite_width; ++i) {
             uint16_t canvas_x = x + i;
-            uint16_t canvas_y = y + j;
 
             if (canvas_x < width && canvas_y < height) {
                 uint16_t color = sprite[j * sprite_width + i];
 
-                if(color == 0xFFFF) continue;
+                /* 0x0000 will be ignored */
+                if(color == 0x0000) continue;
 
-                this->back_buffer[canvas_y * width + canvas_x] = color;
+                /* avoiding unnecessary writings. */
+                if (this->back_buffer[canvas_y * width + canvas_x] != color) {
+                    this->back_buffer[canvas_y * width + canvas_x] = color;
+                }
             }
         }
     }

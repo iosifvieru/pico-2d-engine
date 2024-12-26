@@ -50,7 +50,7 @@ Component* Entity::get_component(const char* component_name) {
         if(component == nullptr) continue;
         //if(component->get_component_name() == component_name){
         if(strcmp(component->get_component_name(), component_name) == 0){
-            Logger::log("Am gasit componenta");
+            //Logger::log("Am gasit componenta");
             return component;
         }
     }
@@ -58,10 +58,10 @@ Component* Entity::get_component(const char* component_name) {
     return nullptr;
 }
 
-bool Entity::has_component(std::string component_name){
+bool Entity::has_component(const char* component_name){
     for(const auto& component : this->components){
         if(component == nullptr) continue;
-        if(component->get_component_name() == component_name){
+        if(strcmp(component->get_component_name(), component_name) == 0){
             return true;
         }
     }

@@ -27,10 +27,6 @@ public:
                     Engine::getInstance().remove_entity(entity);
                 } else {
                     health_component->health -= 20;
-
-                    if(health_component->health <= 0){
-                        Engine::getInstance().remove_entity(entity);
-                    }
                 }
             }
 
