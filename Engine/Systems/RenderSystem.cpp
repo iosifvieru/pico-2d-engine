@@ -35,7 +35,7 @@ void RenderSystem::update(const std::vector<Entity*>& entities){
 
         //entity->set_flag(false);
 
-        /*
+        
         SquareComponent* collision_border = (SquareComponent*) entity->get_component("SquareComponent");
         if(collision_border == nullptr) continue;
 
@@ -44,7 +44,7 @@ void RenderSystem::update(const std::vector<Entity*>& entities){
         canvas.draw_rect(collision_border->get_x(), collision_border->get_y(),
                 collision_border->get_max_x(), collision_border->get_max_y(),
                 0x07c0);
-        */
+        
     }
     /* flushes to display. */
     display.flush(canvas.get_buffer());

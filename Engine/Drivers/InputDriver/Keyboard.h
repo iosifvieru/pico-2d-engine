@@ -5,7 +5,7 @@
 #include "pico/stdlib.h"
 #include <unordered_map>
 
-#define debounce_ms 150
+#define debounce_ms 100
 
 class Keyboard: public Input {
 private:
