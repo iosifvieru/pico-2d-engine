@@ -14,7 +14,7 @@ RenderSystem::~RenderSystem(){
 }
 
 void RenderSystem::update(const std::vector<Entity*>& entities){
-    Logger::log("Am intrat in render system.");
+    
     /* clears the canvas*/
     canvas.fill(0x0000);
 
@@ -26,7 +26,12 @@ void RenderSystem::update(const std::vector<Entity*>& entities){
         SpriteComponent* sprite = (SpriteComponent*) entity->get_component("SpriteComponent");
         if(!sprite || !p) continue;
         
-        canvas.draw_sprite(p->x, p->y, sprite->width, sprite->height, sprite->sprite);
+        const uint16_t* texture = sprite->get_sprite();
+        if(texture == nullptr){
+            continue;
+        }
+
+        canvas.draw_sprite(p->x, p->y, sprite->width, sprite->height, texture);
 
         //entity->set_flag(false);
 
@@ -41,7 +46,6 @@ void RenderSystem::update(const std::vector<Entity*>& entities){
                 0x07c0);
         */
     }
-    Logger::log("Ies din render system.");
     /* flushes to display. */
     display.flush(canvas.get_buffer());
 }

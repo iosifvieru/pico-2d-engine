@@ -7,56 +7,85 @@ class SpriteComponent : public Component {
 public:
     uint8_t width = 0;
     uint8_t height = 0;
-    const uint16_t* sprite = nullptr;
+    
+    /* for non shared sprite */
+    uint16_t *sprite = nullptr;
+
+    /* for shared sprite */
+    const uint16_t* shared_sprite = nullptr;
 
     SpriteComponent(){
         this->width = 0;
         this->height = 0;
         this->sprite = nullptr;
     };
-
-    SpriteComponent(uint8_t width, uint8_t height, const uint16_t* sprite) : sprite(sprite){
+    
+    SpriteComponent(uint8_t width, uint8_t height, const uint16_t* sprite, bool shared){
         if(sprite == nullptr){ return; }
 
         this->width = width;
         this->height = height;
-        //this->sprite = new uint16_t[this->width*this->height];
+        this->shared = shared;
 
-        //for(int i = 0; i < this->width*this->height; i++){
-        //    this->sprite[i] = sprite[i];
-        //}
-        
+        if(this->shared == true){
+            this->shared_sprite = sprite;
+        } else {
+            this->sprite = new uint16_t[this->width * this->height];
+            for(int i = 0; i < this->width * this->height; i++) {
+                this->sprite[i] = sprite[i];
+            }
+        }
+
         Logger::log("SpriteComponent()");
+    }
+
+    /* warning: you are about to create a shared sprite component. */
+    SpriteComponent(uint8_t width, uint8_t height, const uint16_t* sprite) : SpriteComponent(width, height, sprite, true){
+        
     }
 
     SpriteComponent operator=(const SpriteComponent& other){
         if(this == &other) return *this;
 
-        //delete[] sprite;
+        if(this->shared == false){
+            delete[] this->sprite;
+        }
 
         this->width = other.width;
         this->height = other.height;
-        this->sprite = other.sprite;
-        /*
-        if(other.sprite){
-            this->sprite = new uint16_t[this->width*this->height];
 
-            for(int i = 0; i < this->width*this->height; i++){
-                this->sprite[i] = sprite[i];
-            }
+        /* perform a deep copy. */
+        if(other.sprite != nullptr){
+            for(int i = 0; i < this->width * this->height; i++){
+                this->sprite[i] = other.sprite[i];
+            }          
         } else {
             this->sprite = nullptr;
-        } */
-        Logger::log("SpriteComponent operator=");
+        }
+
+        this->shared_sprite = other.shared_sprite;
         return *this;
     }
 
     ~SpriteComponent(){
         // safely delete sprite.
-        //if(sprite != nullptr){
-        //    delete[] sprite;
-        //}
+        if(this->shared == false && this->sprite != nullptr){
+            delete[] this->sprite;
+        }
+
         Logger::log("~SpriteComponent()");
+    }
+
+    const uint16_t* get_sprite(){
+        if(this->shared_sprite != nullptr){
+            return this->shared_sprite;
+        }
+
+        if(this->sprite != nullptr){
+            return this->sprite;
+        }
+
+        return nullptr;
     }
 
     const char* get_component_name() {

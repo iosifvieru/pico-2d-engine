@@ -27,7 +27,6 @@ VelocityComponent* bullet_velocity = new VelocityComponent(0, -2);
 TagComponent* shared_enemy_tag = new TagComponent(TAG::ENEMY);
 TagComponent* shared_bullet_tag = new TagComponent(TAG::PROJECTILE);
 
-
 void game_init(){
     if(enemy_sprite){
         enemy_sprite->make_shared(true);

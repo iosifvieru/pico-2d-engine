@@ -9,7 +9,7 @@ in this file all the components will be defined for now.
 */
 
 class Component {
-private:
+protected:
     /*
     variable that states the component is shared across multiple other components
     so it won't be automatically deleted.
