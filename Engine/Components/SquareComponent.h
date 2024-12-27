@@ -76,6 +76,14 @@ public:
         return this->y;
     }
 
+    uint16_t get_height(){
+        return this->height;
+    }
+
+    uint16_t get_width() {
+        return this->width;
+    }
+
     bool has_collided(const SquareComponent& other){
         if((this->x + this->width) < other.x || this->x > (other.x + other.width)){
             return false;

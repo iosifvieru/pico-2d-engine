@@ -14,5 +14,7 @@
 
 void create_ball(uint16_t x, uint16_t y, int8_t speed);
 PositionComponent* get_ball_position();
+SquareComponent* get_ball_collision();
+void ball_reset(int x, int y);
 
 #endif

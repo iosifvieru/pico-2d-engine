@@ -8,7 +8,7 @@ void create_ball(uint16_t x, uint16_t y, int8_t speed){
 
     ball->add_component(position);
 
-    VelocityComponent* velocity = new VelocityComponent(0, -speed);
+    VelocityComponent* velocity = new VelocityComponent(speed, -speed);
     if(velocity == nullptr) return;
 
     ball->add_component(velocity);
@@ -45,4 +45,38 @@ PositionComponent* get_ball_position(){
     }
 
     return nullptr;
+}
+
+/* 
+    this only works because i know for sure that there is only one "BALL" in the game. 
+
+    basically returns the first entity it finds.
+*/
+SquareComponent* get_ball_collision(){
+    for(const auto& entity: Engine::getInstance().get_entities()){
+        
+        TagComponent* tag = (TagComponent*) entity->get_component("TagComponent");
+        if(tag == nullptr) continue;
+
+        if(tag->tag == TAG::ENTITY){
+            return (SquareComponent*) entity->get_component("SquareComponent");
+        }
+    }
+
+    return nullptr;
+}
+
+void ball_reset(int x, int y){
+    for(const auto& entity: Engine::getInstance().get_entities()){
+        
+        TagComponent* tag = (TagComponent*) entity->get_component("TagComponent");
+        if(tag == nullptr) continue;
+
+        if(tag->tag == TAG::ENTITY){
+            PositionComponent* position = (PositionComponent*) entity->get_component("PositionCompontn");
+
+            position->x = x;
+            position->y = y;
+        }
+    }
 }
