@@ -6,6 +6,8 @@
 #define DOWN_KEY 14
 #define SPEED 6
 
+bool goal = false;
+
 /* 
     checks for input and moves the player's position. 
 */

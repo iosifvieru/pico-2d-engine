@@ -84,18 +84,6 @@ public:
         return this->width;
     }
 
-    bool has_collided(const SquareComponent& other){
-        if((this->x + this->width) < other.x || this->x > (other.x + other.width)){
-            return false;
-        }
-
-        if((this->y + this->height) < other.y || this->y > (other.y + other.height)){
-            return false;
-        }
-
-        return true;
-    }
-
     const char* get_component_name() {
         return "SquareComponent";
     }

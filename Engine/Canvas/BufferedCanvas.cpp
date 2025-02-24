@@ -145,7 +145,7 @@ void BufferedCanvas::draw_rect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y
     |                   |
     |                   |
     |                   |
-    x1,y2-------------x2,y1  
+    x1,y1-------------x2,y1  
     */
     this->draw_line(x1, y1, x2, y1, color); // Top edge
     this->draw_line(x2, y1, x2, y2, color); // Right edge
