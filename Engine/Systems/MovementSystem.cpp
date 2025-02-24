@@ -10,12 +10,10 @@ void MovementSystem::update(const std::vector<Entity*>& entities){
         VelocityComponent* velocity = (VelocityComponent*)(entity->get_component("VelocityComponent"));
         if(velocity == nullptr) continue;
 
-        if((p->x + velocity->v_x) != p->x){
-            p->x += velocity->v_x;
-        }
-        
-        if((p->y + velocity->v_y) != p->y) {
-            p->y += velocity->v_y;
-        }
+        p->x += velocity->v_x;
+        p->y += velocity->v_y;
+
+        if (p->x < 0) p->x = 0;
+        if (p->y < 0) p->y = 0;
     }
 }

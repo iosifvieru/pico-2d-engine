@@ -48,10 +48,7 @@ add_executable(pico-game-engine
         Engine/Systems/MovementSystem.cpp
         Engine/Drivers/InputDriver/Keyboard.cpp
         Engine/Systems/CollisionSystem.cpp
-        Games/pong/Pong.cpp
-        Games/pong/Ball.cpp
-        Games/pong/Player.cpp
-        Games/pong/PongSystems/InputSystem.cpp
+        Engine/Systems/CameraSystem.cpp
         )
 
 pico_set_program_name(pico-game-engine "pico-game-engine")

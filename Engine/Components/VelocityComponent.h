@@ -6,10 +6,10 @@
 
 class VelocityComponent : public Component {
 public:
-    int8_t v_x = 0;
-    int8_t v_y = 0;
+    int16_t v_x = 0;
+    int16_t v_y = 0;
 
-    VelocityComponent(int8_t x, int8_t y) : v_x(x), v_y(y) {
+    VelocityComponent(int16_t x, int16_t y) : v_x(x), v_y(y) {
         Logger::log("VelocityComponent()");
     };
 
