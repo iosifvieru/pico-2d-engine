@@ -9,6 +9,7 @@ public:
 
     void config(uint8_t button_pin);
     bool is_pressed(uint8_t button_pin);
+    bool is_pressed_once(uint8_t button_pin);
 };
 
 #endif

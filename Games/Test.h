@@ -34,7 +34,7 @@ const uint16_t test_sprite[9] = {
     0xFFFF, 0xFFFF, 0xFFFF
 };
 
-#define SPEED 8
+#define SPEED 3
 
 class Test {
 public:
@@ -90,7 +90,7 @@ public:
         PositionComponent* p = (PositionComponent*) e->get_component("PositionComponent");
 
         /* 60 fps*/
-        uint64_t frame_time_us = 1000000 / 30;
+        uint64_t frame_time_us = 1000000 / 60;
         uint64_t previous_time = time_us_64();
 
         int i = 0;

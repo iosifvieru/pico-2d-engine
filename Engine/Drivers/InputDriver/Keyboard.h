@@ -15,11 +15,10 @@ private:
     /* instance */
     static Keyboard* instance;
 
-    std::unordered_map<uint8_t, uint32_t> lastPressTimes;
-
 public:
     void config(uint8_t button_pin);
     bool is_pressed(uint8_t button_pin);
+    bool is_pressed_once(uint8_t button_pin);
 
     /* returns the Keyboard instance */
     static Keyboard& getInstance(){

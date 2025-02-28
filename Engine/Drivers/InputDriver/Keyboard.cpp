@@ -5,7 +5,6 @@
 
 Keyboard* Keyboard::instance = nullptr;
 
-
 Keyboard::Keyboard(){
     //
 }
@@ -14,14 +13,13 @@ Keyboard::~Keyboard(){
     //
 }
 
-
 void Keyboard::config(uint8_t button_pin){
     gpio_init(button_pin);
     gpio_set_dir(button_pin, GPIO_IN);
     gpio_pull_up(button_pin);
 }
 
-bool Keyboard::is_pressed(uint8_t button_pin) {
+bool Keyboard::is_pressed_once(uint8_t button_pin){
     static std::unordered_map<uint8_t, bool> last_state;
 
     bool is_pressed_rn = !gpio_get(button_pin);
@@ -36,4 +34,8 @@ bool Keyboard::is_pressed(uint8_t button_pin) {
     }
 
     return false;
+}
+
+bool Keyboard::is_pressed(uint8_t button_pin) {
+    return !gpio_get(button_pin);
 }
