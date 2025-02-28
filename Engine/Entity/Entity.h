@@ -15,6 +15,8 @@ private:
     std::vector<Component*> components;
 
     bool flag = true;
+    // 32 biti
+    // 0000000000011
 public:
 
     Entity();

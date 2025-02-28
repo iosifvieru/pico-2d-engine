@@ -50,7 +50,7 @@ void Engine::update(){
     for(const auto& system : this->systems){
         system->update(this->entities);
     }
-    
+
     delete_entities();
 }
 

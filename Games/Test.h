@@ -17,29 +17,24 @@
 #include "Engine/Components/SquareComponent.h"
 #include "Engine/Components/CameraComponent.h"
 
+#include "Engine/TextureManager.h"
+
 #include "Engine/Random.h"
-
-#include "Games/Hero.h"
-
-uint16_t sprite[16] = {
-    0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF,
-    0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF,
-    0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF,
-    0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF,
-};
-
-uint16_t player[9] = {
-    0xffc0, 0xffc0, 0xffc0,
-    0xf800, 0xFFFF, 0xf800,
-    0xFFFF, 0xffc0, 0xFFFF,
-};
+#include "Games/Map.h"
+#include "Games/Assets.h"
 
 #define A 8
 #define D 14
 #define W 13
 #define S 15
 
-#define SPEED 1
+const uint16_t test_sprite[9] = {
+    0xFFFF, 0xFFFF, 0xFFFF,
+    0xFFFF, 0xFFFF, 0xFFFF,
+    0xFFFF, 0xFFFF, 0xFFFF
+};
+
+#define SPEED 8
 
 class Test {
 public:
@@ -58,63 +53,89 @@ public:
 
         CameraSystem* camera_system = new CameraSystem();
 
-        /* keyboard configuration */
-        Keyboard& keyboard = Keyboard::getInstance();
-        keyboard.config(A);
-        keyboard.config(D);
-        keyboard.config(W);
-        keyboard.config(S);
-
         engine.add_system(render_system);
         engine.add_system(camera_system);
         engine.add_system(new MovementSystem());
-    }
-    void run() {
 
+        Keyboard& keyboard = Keyboard::getInstance();
+
+        keyboard.config(A);
+        keyboard.config(S);
+        keyboard.config(W);
+        keyboard.config(D);
+    }
+
+    void run() {
         /* some test entity with camera !! */
         Entity* e = new Entity();
-        e->add_component(new PositionComponent(40, 55));
-        e->add_component(new SpriteComponent(16, 16, hero));
-        e->add_component(new VelocityComponent(1, 0));
+
+        map_init();
+
+        SpriteComponent* hero_texture = new SpriteComponent(16, 16, hero_front); 
+
+        e->add_component(new PositionComponent(20, 50));
+        e->add_component(hero_texture);
+        e->add_component(new VelocityComponent(10, 0));
         e->add_component(new CameraComponent(0, 0, 128, 128, 1));
 
         Engine::getInstance().add_entity(e);
 
-        SpriteComponent* spriteC = new SpriteComponent(4, 4, sprite);
+        Entity* e2 = new Entity();
+        e2->add_component(new PositionComponent(60, 55));
+        e2->add_component(new SpriteComponent(16, 16, other_sprite));
+        
+        Engine::getInstance().add_entity(e2);        
 
-        /* creating some entities so i can test the camera feature. */
-        for(int i = 0; i < 10; i++){
-            Entity* e2 = new Entity();
-            e2->add_component(new PositionComponent(rnd() % 200, rnd() % 100));
-            e2->add_component(spriteC);
+        VelocityComponent* v = (VelocityComponent*) e->get_component("VelocityComponent");
+        PositionComponent* p = (PositionComponent*) e->get_component("PositionComponent");
 
-            Engine::getInstance().add_entity(e2);
-        }
+        /* 60 fps*/
+        uint64_t frame_time_us = 1000000 / 30;
+        uint64_t previous_time = time_us_64();
+
+        int i = 0;
 
         while(1){
-            Engine::getInstance().update();
+            uint64_t current_time = time_us_64();
+            uint64_t elapsed_time = current_time - previous_time;
 
-            /* some basic movement */
-            if(Keyboard::getInstance().is_pressed(A)){
-                VelocityComponent* v = (VelocityComponent*) e->get_component("VelocityComponent");
-                v->v_x = -SPEED;
-            }
-            else if(Keyboard::getInstance().is_pressed(D)){
-                VelocityComponent* v = (VelocityComponent*) e->get_component("VelocityComponent");
-                v->v_x = SPEED;
-            }
-            else if(Keyboard::getInstance().is_pressed(S)){
-                VelocityComponent* v = (VelocityComponent*) e->get_component("VelocityComponent");
-                v->v_y = -SPEED;
-            }
+            if(elapsed_time >= frame_time_us){
 
-            else if(Keyboard::getInstance().is_pressed(W)){
-                VelocityComponent* v = (VelocityComponent*) e->get_component("VelocityComponent");
-                v->v_y = SPEED;
-            } else {
-                VelocityComponent* v = (VelocityComponent*) e->get_component("VelocityComponent");
-                v->v_x = 0;
-                v->v_y = 0;
+                Engine::getInstance().update();
+
+                if(Keyboard::getInstance().is_pressed(A)){
+                    v->v_x = -SPEED;
+                    hero_texture->set_sprite(hero_left);
+
+                } else if(Keyboard::getInstance().is_pressed(D)) {
+                    v->v_x = SPEED;
+                    hero_texture->set_sprite(hero_right);
+                }
+                else if(Keyboard::getInstance().is_pressed(W)) {
+                    v->v_y = -SPEED;
+                    hero_texture->set_sprite(hero_up);
+
+                    Entity* e3 = new Entity();
+                    e3->add_component(new PositionComponent(p->x, p->y));
+                    e3->add_component(new VelocityComponent(1, 0));
+                    e3->add_component(new SpriteComponent(3, 3, test_sprite));
+
+                    Engine::getInstance().add_entity(e3);
+
+                } else if(Keyboard::getInstance().is_pressed(S)) {
+                    v->v_y = SPEED;
+                    hero_texture->set_sprite(hero_front);
+
+                } else {
+                    v->v_x = 0;
+                    v->v_y = 0;
+                }
+
+                previous_time = current_time;
+                elapsed_time = time_us_64() - current_time;
+                if(elapsed_time < frame_time_us){
+                    sleep_us(frame_time_us - elapsed_time);
+                }
             }
         }
     }

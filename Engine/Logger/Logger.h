@@ -11,7 +11,7 @@ public:
 
     /*
     sends a string to stdout.
-    also adds \n to the end of string.
+    also adds \n to the end of string.1
     */
     static void log(const char* msg, ...) {
         #ifdef _LOG_

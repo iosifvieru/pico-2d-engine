@@ -87,6 +87,10 @@ public:
 
         return nullptr;
     }
+    
+    void set_sprite(const uint16_t* sprite){
+        this->shared_sprite = sprite;
+    }
 
     const char* get_component_name() {
         return "SpriteComponent";

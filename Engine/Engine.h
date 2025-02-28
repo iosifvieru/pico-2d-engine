@@ -9,6 +9,8 @@ class Engine {
 private:
     std::vector<System*> systems;
     std::vector<Entity*> entities;
+
+    
     std::vector<Entity*> deleted_entities;
 
     Engine();

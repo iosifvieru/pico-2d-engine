@@ -5,6 +5,7 @@
 #include "Engine/Systems/System.h"
 #include "Engine/Canvas/Canvas.h"
 #include "Engine/Drivers/DisplayDriver/Display.h"
+#include "Engine/Components/CameraComponent.h"
 
 /* 
     RenderSystem implements System inteface.
@@ -15,12 +16,16 @@ private:
     Canvas& canvas;
     Display& display;
 
+    CameraComponent* camera = nullptr;
+
 public:
     RenderSystem(Canvas& canvas, Display& display);
     ~RenderSystem();
 
     /* system interface implementation */
     void update(const std::vector<Entity*>& entities) override;
+
+    CameraComponent* search_for_camera(const std::vector<Entity*>& entities);
 };
 
 #endif
