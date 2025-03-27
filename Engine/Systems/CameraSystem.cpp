@@ -16,7 +16,7 @@ void CameraSystem::update(const std::vector<Entity*>& entities) {
         float targetX = p->x - (camera->width / 2) + 8;
         float targetY = p->y - (camera->height / 2) + 8;
 
-        float smoothingFactor = 0.05f;
+        float smoothingFactor = 0.1f;
         camera->x += (targetX - camera->x) * smoothingFactor;
         camera->y += (targetY - camera->y) * smoothingFactor;
 

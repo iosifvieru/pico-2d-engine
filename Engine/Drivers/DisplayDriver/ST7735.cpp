@@ -169,9 +169,6 @@ void ST7735::flush(const uint16_t* buffer){
     }
     */
 
-    /* i left this as a reminder to limit the use of dinamically allocated memory. */
-    //uint8_t* bf = new uint8_t[ST7735_WIDTH * ST7735_HEIGHT * 2];
-
     static uint8_t bf[ST7735_WIDTH * ST7735_HEIGHT * 2];
     uint8_t *bf_ptr = bf;
 
@@ -189,10 +186,6 @@ void ST7735::flush(const uint16_t* buffer){
 
     /* sending all of the data once. */
     spi_write_blocking(spi0, bf, sizeof(bf));
-
-    /* this is not ok because it sends the color incorrectly. */
-    //spi_write_blocking(spi0, (uint8_t*)buffer, ST7735_WIDTH * ST7735_HEIGHT * 2);
-
     this->set_cs(1);
 }
 

@@ -1,13 +1,11 @@
 #include "pico/stdlib.h"
-//#include "Games/pong/Pong.h"
 
-#include "Games/Test.h"
+#include "Games/platformer_game/Platformer.h"
 
 int main() { 
     stdio_init_all();
-    
-    Test t;
-    t.run();
+
+    run(60);
 
     return 0;
 }

@@ -48,7 +48,7 @@ def convert_image_to_rgb565(image_path, output_path, columns=16):
 
 if __name__ == "__main__":
     # Input and output paths
-    input_image = "tilemap.jpg"  # Change this to your input file
+    input_image = "items.jpg"  # Change this to your input file
     output_file = "output_rgb565.txt"  # Change this to your desired output file
 
     # Convert the image and save the RGB565 values

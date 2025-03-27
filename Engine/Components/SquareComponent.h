@@ -14,6 +14,7 @@ private:
 public:
     bool is_visible = true;
     bool collided = false;
+    bool is_solid = false;
 
     SquareComponent() {};
     ~SquareComponent() {};

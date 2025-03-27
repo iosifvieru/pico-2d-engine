@@ -9,8 +9,6 @@ class Engine {
 private:
     std::vector<System*> systems;
     std::vector<Entity*> entities;
-
-    
     std::vector<Entity*> deleted_entities;
 
     Engine();
@@ -26,11 +24,17 @@ public:
     static Engine& getInstance() {
         if(instance == nullptr){
             instance = new Engine();
+            instance->init();
         }
 
         return *instance;
     }
     
+    /* 
+        Initializes the engine.
+
+        the reserve function allocates in advance some memory for better performance.
+    */
     void init(){
         this->systems.reserve(10);
         //this->entities.reserve(600);

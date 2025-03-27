@@ -44,7 +44,7 @@ void Entity::remove_component(Component* component) {
     components.erase(std::remove(components.begin(), components.end(), component), components.end());
 }
 
-Component* Entity::get_component(const char* component_name) {
+const Component* Entity::get_component(const char* component_name) {
    // Logger::log("Sunt in get_component");
     for(const auto& component : this->components){
         if(component == nullptr) continue;

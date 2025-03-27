@@ -29,11 +29,11 @@
 #define ST7735_HEIGHT 130
 
 /*
-Implements Display interface.
+ST7735 is a singleton object that implements the "Display" interface.
 */
-
 class ST7735: public Display {
 private:
+    /* pins for SPI communication */
     uint8_t sck_pin;
     uint8_t mosi_pin;
     uint8_t cs;
@@ -102,10 +102,12 @@ public:
     */
     void flush(const uint16_t* buffer) override;
 
+    /* returns the height of the ST7735 display. */
     uint16_t get_height() override{
         return ST7735_HEIGHT;
     }
 
+    /* returns the width of the ST7735 display. */
     uint16_t get_width() override {
         return ST7735_WIDTH;
     }

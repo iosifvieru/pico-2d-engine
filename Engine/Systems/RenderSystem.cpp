@@ -17,7 +17,7 @@ RenderSystem::~RenderSystem(){
 void RenderSystem::update(const std::vector<Entity*>& entities){
     /* get camera if null. */
     if(this->camera == nullptr){
-        Logger::log("CAUT CAMERA.");
+        // Logger::log("CAUT CAMERA.");
         this->camera = search_for_camera(entities);
     }
 
@@ -49,7 +49,6 @@ void RenderSystem::update(const std::vector<Entity*>& entities){
 
         //Logger::log("screen y: %d, camera height: %d", screen_y, camera->height);
         canvas.draw_sprite(screen_x, screen_y, sprite->width, sprite->height, texture);
-
     }
     /* flushes to display. */
     display.flush(canvas.get_buffer());

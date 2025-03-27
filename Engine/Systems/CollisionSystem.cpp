@@ -1,6 +1,7 @@
 #include "Engine/Systems/CollisionSystem.h"
 #include "Engine/Components/PositionComponent.h"
 #include "Engine/Components/SquareComponent.h"
+#include "Engine/Components/VelocityComponent.h"
 
 #include "Engine/Logger/Logger.h"
 

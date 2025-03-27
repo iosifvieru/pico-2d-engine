@@ -20,8 +20,8 @@
 #include "Engine/TextureManager.h"
 
 #include "Engine/Random.h"
-#include "Games/Map.h"
-#include "Games/Assets.h"
+#include "Games/test_game/Map.h"
+#include "Games/test_game/Assets.h"
 
 #define A 8
 #define D 14
@@ -81,7 +81,7 @@ public:
         Engine::getInstance().add_entity(e);
 
         Entity* e2 = new Entity();
-        e2->add_component(new PositionComponent(60, 55));
+        e2->add_component(new PositionComponent(70, 60));
         e2->add_component(new SpriteComponent(16, 16, other_sprite));
         
         Engine::getInstance().add_entity(e2);        
@@ -114,14 +114,6 @@ public:
                 else if(Keyboard::getInstance().is_pressed(W)) {
                     v->v_y = -SPEED;
                     hero_texture->set_sprite(hero_up);
-
-                    Entity* e3 = new Entity();
-                    e3->add_component(new PositionComponent(p->x, p->y));
-                    e3->add_component(new VelocityComponent(1, 0));
-                    e3->add_component(new SpriteComponent(3, 3, test_sprite));
-
-                    Engine::getInstance().add_entity(e3);
-
                 } else if(Keyboard::getInstance().is_pressed(S)) {
                     v->v_y = SPEED;
                     hero_texture->set_sprite(hero_front);

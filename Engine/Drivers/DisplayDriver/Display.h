@@ -18,7 +18,10 @@ public:
     */
     virtual void flush(const uint16_t* buffer) = 0;
 
+    /* returns the height of the display. */
     virtual uint16_t get_height() = 0;
+
+    /* returns the width of the display. */
     virtual uint16_t get_width() = 0;
 };
 
