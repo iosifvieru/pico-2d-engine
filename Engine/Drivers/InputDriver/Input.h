@@ -7,9 +7,9 @@ class Input {
 public:
     virtual ~Input() = default;
 
-    void config(uint8_t button_pin);
-    bool is_pressed(uint8_t button_pin);
-    bool is_pressed_once(uint8_t button_pin);
+    virtual void config(uint8_t button_pin) = 0;
+    virtual bool is_pressed(uint8_t button_pin) = 0;
+    virtual bool is_pressed_once(uint8_t button_pin) = 0;
 };
 
 #endif

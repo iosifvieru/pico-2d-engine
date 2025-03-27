@@ -3,6 +3,44 @@
 This project focuses on developing a 2D Game engine for low-cost embedded systems. It is part of my bachelor's degree paper.
 My implementation is based on RP2040 microcontroller found on boards like Raspberry Pi Pico and Marble Pico.
 
+## Usage
+
+### 1. Prerequisites
+Before using the engine, make sure you have the following installed:
+
+- Raspberry Pi Pico SDK
+- CMake
+- ARM GCC Toolchain
+- Ninja
+- VS Code Raspberry Pi Pico Extension (optional)
+
+### 2. Cloning the Repository
+
+    git clone https://github.com/iosifvieru/pico-game-engine.git
+    cd pico-game-engine
+
+### 3. Building the project
+Before building the project:
+- Hold the BOOTSEL button on the Pico.
+- Plug it into your computer via USB.
+
+Run the following script to build the project:
+    
+    ./build-pico.sh
+
+If for some reason you don't have permission try using:
+
+    sudo ./build-pico.sh
+
+This script will:
+- Initialize CMake.
+- Build the project using the Pico SDK.
+- Generate a .uf2 file for flashing.
+- Flash the .uf2 file to your Pico.
+- Restart the pico and start running the new code.
+
+You can alternatively use the VS Code Raspberry Pi Pico Extension to do all this with just a click.
+
 ## Hardware setup
 ### **Marble Pico**
 Marble Pico is a development board based on RP2040 produced by Raspberry Pi. It is fully compatible with Raspberry Pi Pico (the board has the same pinout as pico) but it has some upgrades such as:
@@ -55,11 +93,11 @@ The ST7735 Datasheet can be found [here](https://www.displayfuture.com/Display/d
 |------------------|------------------|
 | 3.3V             | VCC              |
 | GND              | GND              |
-| GP18             | SCK              |
-| GP19             | MOSI             |
-| GP20             | DC               |
-| GP21             | RESET            |
-| GP17             | CS               |
+| GPIO18             | SCK              |
+| GPIO19             | MOSI             |
+| GPIO20             | DC               |
+| GPIO21             | RESET            |
+| GPIO17             | CS               |
 
 Buttons can be connected at any GPIO pin then configure them in software.
 
@@ -98,7 +136,7 @@ Example of *flush* implementation:
         this->set_cs(1);
     }
 
-To optimize rendering and avoid flickering a double buffered canvas is used. All the drawing operations are made in a back buffer and only the front buffer is rendered to the screen. On the next frame these two are changed.
+To optimize rendering and avoid flickering a double buffered canvas is used. All the drawing operations are made in a back buffer and only the front buffer is rendered to the screen. On the next frame these two are swapped.
 
 Example of drawing a pixel to canvas:
 
