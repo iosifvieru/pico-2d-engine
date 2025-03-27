@@ -156,7 +156,7 @@ Example of drawing a pixel to canvas:
 
 #### UML Diagram
 
-![Input UML](./Documentation/input.png)
+![Input UML](./Documentation/input.jpeg)
 
 The `Input` interface defines three methods for handling any sort of input.
 
@@ -188,4 +188,71 @@ Example of usage:
 
     if(Keyboard::getInstance().is_pressed(S)){
         /* logic here */
+    }
+
+### 3. Engine
+
+In *object-oriented programming* (OOP), a classic issue is the famous *diamond problem*. It occurs when a class inherits from two classes that both inherit from the same base class creating ambiguity about which base class implementation should be used.
+
+![Diamond Problem](./Documentation/diamond-problem.png)
+
+The example above provides an example that further explains the diamond problem, we have a *GameObject* base class that is inherited by a *Renderable* class that adds the rendering capabilities. *Knight* and *Jedi* are two classes that inherit the *Renderable* class, each object adding it's own functionality. *Knight* - weilds a sword, *Jedi* - has magical powers. Now, if we want to create a *Jedi Knight* class that combines both functionalities a diamond-shaped structure is created which leads to ambiguity.
+In order to fix this, the OOP approach is to rely on *interfaces and composition*, but these solutions sometimes struggle with scalability in complex projects or video games.
+An "anti OOP" way to solve the issue is by using an *Entity-Component-System* (ECS) architecture. Instead of using class hierarchies, ECS favours composition over inheritence. This approach breaks down *GameObjects* in three key components:
+- *Entity* - a container that represents the game objects, it does not have any logic or behaviour.
+- *Component* - a structure that holds data, it does not have any logic or behaviour.
+- *System* - a process that modifies all entities with the desired components.
+Using this approach, the logic of an entity can be changed at runtime, it also removes the ambiguity of deep hierarchies.
+
+Having this in mind, I wrote my own implementation for an ECS. Let's break it down:
+
+#### Entity
+
+![Entity diagram](./Documentation/entity.png)
+
+- `std::vector<Component*> components` - holds the components dinamically.
+- `add_component()`,  `remove_component()` - procedures to manage components.
+- `get_component()`, `has_component()` - gets and check for components.
+
+#### Component
+
+![Component diagram](./Documentation/components.jpg)
+
+- `shared: bool` - indicates whether the component is shared between multiple entities or not.
+- `get_component_name(): const char*` - returns the name of the component.
+- `make_shared(shared: bool): void` - marks the component as shared.
+- `is_shared(): bool` - returns if a component is shared or not.
+
+This interface is implemented by *PositionComponent* (stores the position of an entity), *VelocityComponent* (defines the movement speed), *SpriteComponent* (containes the entity's texture).
+
+#### System
+
+![System diagram](./Documentation/systems.png)
+
+The System interface has an update function that accepts entities, iterates through all of them and modify their data.
+
+Example of a system:
+
+    void MovementSystem::update(const std::vector<Entity*>& entities){
+        for(const auto& entity: entities){
+            VelocityComponent* velocity = (VelocityComponent*)(entity->get_component("VelocityComponent"));
+            if(velocity == nullptr) continue;
+            
+            PositionComponent* p = (PositionComponent*) (entity->get_component("PositionComponent"));
+            if(p == nullptr) continue;
+
+            /* normalization for diagonal movement */
+            /*
+            if (velocity->v_x != 0 && velocity->v_y != 0) {
+                float magnitude = std::sqrt(velocity->v_x * velocity->v_x + velocity->v_y * velocity->v_y);
+
+                if (magnitude > 1.0f) {
+                    velocity->v_x /= magnitude;
+                    velocity->v_y /= magnitude;
+                }
+            } */
+            
+            p->x += velocity->v_x;
+            p->y += velocity->v_y; 
+        }
     }
