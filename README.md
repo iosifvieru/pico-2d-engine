@@ -214,6 +214,13 @@ Having this in mind, I wrote my own implementation for an ECS. Let's break it do
 - `add_component()`,  `remove_component()` - procedures to manage components.
 - `get_component()`, `has_component()` - gets and check for components.
 
+Example of usage:
+    
+    // this will create a renderable entity at (10, 20) with a 16x16 texture called player_texture;
+    Entity* e = new Entity();
+    e->add_component(new PositionComponent(10, 20));
+    e->add_component(new SpriteComponent(16, 16, player_texture));
+    
 #### Component
 
 ![Component diagram](./Documentation/components.jpg)
@@ -223,13 +230,13 @@ Having this in mind, I wrote my own implementation for an ECS. Let's break it do
 - `make_shared(shared: bool): void` - marks the component as shared.
 - `is_shared(): bool` - returns if a component is shared or not.
 
-This interface is implemented by *PositionComponent* (stores the position of an entity), *VelocityComponent* (defines the movement speed), *SpriteComponent* (containes the entity's texture).
+This interface is implemented by *PositionComponent* (stores the position of an entity), *VelocityComponent* (defines the movement speed), *SpriteComponent* (containes the entity's texture). To create your component implement this interface.
 
 #### System
 
 ![System diagram](./Documentation/systems.png)
 
-The System interface has an update function that accepts entities, iterates through all of them and modify their data.
+The System interface has an update function that accepts entities, iterates through all of them and modify their data. To create your own system implement the interface.
 
 Example of a system:
 
@@ -242,7 +249,6 @@ Example of a system:
             if(p == nullptr) continue;
 
             /* normalization for diagonal movement */
-            /*
             if (velocity->v_x != 0 && velocity->v_y != 0) {
                 float magnitude = std::sqrt(velocity->v_x * velocity->v_x + velocity->v_y * velocity->v_y);
 
@@ -250,9 +256,50 @@ Example of a system:
                     velocity->v_x /= magnitude;
                     velocity->v_y /= magnitude;
                 }
-            } */
+            }
             
             p->x += velocity->v_x;
             p->y += velocity->v_y; 
         }
     }
+
+#### Engine
+
+The ECS is incapsulated within the `Engine` class, a Singleton object that centralizes entities and systems.
+
+- `add_entity(Entity* entity)` / `remove_entity(Entity* entity)` - adds / removes an entity.
+- `add_system(System* system)` / `remove_system(System* system)` - adds / removes a system.
+- `update()` - iterates through all the systems and calls their update function with the entity list.
+
+Example of usage:
+
+    Engine::getInstance().add_system(new MovementSystem());
+
+    // creates an entity at (10, 20) with a 16x16 texture and a velocity component with v_x = 1 (the object has a horizontal movement);
+    Entity* e = new Entity();
+    e->add_component(new PositionComponent(10, 20));
+    e->add_component(new SpriteComponent(16, 16, player_texture));
+    e->add_component(new VelocityComponent(1, 0));
+
+    Engine::getInstance().add_entity(e);
+    
+    /* game loop */
+    while(true) {
+        Engine::getInstance().update();
+    }
+
+### 4. Random
+
+Pseudorandom number generator found [here](https://forums.raspberrypi.com/viewtopic.php?t=302960).
+
+### 5. Texture Manager
+
+TextureManager handles sprite extraction from a large bitmap spritesheet. It can extract a specific tile from the whole texture.
+
+Example of usage:
+
+    TextureManager* t = new TextureManager(spritesheet, spritesheet_width, spritesheet_height, tile_width, tile_height);
+
+    const uint16_t* player_texture = t->get_tile(0);
+    const uint16_t* coin_texture = t->get_tile(3);
+    ...

@@ -14,12 +14,10 @@ Engine::~Engine(){
 
 void Engine::add_entity(Entity* entity){
     if(entity == nullptr){
-        //Logger::log("ENTITATEA ESTE NULL.");
         return;
     }
 
     this->entities.push_back(entity);
-    //Logger::log("AM ADAUGAT ENTITATEA IN ENGINE.");
 }
 
 void Engine::remove_entity(Entity* entity){
@@ -28,7 +26,6 @@ void Engine::remove_entity(Entity* entity){
     }
 
     deleted_entities.push_back(entity);
-    //Logger::log("Am sters nod. ");
 }
 
 void Engine::add_system(System* system){
@@ -37,8 +34,6 @@ void Engine::add_system(System* system){
     }
 
     this->systems.push_back(system);
-
-    //Logger::log("AM adaugat system/");
 }
 
 
@@ -58,12 +53,8 @@ void Engine::delete_entities() {
     for (const auto& entity : deleted_entities) {
         if(entity == nullptr) continue;
 
-        //Logger::log("SUNT IN DELETE ENTITIES.");
-        //this->entities.remove(entity);
         entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end());
         delete entity;
-        //entity = nullptr;
     }
     deleted_entities.clear();
-
 }
