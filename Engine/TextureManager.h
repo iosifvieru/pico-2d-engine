@@ -5,13 +5,13 @@
 class TextureManager {
 private:
     const uint16_t* spritesheet;
-    uint8_t tile_width, tile_height;
-    uint8_t columns, rows;
+    uint16_t tile_width, tile_height;
+    uint16_t columns, rows;
 
 public:
     TextureManager(const uint16_t* spritesheet, 
-                uint8_t spritesheet_width, uint8_t spritesheet_height, 
-                uint8_t tile_width, uint8_t tile_height){
+                uint16_t spritesheet_width, uint16_t spritesheet_height, 
+                uint16_t tile_width, uint16_t tile_height){
         
         this->spritesheet = spritesheet;
         this->tile_height = tile_height;
@@ -20,7 +20,7 @@ public:
         this->rows = spritesheet_height / tile_height;
     }
 
-    const uint16_t* get_tile(uint8_t index, bool flipped = false) {
+    const uint16_t* get_tile(uint16_t index, bool flipped = false) {
         if (index >= columns * rows) {
             return nullptr;
         }

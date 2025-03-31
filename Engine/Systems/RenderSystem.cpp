@@ -4,6 +4,9 @@
 #include "Engine/Components/SpriteComponent.h"
 #include "Engine/Components/SquareComponent.h"
 #include "Engine/Components/CameraComponent.h"
+#include "Engine/Components/TextComponent.h"
+
+TextureManager TextComponent::tm = TextureManager(font, 160, 192, 10, 12);
 
 RenderSystem::RenderSystem(Canvas& canvas, Display& display): canvas(canvas), display(display) {
     //
@@ -29,26 +32,47 @@ void RenderSystem::update(const std::vector<Entity*>& entities){
         if(entity == nullptr || (entity->is_flagged() == false)) continue;
 
         SpriteComponent* sprite = (SpriteComponent*) entity->get_component("SpriteComponent");
-        if(!sprite) continue;
-        
         PositionComponent* p = (PositionComponent*) entity->get_component("PositionComponent");
-        if(!p) continue;
 
-        const uint16_t* texture = sprite->get_sprite();
-        if(texture == nullptr){
-            continue;
+        /* rendering textures */
+        if(sprite && p){
+            const uint16_t* texture = sprite->get_sprite();
+            if(texture == nullptr){
+                continue;
+            }
+    
+            int screen_x = (p->x - this->camera->x) * this->camera->zoom;
+            int screen_y = (p->y - this->camera->y) * this->camera->zoom; 
+    
+            if (screen_x + sprite->width <= 0 || screen_x >= this->camera->width ||
+                screen_y + sprite->height <= 0 || screen_y >= this->camera->height) {
+                continue;
+            }
+    
+            //Logger::log("screen y: %d, camera height: %d", screen_y, camera->height);
+            canvas.draw_sprite(screen_x, screen_y, sprite->width, sprite->height, texture);
         }
 
-        int screen_x = (p->x - this->camera->x) * this->camera->zoom;
-        int screen_y = (p->y - this->camera->y) * this->camera->zoom; 
+        /* rendering text */
+        TextComponent* text = (TextComponent*) entity->get_component("TextComponent");
+        if (text) {
+            int text_x = (text->x - this->camera->x) * this->camera->zoom;
+            int text_y = (text->y - this->camera->y) * this->camera->zoom;
 
-        if (screen_x + sprite->width <= 0 || screen_x >= this->camera->width ||
-            screen_y + sprite->height <= 0 || screen_y >= this->camera->height) {
-            continue;
+            const char* str = text->text.c_str();
+            while (*str) {
+
+                /* get_tile dinamically allocates memory. */
+                const uint16_t* c_texture = TextComponent::tm.get_tile(*str);
+
+                canvas.draw_sprite(text_x, text_y, FONT_WIDTH, FONT_HEIGHT, c_texture);
+                text_x += FONT_WIDTH;
+                str++;
+
+                /* taking care of memory =) */
+                delete c_texture;
+            }
         }
-
-        //Logger::log("screen y: %d, camera height: %d", screen_y, camera->height);
-        canvas.draw_sprite(screen_x, screen_y, sprite->width, sprite->height, texture);
     }
     /* flushes to display. */
     display.flush(canvas.get_buffer());

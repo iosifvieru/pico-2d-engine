@@ -6,6 +6,7 @@
 #include "Engine/Components/VelocityComponent.h"
 #include "Engine/Components/TagComponent.h"
 #include "Engine/Components/SquareComponent.h"
+#include "Engine/Components/TextComponent.h"
 
 #include "Engine/Drivers/DisplayDriver/ST7735.h"
 #include "Engine/Drivers/InputDriver/Keyboard.h"
@@ -60,13 +61,12 @@ void game_init(){
     /* player system */
     PlayerSystem* player_system = new PlayerSystem();
 
-    engine.add_system(render_system);
-    engine.add_system(camera_system);
     engine.add_system(new CollisionSystem());
     engine.add_system(player_system);
     engine.add_system(new MovementSystem());
-
     engine.add_system(new LifetimeSystem());
+    engine.add_system(camera_system);
+    engine.add_system(render_system);
 
     /* init keyboard */
     Keyboard& keyboard = Keyboard::getInstance();
@@ -75,6 +75,7 @@ void game_init(){
     keyboard.config(S);
     keyboard.config(W);
     keyboard.config(D);
+
 }
 
 void run(uint8_t framerate){
@@ -87,6 +88,11 @@ void run(uint8_t framerate){
 
     /* engine reference for fast update call */
     Engine& engine = Engine::getInstance();
+
+    Entity* e = new Entity();
+    e->add_component(new TextComponent(100, 50, "Hello world!"));
+
+    engine.add_entity(e);
 
     /* game loop */
     while(1){

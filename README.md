@@ -3,6 +3,8 @@
 This project focuses on developing a 2D Game engine for low-cost embedded systems. It is part of my bachelor's degree paper.
 My implementation is based on RP2040 microcontroller found on boards like Raspberry Pi Pico and Marble Pico.
 
+![hello-world image](./Documentation/hello-world.jpeg)
+
 ## Usage
 
 ### 1. Prerequisites
