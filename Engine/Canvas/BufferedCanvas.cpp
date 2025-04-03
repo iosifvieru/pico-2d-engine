@@ -57,10 +57,10 @@ void BufferedCanvas::draw_sprite(uint16_t x, uint16_t y, uint16_t sprite_width, 
         }
 
         for (uint16_t i = 0; i < sprite_width; ++i) {
-            uint16_t canvas_x = x + i;
+            int16_t canvas_x = x + i;
 
             if (canvas_x >= width || canvas_x < 0) {
-                            continue;
+                continue;
             }
 
             if (canvas_x < width && canvas_y < height) {

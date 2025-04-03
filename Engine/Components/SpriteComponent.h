@@ -40,9 +40,7 @@ public:
     }
 
     /* warning: you are about to create a shared sprite component. */
-    SpriteComponent(uint8_t width, uint8_t height, const uint16_t* sprite) : SpriteComponent(width, height, sprite, true){
-        
-    }
+    SpriteComponent(uint8_t width, uint8_t height, const uint16_t* sprite) : SpriteComponent(width, height, sprite, true){}
 
     SpriteComponent operator=(const SpriteComponent& other){
         if(this == &other) return *this;
@@ -92,7 +90,7 @@ public:
         this->shared_sprite = sprite;
     }
 
-    const char* get_component_name() {
+    const char* get_component_name() const {
         return "SpriteComponent";
     }
 };

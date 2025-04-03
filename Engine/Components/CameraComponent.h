@@ -3,6 +3,14 @@
 
 #include "Engine/Components/Component.h"
 
+/*
+CameraComponent represents the scene that will be flushed to the screen.alignas
+
+x, y -> the position of the camera
+width, height -> the dimensions of the camera.
+zoom -> feature not implemented yet (should be set to 1 for the moment) due to the fact that there is no 
+        actual way of scaling up or down the sprites. 
+*/
 class CameraComponent: public Component {
 public:
     int16_t x, y;
@@ -17,7 +25,7 @@ public:
         this->zoom = zoom;
     }
 
-    const char* get_component_name() {
+    const char* get_component_name() const {
         return "CameraComponent";
     }
 };

@@ -16,6 +16,7 @@
 #include "Engine/Systems/MovementSystem.h"
 #include "Engine/Systems/CameraSystem.h"
 #include "Engine/Systems/CollisionSystem.h"
+#include "Engine/Systems/PhysicsSystem.h"
 
 #include "Games/platformer_game/Keys.h"
 
@@ -23,6 +24,10 @@
 #include "Games/platformer_game/Map.h"
 #include "Games/platformer_game/Systems/PlayerSystem.h"
 #include "Games/platformer_game/Systems/LifetimeSystem.h"
+#include "Games/platformer_game/Systems/EnemySystem.h"
+
+
+#include "Games/platformer_game/Enemy.h"
 
 
 void load_level(const uint16_t* level, uint8_t width, uint8_t height){
@@ -30,7 +35,9 @@ void load_level(const uint16_t* level, uint8_t width, uint8_t height){
         uint16_t x = (i % width) * TILE_WIDTH + 1;
         uint16_t y = (i / height) * TILE_HEIGHT + 1;
 
-        Entity* e = new Entity();
+        Entity* e = Entity::create();
+        if(e == nullptr) continue;
+        
         e->add_component(new PositionComponent(x, y));
         e->add_component(get_sprite_component(level[i]));
 
@@ -62,7 +69,9 @@ void game_init(){
     PlayerSystem* player_system = new PlayerSystem();
 
     engine.add_system(new CollisionSystem());
+    engine.add_system(new PhysicsSystem());
     engine.add_system(player_system);
+    engine.add_system(new EnemySystem());
     engine.add_system(new MovementSystem());
     engine.add_system(new LifetimeSystem());
     engine.add_system(camera_system);
@@ -75,24 +84,19 @@ void game_init(){
     keyboard.config(S);
     keyboard.config(W);
     keyboard.config(D);
-
 }
 
 void run(uint8_t framerate){
     game_init();
     load_level(level1, MAP_HEIGHT, MAP_WIDTH);
     init_player(0, 0);
+    create_enemy(200, 20);
 
     uint64_t frame_time_us = 1000000 / framerate;
     uint64_t previous_time = time_us_64();
 
     /* engine reference for fast update call */
     Engine& engine = Engine::getInstance();
-
-    Entity* e = new Entity();
-    e->add_component(new TextComponent(100, 50, "Hello world!"));
-
-    engine.add_entity(e);
 
     /* game loop */
     while(1){

@@ -4,8 +4,6 @@
 /*
 took it from here. 
 https://opengameart.org/content/monospace-bitmap-fonts-english-russian
-
-
 */
 
 #define FONT_WIDTH 10

@@ -85,7 +85,7 @@ public:
         return this->width;
     }
 
-    const char* get_component_name() {
+    const char* get_component_name() const {
         return "SquareComponent";
     }
 };

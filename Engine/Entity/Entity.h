@@ -7,7 +7,7 @@
 #include "Engine/Components/Component.h"
 #include "pico/stdlib.h"
 
-#define MAX_NO_ENTITIES 10000
+#define MAX_NO_ENTITIES 500
 
 class Entity {
 private:
@@ -15,12 +15,15 @@ private:
     std::vector<Component*> components;
 
     bool flag = true;
-public:
 
+    /* private constructor for factory approach */
     Entity();
-    ~Entity();
 
+public:
+    ~Entity();
     Entity(const Entity& e) = delete;
+
+    static Entity* create();
 
     bool is_flagged() { return this->flag; }
     void set_flag(bool value) { 
@@ -37,7 +40,7 @@ public:
     /* removes a component. */
     void remove_component(Component* components);
 
-    /* returns a certain component. */
+    /* returns the first occurance of the component you are looking for, otherwise returns nullptr. */
     const Component* get_component(const char* component_name);
 
     /* returns true / false if the entity has a certain component. */

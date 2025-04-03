@@ -6,50 +6,42 @@
 #include "Engine/Components/CameraComponent.h"
 #include "Engine/Components/TextComponent.h"
 
+/* loading the text spritesheet. */
 TextureManager TextComponent::tm = TextureManager(font, 160, 192, 10, 12);
 
-RenderSystem::RenderSystem(Canvas& canvas, Display& display): canvas(canvas), display(display) {
-    //
-
-}
-
-RenderSystem::~RenderSystem(){
-    //
-}
+RenderSystem::RenderSystem(Canvas& canvas, Display& display): canvas(canvas), display(display) {}
+RenderSystem::~RenderSystem(){}
 
 void RenderSystem::update(const std::vector<Entity*>& entities){
     /* get camera if null. */
-    if(this->camera == nullptr){
-        // Logger::log("CAUT CAMERA.");
-        this->camera = search_for_camera(entities);
-    }
+    if(this->camera == nullptr){ this->camera = search_for_camera(entities); }
 
-    /* clears the canvas*/
-    canvas.fill(0x0000);
+    const int camera_right = camera->x + camera->width;
+    const int camera_bottom =camera->y + camera->height;
 
     /* redraws everything. */
     for(const auto& entity : entities){
-        if(entity == nullptr || (entity->is_flagged() == false)) continue;
+        if(entity->is_flagged() == false) continue;
 
+        /* getting sprite and position components. */
         SpriteComponent* sprite = (SpriteComponent*) entity->get_component("SpriteComponent");
         PositionComponent* p = (PositionComponent*) entity->get_component("PositionComponent");
 
         /* rendering textures */
         if(sprite && p){
-            const uint16_t* texture = sprite->get_sprite();
-            if(texture == nullptr){
+            
+            /* skipping components that are not in the scene. */
+            if (p->x + sprite->width < camera->x || p->x > camera_right || 
+                p->y + sprite->height < camera->y || p->y > camera_bottom) {
                 continue;
             }
-    
+
+            const uint16_t* texture = sprite->get_sprite();
+            if(texture == nullptr) continue;
+
             int screen_x = (p->x - this->camera->x) * this->camera->zoom;
             int screen_y = (p->y - this->camera->y) * this->camera->zoom; 
-    
-            if (screen_x + sprite->width <= 0 || screen_x >= this->camera->width ||
-                screen_y + sprite->height <= 0 || screen_y >= this->camera->height) {
-                continue;
-            }
-    
-            //Logger::log("screen y: %d, camera height: %d", screen_y, camera->height);
+
             canvas.draw_sprite(screen_x, screen_y, sprite->width, sprite->height, texture);
         }
 
@@ -70,7 +62,7 @@ void RenderSystem::update(const std::vector<Entity*>& entities){
                 str++;
 
                 /* taking care of memory =) */
-                delete c_texture;
+                delete[] c_texture;
             }
         }
     }

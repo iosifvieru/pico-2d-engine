@@ -5,7 +5,7 @@
 int main() { 
     stdio_init_all();
 
-    run(60);
+    run(30);
 
     return 0;
 }

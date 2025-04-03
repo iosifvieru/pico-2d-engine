@@ -7,6 +7,7 @@
 #include "Engine/Components/TagComponent.h"
 #include "Engine/Components/SquareComponent.h"
 #include "Engine/Components/CameraComponent.h"
+#include "Engine/Components/GravityComponent.h"
 
 #include "Games/platformer_game/Assets.h"
 
@@ -14,7 +15,9 @@ Entity* player = nullptr;
 
 void init_player(uint16_t x, uint16_t y){
     if(player == nullptr){
-        player = new Entity();
+        player = Entity::create();
+
+        if(player == nullptr) return;
     }
 
     player->add_component(new PositionComponent(x, y));
@@ -22,6 +25,7 @@ void init_player(uint16_t x, uint16_t y){
     player->add_component(new VelocityComponent(0, 0));
     player->add_component(new TagComponent(TAG::PLAYER));
     player->add_component(player_frame1);
+    player->add_component(new GravityComponent());
     player->add_component(new SquareComponent(x, y, TILE_WIDTH, TILE_HEIGHT + 2));
 
     Engine::getInstance().add_entity(player);

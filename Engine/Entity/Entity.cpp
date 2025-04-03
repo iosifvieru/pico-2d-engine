@@ -9,15 +9,26 @@ uint16_t Entity::no_entities = 0;
 Entity::Entity(){
     Logger::log("Entity()");
     no_entities++;
+
+    Logger::log("There are %d entities!", no_entities);
+}
+
+Entity* Entity::create(){
+    if (no_entities >= MAX_NO_ENTITIES) {
+        Logger::log("Entity limit exceeded!");
+        return nullptr;
+    }
+    return new Entity();
 }
 
 Entity::~Entity(){
     Logger::log("~Entity()");
     no_entities--;
     
-    for(auto* component: this->components) {
+    for(const auto& component: this->components) {
         /* if a component is shared that's on you. */
         if(component == nullptr || (component->is_shared() == true)) continue;
+        
         delete component;
     }
 
@@ -25,36 +36,26 @@ Entity::~Entity(){
 }
 
 void Entity::add_component(Component* component) {
-    if(component == nullptr){
-        //Logger::log("add_component -> node is null.");
-        return;
-    }
-
+    if(component == nullptr) return;
     this->components.push_back(component);
-    //Logger::log("Nod adaugat cu succes.");
-
 }
 
 void Entity::remove_component(Component* component) {
-    if (component == nullptr) {
-        return;
-    }
-
-    //this->components.remove(components);
+    if (component == nullptr) return;
     components.erase(std::remove(components.begin(), components.end(), component), components.end());
 }
 
+/* Returns the first occurance of the component you are looking for, otherwise returns nullptr. */
 const Component* Entity::get_component(const char* component_name) {
-   // Logger::log("Sunt in get_component");
+    /* iterates through all the components */
     for(const auto& component : this->components){
         if(component == nullptr) continue;
-        //if(component->get_component_name() == component_name){
+
+        /* checks for the right component */
         if(strcmp(component->get_component_name(), component_name) == 0){
-            //Logger::log("Am gasit componenta");
             return component;
         }
     }
-    //Logger::log("Returnez nullptr/");
     return nullptr;
 }
 

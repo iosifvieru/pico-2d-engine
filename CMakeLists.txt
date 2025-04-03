@@ -40,7 +40,6 @@ pico_sdk_init()
 add_executable(pico-game-engine 
         main.cpp 
         Engine/Drivers/DisplayDriver/ST7735.cpp
-        Engine/Canvas/BasicCanvas.cpp
         Engine/Canvas/BufferedCanvas.cpp
         Engine/Systems/RenderSystem.cpp
         Engine/Engine.cpp
@@ -49,6 +48,7 @@ add_executable(pico-game-engine
         Engine/Drivers/InputDriver/Keyboard.cpp
         Engine/Systems/CollisionSystem.cpp
         Engine/Systems/CameraSystem.cpp
+        Engine/Systems/PhysicsSystem.cpp
         )
 
 pico_set_program_name(pico-game-engine "pico-game-engine")

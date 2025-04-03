@@ -9,7 +9,7 @@ public:
 
     LifetimeComponent(int time): time(time) {}
 
-    const char* get_component_name() {
+    const char* get_component_name() const {
         return "LifetimeComponent";
     };
 };

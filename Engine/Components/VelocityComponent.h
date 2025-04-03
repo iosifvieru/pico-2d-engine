@@ -32,7 +32,7 @@ public:
         Logger::log("~VelocityComponent()");
     };
 
-    const char* get_component_name() {
+    const char* get_component_name() const {
         return "VelocityComponent";
     }
 };
