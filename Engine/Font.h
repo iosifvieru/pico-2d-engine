@@ -8,6 +8,8 @@ https://opengameart.org/content/monospace-bitmap-fonts-english-russian
 
 #define FONT_WIDTH 10
 #define FONT_HEIGHT 12
+#define FONT_SH_WIDTH 160
+#define FONT_SH_HEIGHT 192
 
 const uint16_t font[160*192] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,

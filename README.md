@@ -219,7 +219,8 @@ Having this in mind, I wrote my own implementation for an ECS. Let's break it do
 Example of usage:
     
     // this will create a renderable entity at (10, 20) with a 16x16 texture called player_texture;
-    Entity* e = new Entity();
+    Entity* e = Entity::create();
+    if(e == nulltpr) return;
     e->add_component(new PositionComponent(10, 20));
     e->add_component(new SpriteComponent(16, 16, player_texture));
     
@@ -278,7 +279,8 @@ Example of usage:
     Engine::getInstance().add_system(new MovementSystem());
 
     // creates an entity at (10, 20) with a 16x16 texture and a velocity component with v_x = 1 (the object has a horizontal movement);
-    Entity* e = new Entity();
+    Entity* e = Entity::create();
+    if(e == nullptr) return;
     e->add_component(new PositionComponent(10, 20));
     e->add_component(new SpriteComponent(16, 16, player_texture));
     e->add_component(new VelocityComponent(1, 0));

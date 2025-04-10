@@ -7,7 +7,7 @@
 #include "Engine/Components/TextComponent.h"
 
 /* loading the text spritesheet. */
-TextureManager TextComponent::tm = TextureManager(font, 160, 192, 10, 12);
+TextureManager TextComponent::tm = TextureManager(font, FONT_SH_WIDTH, FONT_SH_HEIGHT, FONT_WIDTH, FONT_HEIGHT);
 
 RenderSystem::RenderSystem(Canvas& canvas, Display& display): canvas(canvas), display(display) {}
 RenderSystem::~RenderSystem(){}
@@ -21,7 +21,6 @@ void RenderSystem::update(const std::vector<Entity*>& entities){
 
     /* redraws everything. */
     for(const auto& entity : entities){
-        if(entity->is_flagged() == false) continue;
 
         /* getting sprite and position components. */
         SpriteComponent* sprite = (SpriteComponent*) entity->get_component("SpriteComponent");

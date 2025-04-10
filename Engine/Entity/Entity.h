@@ -14,22 +14,20 @@ private:
     /* components */
     std::vector<Component*> components;
 
+    /* entity flag - no usage for now. */
     bool flag = true;
 
-    /* private constructor for factory approach */
+    /* private constructor for "factory" approach */
     Entity();
-
 public:
     ~Entity();
     Entity(const Entity& e) = delete;
 
+    /* creates an entity - returns nullptr if the entity limit is exceeded. */
     static Entity* create();
 
     bool is_flagged() { return this->flag; }
-    void set_flag(bool value) { 
-        this->flag = value; 
-        //printf("am setat pe %d", value);
-    }
+    void set_flag(bool value) { this->flag = value; }
     
     /* static variable counting the entity number. */
     static uint16_t no_entities;

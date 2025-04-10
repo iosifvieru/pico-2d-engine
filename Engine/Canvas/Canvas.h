@@ -10,17 +10,15 @@ class Canvas {
 protected:
     uint16_t width, height;
 public:
-    Canvas(uint16_t width, uint16_t height) : width(width), height(height) {
+    Canvas(uint16_t width, uint16_t height) : width(width), height(height) {};
+    ~Canvas() = default;
 
-    };
-    ~Canvas() {
-
-    };
-
+    /* returns height of canvas */
     uint16_t get_height(){
         return this->height;
     }
 
+    /* returns width of canvas */
     uint16_t get_width(){
         return this->width;
     }
@@ -43,19 +41,11 @@ public:
     /* draw a line to the canvas */
     virtual void draw_line(uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end, uint16_t color) = 0;
 
+    /* draws a rect to canvas */
     virtual void draw_rect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color) = 0;
 
+    /* clears the canvas */
     virtual void clear() = 0;
-
-    /* TODO: 
-    - draw rect,
-    - fill rect,
-
-    - draw circle,
-    - fill circle,
-    
-    brainstorming for other possible functionalities.
-    */
 };
 
 #endif

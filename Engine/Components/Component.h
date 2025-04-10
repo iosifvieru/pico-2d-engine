@@ -19,7 +19,11 @@ public:
 
     /* returns the name of the component */
     virtual const char* get_component_name() const = 0;
+
+    /* makes a component "shared" */
     void make_shared(bool value){ this->shared = value; }
+
+    /* returns a bool with the shared-status of the component. */
     bool is_shared() { return this->shared; }
 };
 

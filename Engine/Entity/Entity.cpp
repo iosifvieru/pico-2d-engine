@@ -37,6 +37,10 @@ Entity::~Entity(){
 
 void Entity::add_component(Component* component) {
     if(component == nullptr) return;
+    if(this->has_component(component->get_component_name())) {
+        Logger::log("[Entity]: exista deja o componenta de acest tip.");
+        return;
+    }
     this->components.push_back(component);
 }
 

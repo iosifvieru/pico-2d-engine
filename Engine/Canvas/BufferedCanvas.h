@@ -5,20 +5,27 @@
 
 /*
 Double BufferedCanvas.
+Implements Canvas
 */
 class BufferedCanvas : public Canvas {
 private:
     uint16_t* back_buffer;
     uint16_t* front_buffer;
-
 public:
+    /* 
+        Destructor -> deletes the back buffer and front buffer to clear memory.
+    */
     ~BufferedCanvas();
-    BufferedCanvas(uint16_t width, uint16_t height);
 
     /*
-    Canvas interface implementation
-    */
+    Constructor for BufferedCanvas.
+    Implements Canvas.h
 
+    Allocates memory for back and front buffer.
+    */
+    BufferedCanvas(uint16_t width, uint16_t height);
+
+    /* swaps the buffers. */
     void swap_buffers() {
         std::swap(back_buffer, front_buffer);
     }
@@ -41,7 +48,10 @@ public:
     /* draw a line to the canvas */
     void draw_line(uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end, uint16_t color);
 
+    /* draw a rect to canvas */
     void draw_rect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color);
+    
+    /* clears the canvas (draws 0x0000) to all pixels */
     void clear() override {
         this->fill(0x0000);
     };
