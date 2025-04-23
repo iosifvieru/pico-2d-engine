@@ -64,6 +64,26 @@ public:
     */
     void update();
 
+
+    void run(uint8_t framerate);
+
+    void clear() {
+        for (Entity* entity : entities) {
+            delete entity;
+        }
+        entities.clear();
+    
+        for (Entity* entity : deleted_entities) {
+            delete entity;
+        }
+        deleted_entities.clear();
+    
+        for (System* system : systems) {
+            delete system;
+        }
+        systems.clear();
+    }
+    
 };
 
 #endif

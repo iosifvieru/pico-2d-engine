@@ -58,3 +58,28 @@ void Engine::delete_entities() {
     }
     deleted_entities.clear();
 }
+
+void Engine::run(uint8_t framerate){
+    uint64_t frame_time_us = 1000000 / framerate;
+    uint64_t previous_time = time_us_64();
+
+    /* engine reference for fast update call */
+    Engine& engine = Engine::getInstance();
+
+    /* game loop */
+    while(1){
+        uint64_t current_time = time_us_64();
+        uint64_t elapsed_time = current_time - previous_time;
+
+        if(elapsed_time >= frame_time_us){
+            /* update all systems */
+            engine.update();
+            
+            previous_time = current_time;
+            elapsed_time = time_us_64() - current_time;
+            if(elapsed_time < frame_time_us){
+                sleep_us(frame_time_us - elapsed_time);
+            }
+        }
+    }
+}

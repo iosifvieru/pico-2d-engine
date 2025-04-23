@@ -10,6 +10,6 @@ public:
 };
 
 /* this function takes two square components as input and returns true if collided. */
-bool has_collided(SquareComponent* e1, SquareComponent* e2);
+CollisionSide has_collided(SquareComponent* e1, SquareComponent* e2);
 
 #endif

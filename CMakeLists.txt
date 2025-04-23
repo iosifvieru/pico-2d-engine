@@ -49,6 +49,8 @@ add_executable(pico-game-engine
         Engine/Systems/CollisionSystem.cpp
         Engine/Systems/CameraSystem.cpp
         Engine/Systems/PhysicsSystem.cpp
+        Menu/Menu.cpp
+        Engine/Systems/MenuSystem.cpp
         )
 
 pico_set_program_name(pico-game-engine "pico-game-engine")

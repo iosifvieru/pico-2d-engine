@@ -26,7 +26,11 @@ void init_player(uint16_t x, uint16_t y){
     player->add_component(new TagComponent(TAG::PLAYER));
     player->add_component(player_frame1);
     player->add_component(new GravityComponent());
-    player->add_component(new SquareComponent(x, y, TILE_WIDTH, TILE_HEIGHT + 2));
+
+    SquareComponent* collision = new SquareComponent(x, y, TILE_WIDTH, TILE_HEIGHT + 2);
+    collision->is_visible = false;
+
+    player->add_component(collision);
 
     Engine::getInstance().add_entity(player);
 }

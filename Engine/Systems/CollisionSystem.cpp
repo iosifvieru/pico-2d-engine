@@ -46,8 +46,10 @@ void CollisionSystem::update(const std::vector<Entity*>& entities) {
             square_component1->collided = square_component1->has_collided(...);
             */
 
-            if(has_collided(square_component1, square_component2)){
+            CollisionSide collision_info = has_collided(square_component1, square_component2);
+            if(collision_info != CollisionSide::NONE){
                 square_component1->collided = true;
+                square_component1->collision_side = collision_info;
                 break;
             }
         }
@@ -59,15 +61,35 @@ void CollisionSystem::update(const std::vector<Entity*>& entities) {
 }
 
 /* this function takes two square components as input and returns true if collided. */
-bool has_collided(SquareComponent* e1, SquareComponent* e2){
+CollisionSide has_collided(SquareComponent* e1, SquareComponent* e2){
     if(e1->get_max_x() < e2->get_x() || e1->get_x() > e2->get_max_x()) {
-        return false;
+        return CollisionSide::NONE;
     }
 
     if(e1->get_max_y() < e2->get_y() || e1->get_y() > e2->get_max_y()){
-        return false;
+        return CollisionSide::NONE;
     }
 
-    /* the object has collided */
-    return true;
+    /* getting distances from each side */
+    int dx_right = e1->get_max_x() - e2->get_x();
+    int dx_left = e2->get_max_x() - e1->get_x();
+    int dy_bottom = e1->get_max_y() - e2->get_y();
+    int dy_top = e2->get_max_y() - e1->get_y();
+
+    int min_dx = std::min(dx_right, dx_left);
+    int min_dy = std::min(dy_bottom, dy_top);
+
+    if(min_dx < min_dy){
+        if(dx_right < dx_left){
+            return CollisionSide::RIGHT;
+        } else {
+            return CollisionSide::LEFT;
+        }
+    } else {
+        if(dy_bottom < dy_top){
+            return CollisionSide::BOTTOM;
+        } else {
+            return CollisionSide::TOP;
+        }
+    }
 }

@@ -4,13 +4,9 @@
     the color 0x0000 is ignored for now for PNG like behaviour.
 */
 
-#include <iostream>
-
 #include "BufferedCanvas.h"
 #include "Engine/Logger/Logger.h"
 #include <math.h>
-#include <algorithm>
-
 
 BufferedCanvas::BufferedCanvas(uint16_t width, uint16_t height) : Canvas(width, height){
     this->back_buffer = new uint16_t[width * height];
@@ -88,6 +84,7 @@ void BufferedCanvas::set_pixel(uint16_t x, uint16_t y, uint16_t color) {
     https://rosettacode.org/wiki/Bitmap/Bresenham's_line_algorithm    
 */
 void BufferedCanvas::draw_line(uint16_t x_start, uint16_t y_start, uint16_t x_end, uint16_t y_end, uint16_t color) {
+
     int dx = abs((int)x_end - (int)x_start);
     int dy = abs((int)y_end - (int)y_start);
 
@@ -132,8 +129,21 @@ uint16_t BufferedCanvas::get_pixel(uint16_t x, uint16_t y){
     x1,y1-------------x2,y1  
 */
 void BufferedCanvas::draw_rect(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color){
-    this->draw_line(x1, y1, x2, y1, color);
-    this->draw_line(x2, y1, x2, y2, color);
-    this->draw_line(x2, y2, x1, y2, color);
-    this->draw_line(x1, y2, x1, y1, color);
+    // for (uint16_t i = 0; i < y2; ++i) {
+    //     for (uint16_t j = 0; j < x2; ++j) {
+    //         this->set_pixel(x1 + j, y1 + i, color);
+    //     }
+    // }
+
+    // liniile de sus si jos
+    for (uint16_t i = 0; i < x2; ++i) {
+        set_pixel(x1 + i, y1, color);
+        set_pixel(x1 + i, y1 + y2 - 1, color);
+    }
+
+    // liniile din stanga dreapta
+    for (uint16_t i = 0; i < y2; ++i) {
+        set_pixel(x1, y1 + i, color);
+        set_pixel(x1 + x2 - 1, y1 + i, color);
+    }
 }

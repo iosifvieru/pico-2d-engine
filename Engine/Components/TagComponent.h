@@ -7,7 +7,8 @@ enum TAG {
     ENTITY,
     PLAYER,
     ENEMY,
-    PROJECTILE
+    PROJECTILE,
+    UI
 };
 
 class TagComponent : public Component {

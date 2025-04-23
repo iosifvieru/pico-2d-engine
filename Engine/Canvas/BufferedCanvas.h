@@ -2,6 +2,7 @@
 #define _BUFFERED_CANVAS_H_
 
 #include "Canvas.h"
+#include <algorithm>
 
 /*
 Double BufferedCanvas.

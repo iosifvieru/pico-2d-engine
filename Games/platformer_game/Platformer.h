@@ -26,9 +26,7 @@
 #include "Games/platformer_game/Systems/LifetimeSystem.h"
 #include "Games/platformer_game/Systems/EnemySystem.h"
 
-
 #include "Games/platformer_game/Enemy.h"
-
 
 void load_level(const uint16_t* level, uint8_t width, uint8_t height){
     for(int i = 0; i < width * height; i++){
@@ -42,14 +40,16 @@ void load_level(const uint16_t* level, uint8_t width, uint8_t height){
         e->add_component(get_sprite_component(level[i]));
 
         if(level[i] == 13 || level[i] == 12 || level[i] == 14 || level[i] == 15){
-            e->add_component(new SquareComponent(x, y, 16, 16));
+            SquareComponent* sq = new SquareComponent(x, y, 16, 16);
+            sq->is_visible = false;
+            e->add_component(sq);
         }
 
         Engine::getInstance().add_entity(e);
     }
 }
 
-void game_init(){
+void platformer_init(){
     /* reference to engine */
     Engine& engine = Engine::getInstance();
     
@@ -60,7 +60,7 @@ void game_init(){
     BufferedCanvas* canvas = new BufferedCanvas(display.get_width(), display.get_height());
 
     /* render system */
-    RenderSystem* render_system = new RenderSystem(*canvas, display);
+    RenderSystem* render_system = new RenderSystem(canvas, &display);
 
     /* camera system */
     CameraSystem* camera_system = new CameraSystem();
@@ -84,36 +84,10 @@ void game_init(){
     keyboard.config(S);
     keyboard.config(W);
     keyboard.config(D);
-}
 
-void run(uint8_t framerate){
-    game_init();
     load_level(level1, MAP_HEIGHT, MAP_WIDTH);
     init_player(0, 0);
     create_enemy(200, 20);
-
-    uint64_t frame_time_us = 1000000 / framerate;
-    uint64_t previous_time = time_us_64();
-
-    /* engine reference for fast update call */
-    Engine& engine = Engine::getInstance();
-
-    /* game loop */
-    while(1){
-        uint64_t current_time = time_us_64();
-        uint64_t elapsed_time = current_time - previous_time;
-
-        if(elapsed_time >= frame_time_us){
-            /* update all systems */
-            engine.update();
-            
-            previous_time = current_time;
-            elapsed_time = time_us_64() - current_time;
-            if(elapsed_time < frame_time_us){
-                sleep_us(frame_time_us - elapsed_time);
-            }
-        }
-    }
 }
 
 #endif

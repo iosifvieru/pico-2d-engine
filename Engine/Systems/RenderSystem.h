@@ -13,19 +13,29 @@
 */
 class RenderSystem : public System {
 private:
-    Canvas& canvas;
-    Display& display;
+    Canvas* canvas;
+    Display* display;
 
     CameraComponent* camera = nullptr;
 
 public:
-    RenderSystem(Canvas& canvas, Display& display);
-    ~RenderSystem();
+    RenderSystem(Canvas* canvas, Display* display);
+    ~RenderSystem() {
+        if(this->camera){
+            delete camera;
+            camera = nullptr;
+        }
+        if (canvas) {
+            delete canvas;
+            canvas = nullptr;
+        }
+    };
 
     /* system interface implementation */
     void update(const std::vector<Entity*>& entities) override;
 
     CameraComponent* search_for_camera(const std::vector<Entity*>& entities);
+
 };
 
 #endif

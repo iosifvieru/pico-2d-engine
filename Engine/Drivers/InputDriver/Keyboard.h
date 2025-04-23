@@ -7,6 +7,14 @@
 
 #define debounce_ms 50
 
+/* MY KEYS */
+#define A 8
+#define D 14
+#define W 13
+#define S 15
+#define ENTER 3
+#define ESC 4
+
 class Keyboard: public Input {
 private:
     Keyboard();

@@ -17,7 +17,10 @@ void create_enemy(int x, int y){
     enemy->add_component(player_frame1);
     enemy->add_component(new VelocityComponent());
     enemy->add_component(new GravityComponent());
-    enemy->add_component(new SquareComponent(x, y, TILE_WIDTH, TILE_HEIGHT + 2));
+
+    SquareComponent* sq = new SquareComponent(x, y, TILE_WIDTH, TILE_HEIGHT+2);
+    sq->is_visible = false;
+    enemy->add_component(sq);
     enemy->add_component(new TagComponent(TAG::ENEMY));
 
     Engine::getInstance().add_entity(enemy);

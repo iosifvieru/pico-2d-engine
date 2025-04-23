@@ -9,8 +9,7 @@
 /* loading the text spritesheet. */
 TextureManager TextComponent::tm = TextureManager(font, FONT_SH_WIDTH, FONT_SH_HEIGHT, FONT_WIDTH, FONT_HEIGHT);
 
-RenderSystem::RenderSystem(Canvas& canvas, Display& display): canvas(canvas), display(display) {}
-RenderSystem::~RenderSystem(){}
+RenderSystem::RenderSystem(Canvas* canvas, Display* display): canvas(canvas), display(display) {}
 
 void RenderSystem::update(const std::vector<Entity*>& entities){
     /* get camera if null. */
@@ -20,6 +19,8 @@ void RenderSystem::update(const std::vector<Entity*>& entities){
     const int camera_bottom =camera->y + camera->height;
 
     /* redraws everything. */
+    canvas->clear();
+
     for(const auto& entity : entities){
 
         /* getting sprite and position components. */
@@ -41,7 +42,7 @@ void RenderSystem::update(const std::vector<Entity*>& entities){
             int screen_x = (p->x - this->camera->x) * this->camera->zoom;
             int screen_y = (p->y - this->camera->y) * this->camera->zoom; 
 
-            canvas.draw_sprite(screen_x, screen_y, sprite->width, sprite->height, texture);
+            canvas->draw_sprite(screen_x, screen_y, sprite->width, sprite->height, texture);
         }
 
         /* rendering text */
@@ -56,7 +57,7 @@ void RenderSystem::update(const std::vector<Entity*>& entities){
                 /* get_tile dinamically allocates memory. */
                 const uint16_t* c_texture = TextComponent::tm.get_tile(*str);
 
-                canvas.draw_sprite(text_x, text_y, FONT_WIDTH, FONT_HEIGHT, c_texture);
+                canvas->draw_sprite(text_x, text_y, FONT_WIDTH, FONT_HEIGHT, c_texture);
                 text_x += FONT_WIDTH;
                 str++;
 
@@ -64,9 +65,34 @@ void RenderSystem::update(const std::vector<Entity*>& entities){
                 delete[] c_texture;
             }
         }
+
+        /* rendering squares */
+        SquareComponent* sq = (SquareComponent*) entity->get_component("SquareComponent");
+        if(sq && p){
+            if (sq->is_visible) {
+                // int screen_x = (p->x - this->camera->x) * this->camera->zoom;
+                // int screen_y = (p->y - this->camera->y) * this->camera->zoom;
+                // int screen_w = (p->x + sq->get_width() - this->camera->x) * this->camera->zoom;
+                // int screen_h = (p->y + sq->get_height() - this->camera->y) * this->camera->zoom;
+
+                int screen_x = (p->x - camera->x) * camera->zoom;
+                int screen_y = (p->y - camera->y) * camera->zoom;
+                int screen_w = sq->get_width() * camera->zoom;
+                int screen_h = sq->get_height() * camera->zoom;
+                
+
+                if (screen_x + screen_w < 0 || screen_x > canvas->get_width() ||
+                screen_y + screen_h < 0 || screen_y > canvas->get_height()) {
+                    continue;
+                }
+
+                canvas->draw_rect(screen_x, screen_y, screen_w, screen_h, sq->get_color());
+            }
+        }
+    
     }
     /* flushes to display. */
-    display.flush(canvas.get_buffer());
+    display->flush(canvas->get_buffer());
 }
 
 /* 

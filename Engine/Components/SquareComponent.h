@@ -3,6 +3,13 @@
 
 #include "Engine/Components/Component.h"
 
+enum CollisionSide {
+    NONE,
+    TOP,
+    RIGHT,
+    BOTTOM,
+    LEFT
+};
 
 /* square collider component. */
 class SquareComponent : public Component {
@@ -11,9 +18,13 @@ private:
     uint16_t y = 0;
     uint16_t width = 0;
     uint16_t height = 0;
+    uint16_t color = 0xFFFF;
 public:
     bool is_visible = true;
+
     bool collided = false;
+    CollisionSide collision_side = CollisionSide::NONE;
+    
     bool is_solid = false;
 
     SquareComponent() {};
@@ -61,6 +72,8 @@ public:
         this->height = height;
     }
 
+    void set_color(uint16_t color) { this->color = color; }
+
     uint16_t get_max_x(){
         return this->x + this->width;
     }
@@ -84,6 +97,8 @@ public:
     uint16_t get_width() {
         return this->width;
     }
+
+    uint16_t get_color() { return this-> color; }
 
     const char* get_component_name() const {
         return "SquareComponent";

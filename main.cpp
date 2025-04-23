@@ -1,11 +1,12 @@
 #include "pico/stdlib.h"
 
-#include "Games/platformer_game/Platformer.h"
+/* menu */
+#include "Menu/Menu.h"
 
 int main() { 
     stdio_init_all();
-
-    run(30);
-
+    
+    load_menu();
+    Engine::getInstance().run(60);
     return 0;
 }
