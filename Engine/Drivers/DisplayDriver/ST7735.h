@@ -1,5 +1,8 @@
 // Iosif Vieru
 
+#ifndef ST7735_H_
+#define ST7735_H_
+
 #include "pico/stdlib.h"
 #include "Display.h"
 
@@ -112,3 +115,5 @@ public:
         return ST7735_WIDTH;
     }
 };
+
+#endif

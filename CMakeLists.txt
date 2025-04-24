@@ -38,19 +38,33 @@ pico_sdk_init()
 # Add executable. Default name is the project name, version 0.1
 
 add_executable(pico-game-engine 
-        main.cpp 
+        main.cpp
+
         Engine/Drivers/DisplayDriver/ST7735.cpp
+        Engine/Drivers/InputDriver/Keyboard.cpp
+
         Engine/Canvas/BufferedCanvas.cpp
-        Engine/Systems/RenderSystem.cpp
+        
         Engine/Engine.cpp
         Engine/Entity/Entity.cpp
+        Engine/Random.cpp
+
         Engine/Systems/MovementSystem.cpp
-        Engine/Drivers/InputDriver/Keyboard.cpp
+        Engine/Systems/RenderSystem.cpp
         Engine/Systems/CollisionSystem.cpp
         Engine/Systems/CameraSystem.cpp
         Engine/Systems/PhysicsSystem.cpp
-        Menu/Menu.cpp
         Engine/Systems/MenuSystem.cpp
+
+        Menu/Menu.cpp
+
+        Games/pong/Pong.cpp
+        Games/pong/Globals.cpp
+        Games/pong/Systems/BallSystem.cpp
+        Games/pong/Systems/EnemySystem.cpp
+        Games/pong/Systems/GameLogic.cpp
+        Games/pong/Systems/PlayerSystem.cpp
+        Games/pong/Systems/UISystem.cpp
         )
 
 pico_set_program_name(pico-game-engine "pico-game-engine")

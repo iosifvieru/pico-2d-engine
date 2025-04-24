@@ -1,10 +1,3 @@
-#include "Engine/Systems/MenuSystem.h"
-
-#include "Engine/Components/TextComponent.h"
-#include "Engine/Components/CameraComponent.h"
-
-#include "Engine/Engine.h"
-
 #include "Games/platformer_game/Platformer.h"
 #include "Games/pong/Pong.h"
 

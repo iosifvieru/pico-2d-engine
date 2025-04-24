@@ -17,19 +17,20 @@
 #define BALL_START_Y 64
 #define BALL_RANDOMNESS 1000
 
-uint16_t PADDLE_WIDTH = 10;
-uint16_t PADDLE_HEIGHT = 50;
+extern uint16_t PADDLE_WIDTH;
+extern uint16_t PADDLE_HEIGHT;
 
-uint16_t BALL_WIDTH = 8;
-uint16_t BALL_HEIGHT = 8;
+extern uint16_t BALL_WIDTH;
+extern uint16_t BALL_HEIGHT;
 
-uint16_t PLAYER_SCORE = 0;
-uint16_t ENEMY_SCORE = 0;
+extern uint16_t PLAYER_SCORE;
+extern uint16_t ENEMY_SCORE;
 
-float PLAYER_SPEED = 1.2;
-float BALL_SPEED = 1.0;
+extern float PLAYER_SPEED;
+extern float BALL_SPEED;
 
 extern bool has_scored;
+extern bool game_over;
 
 /* fast pointers to the entities */
 extern Entity* Pong_UI;

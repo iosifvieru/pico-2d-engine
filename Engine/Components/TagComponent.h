@@ -3,7 +3,7 @@
 
 #include "Engine/Components/Component.h"
 
-enum TAG {
+enum class TAG {
     ENTITY,
     PLAYER,
     ENEMY,
