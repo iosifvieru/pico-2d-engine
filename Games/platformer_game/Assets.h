@@ -1,110 +1,59 @@
 #ifndef _PLATFORMER_GAME_ASSETS_
 #define _PLATFORMER_GAME_ASSETS_
 
-#include "Engine/TextureManager.h"
-#include "Engine/Components/SpriteComponent.h"
-
+#include "Engine/Core.h"
 #include "Games/platformer_game/Spritesheet.h"
 
 #define TILE_WIDTH 16
 #define TILE_HEIGHT 16
 
 /* tiles spritesheet */
-TextureManager* ts = new TextureManager(platformer_tiles, 128, 80, TILE_WIDTH, TILE_HEIGHT); 
+extern TextureManager* ts;
 
-SpriteComponent* tile1 = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ts->get_tile(0));
-SpriteComponent* tile2 = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ts->get_tile(1));
-SpriteComponent* tile3 = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ts->get_tile(2));
-SpriteComponent* tile4 = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ts->get_tile(3));
+extern SpriteComponent* tile1;
+extern SpriteComponent* tile2;
+extern SpriteComponent* tile3;
+extern SpriteComponent* tile4;
 
-SpriteComponent* tile5 = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ts->get_tile(8));
-SpriteComponent* tile6 = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ts->get_tile(9));
-SpriteComponent* tile7 = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ts->get_tile(10));
-SpriteComponent* tile8 = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ts->get_tile(11));
+extern SpriteComponent* tile5;
+extern SpriteComponent* tile6;
+extern SpriteComponent* tile7;
+extern SpriteComponent* tile8;
 
-SpriteComponent* tile9 = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ts->get_tile(16));
-SpriteComponent* tile10 = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ts->get_tile(17));
-SpriteComponent* tile11 = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ts->get_tile(18));
-SpriteComponent* tile12 = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ts->get_tile(19));
+extern SpriteComponent* tile9;
+extern SpriteComponent* tile10;
+extern SpriteComponent* tile11;
+extern SpriteComponent* tile12;
+ 
+extern SpriteComponent* tile13;
+extern SpriteComponent* tile14;
+extern SpriteComponent* tile15;
+extern SpriteComponent* tile16;
 
-SpriteComponent* tile13 = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ts->get_tile(24));
-SpriteComponent* tile14 = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ts->get_tile(25));
-SpriteComponent* tile15 = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ts->get_tile(26));
-SpriteComponent* tile16 = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ts->get_tile(27));
+extern SpriteComponent* tile17;
+extern SpriteComponent* tile18;
+extern SpriteComponent* tile19;
+extern SpriteComponent* tile20;
 
-SpriteComponent* tile17 = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ts->get_tile(32));
-SpriteComponent* tile18 = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ts->get_tile(33));
-SpriteComponent* tile19 = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ts->get_tile(34));
-SpriteComponent* tile20 = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ts->get_tile(35));
-
-SpriteComponent* box_up = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ts->get_tile(20));
+extern SpriteComponent* box_up;
 
 /* player spritesheet */
-TextureManager* ps = new TextureManager(player_spritesheet, 64, 32, TILE_WIDTH, TILE_HEIGHT);
-SpriteComponent* player_frame1 = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ps->get_tile(0));
-SpriteComponent* player_frame1_flipped = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ps->get_tile(0, true));
+extern TextureManager* ps;
+extern SpriteComponent* player_frame1;
+extern SpriteComponent* player_frame1_flipped;
 
-SpriteComponent* player_shooting = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ps->get_tile(3));
-SpriteComponent* player_shooting_flipped = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ps->get_tile(3, true));
+extern SpriteComponent* player_shooting;
+extern SpriteComponent* player_shooting_flipped;
 
-
-SpriteComponent* player_falling = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ps->get_tile(4));
-SpriteComponent* player_falling_flipped = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, ps->get_tile(4, true));
+extern SpriteComponent* player_falling;
+extern SpriteComponent* player_falling_flipped;
 
 
 /* items spritesheet */
-TextureManager* is = new TextureManager(items_spritesheet, 64, 64, TILE_WIDTH, TILE_HEIGHT);
-SpriteComponent* bullet_frame1 = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, is->get_tile(8));
-SpriteComponent* bullet_frame1_flipped = new SpriteComponent(TILE_WIDTH, TILE_HEIGHT, is->get_tile(8, true));
+extern TextureManager* is;
+extern SpriteComponent* bullet_frame1;
+extern SpriteComponent* bullet_frame1_flipped;
 
-SpriteComponent* get_sprite_component(uint8_t value){
-    switch(value){
-        case 0:
-            return tile1;
-        case 1:
-            return tile2;
-        case 2:
-            return tile3;
-        case 3:
-            return tile4;
-        case 4:
-            return tile5;
-        case 5:
-            return tile6;
-        case 6:
-            return tile7;
-        case 7:
-            return tile8;
-        case 8:
-            return tile9;
-        case 9:
-            return tile10;
-        case 10:
-            return tile11;
-        case 11:
-            return tile12;
-        case 12:
-            return tile13;
-        case 13:
-            return tile14;
-        case 14:
-            return tile15;
-        case 15:
-            return tile16;
-        case 16:
-            return box_up;
-        case 17:
-            return tile17;
-        case 18:
-            return tile18;
-        case 19:
-            return tile19;
-        case 20:
-            return tile20;
-        default:
-            return tile1;
-    }
-}
-
+SpriteComponent* get_sprite_component(int value);
 
 #endif

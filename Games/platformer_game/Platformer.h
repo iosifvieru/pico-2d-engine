@@ -1,31 +1,14 @@
 #ifndef _PLATFORMER_H_
 #define _PLATFORMER_H_
 
-#include "Engine/Engine.h"
-#include "Engine/Components/PositionComponent.h"
-#include "Engine/Components/VelocityComponent.h"
-#include "Engine/Components/TagComponent.h"
-#include "Engine/Components/SquareComponent.h"
-#include "Engine/Components/TextComponent.h"
+#include "Engine/Core.h"
 
-#include "Engine/Drivers/DisplayDriver/ST7735.h"
-#include "Engine/Drivers/InputDriver/Keyboard.h"
-
-#include "Engine/Canvas/BufferedCanvas.h"
-#include "Engine/Systems/RenderSystem.h"
-#include "Engine/Systems/MovementSystem.h"
-#include "Engine/Systems/CameraSystem.h"
-#include "Engine/Systems/CollisionSystem.h"
-#include "Engine/Systems/PhysicsSystem.h"
-
-#include "Games/platformer_game/Keys.h"
-
+/* game specific includes */
 #include "Games/platformer_game/Assets.h"
 #include "Games/platformer_game/Map.h"
 #include "Games/platformer_game/Systems/PlayerSystem.h"
 #include "Games/platformer_game/Systems/LifetimeSystem.h"
 #include "Games/platformer_game/Systems/EnemySystem.h"
-
 #include "Games/platformer_game/Enemy.h"
 
 void load_level(const uint16_t* level, uint8_t width, uint8_t height){

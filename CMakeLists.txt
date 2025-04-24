@@ -55,6 +55,7 @@ add_executable(pico-game-engine
         Engine/Systems/CameraSystem.cpp
         Engine/Systems/PhysicsSystem.cpp
         Engine/Systems/MenuSystem.cpp
+        Engine/TextureManager.cpp
 
         Menu/Menu.cpp
 
@@ -65,6 +66,13 @@ add_executable(pico-game-engine
         Games/pong/Systems/GameLogic.cpp
         Games/pong/Systems/PlayerSystem.cpp
         Games/pong/Systems/UISystem.cpp
+
+        Games/platformer_game/Systems/EnemySystem.cpp
+        Games/platformer_game/Systems/LifetimeSystem.cpp
+        Games/platformer_game/Systems/PlayerSystem.cpp
+        Games/platformer_game/Assets.cpp
+        Games/platformer_game/Player.cpp
+        Games/platformer_game/Enemy.cpp
         )
 
 pico_set_program_name(pico-game-engine "pico-game-engine")
