@@ -24,7 +24,7 @@ void load_level(const uint16_t* level, uint8_t width, uint8_t height){
 
         if(level[i] == 13 || level[i] == 12 || level[i] == 14 || level[i] == 15){
             SquareComponent* sq = new SquareComponent(x, y, 16, 16);
-            sq->is_visible = false;
+            // sq->is_visible = false;
             e->add_component(sq);
         }
 
@@ -70,7 +70,7 @@ void platformer_init(){
 
     load_level(level1, MAP_HEIGHT, MAP_WIDTH);
     init_player(0, 0);
-    create_enemy(200, 20);
+    // create_enemy(200, 20);
 }
 
 #endif

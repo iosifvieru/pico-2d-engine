@@ -12,23 +12,32 @@ void PhysicsSystem::update(const std::vector<Entity*>& entities){
 void apply_gravity(Entity* entity) {
     VelocityComponent* velocity = (VelocityComponent*) entity->get_component("VelocityComponent");
     GravityComponent* g = (GravityComponent*) entity->get_component("GravityComponent");
-    if(!velocity || !g) return;
-
     SquareComponent* collision = (SquareComponent*) entity->get_component("SquareComponent");
 
-    if (collision != nullptr && collision->collided) {
-        velocity->v_y = 0;
-        velocity->v_x = 0;
+    if (!velocity || !g) return;
 
-        g->is_falling = false;
-        g->is_grounded = true;
+    if (collision && collision->collided) {
+        // Stop vertical motion only if falling downward and hit something below
+        if (collision->collision_side == CollisionSide::BOTTOM && velocity->v_y > 0) {
+            velocity->v_y = 0;
+            g->is_falling = false;
+            g->is_grounded = true;
+        }
+
+        // Optional: stop horizontal motion if hitting wall
+        if ((collision->collision_side == CollisionSide::LEFT && velocity->v_x < 0) ||
+            (collision->collision_side == CollisionSide::RIGHT && velocity->v_x > 0)) {
+            velocity->v_x = 0;
+        }
+
     } else {
+        // Apply gravity
         g->is_falling = true;
         g->is_grounded = false;
 
         velocity->v_y += g->gravity;
-        
-        if(velocity->v_y > MAX_GRAVITY) {
+
+        if (velocity->v_y > MAX_GRAVITY) {
             velocity->v_y = MAX_GRAVITY;
         }
     }

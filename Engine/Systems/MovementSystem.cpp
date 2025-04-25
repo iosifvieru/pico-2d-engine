@@ -1,6 +1,4 @@
-#include "Engine/Systems/MovementSystem.h"
-#include "Engine/Components/VelocityComponent.h"
-#include "Engine/Components/PositionComponent.h"
+#include "Engine/Core.h"
 #include "math.h"
 
 void MovementSystem::update(const std::vector<Entity*>& entities){
@@ -22,6 +20,30 @@ void MovementSystem::update(const std::vector<Entity*>& entities){
             }
         } */
         
+        SquareComponent* collision = (SquareComponent*) (entity->get_component("SquareComponent"));
+        if (collision) {
+            // Resolve movement based on which side the collision occurred
+            switch (collision->collision_side) {
+                case CollisionSide::BOTTOM:
+                    // Block vertical movement downwards
+                    if (velocity->v_y > 0) velocity->v_y = 0;
+                    break;
+                case CollisionSide::TOP:
+                    if (velocity->v_y < 0) velocity->v_y = 0;
+                    break;
+                case CollisionSide::LEFT:
+                    if (velocity->v_x < 0) velocity->v_x = 0;
+                    break;
+                case CollisionSide::RIGHT:
+                    if (velocity->v_x > 0) velocity->v_x = 0;
+                    break;
+                default:
+                    break;
+            }
+
+            Logger::log("collision: %d", collision->collision_side);
+        }
+
         p->x += velocity->v_x;
         p->y += velocity->v_y; 
     }

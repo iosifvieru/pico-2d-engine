@@ -29,6 +29,10 @@ void CollisionSystem::update(const std::vector<Entity*>& entities) {
             so far the implementation is a O(n^2)..
             which is really slow.. but for now it looks good.
         */
+
+        /* modifing the collision square's position. */
+        square_component1->set_x(position1->x);
+        square_component1->set_y(position1->y);
         for(const auto& entity2: entities){
             /* skipping if comparing the entity with itself. */
             if(entity1 == entity2) continue;
@@ -51,12 +55,11 @@ void CollisionSystem::update(const std::vector<Entity*>& entities) {
                 square_component1->collided = true;
                 square_component1->collision_side = collision_info;
                 break;
+            } else {
+                square_component1->collided = false;
+                square_component1->collision_side = CollisionSide::NONE;
             }
         }
-        
-        /* modifing the collision square's position. */
-        square_component1->set_x(position1->x);
-        square_component1->set_y(position1->y);
     }
 }
 
