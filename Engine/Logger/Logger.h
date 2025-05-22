@@ -4,17 +4,16 @@
 #include <stdarg.h>
 #include <cstdio>
 
-#define _LOG_ 1
+#define LOG 1
 
 class Logger {
 public:
-
     /*
     sends a string to stdout.
     also adds \n to the end of string.1
     */
     static void log(const char* msg, ...) {
-        #ifdef _LOG_
+        #if LOG == 1
         va_list args;
         va_start(args, msg);
         vprintf(msg, args);

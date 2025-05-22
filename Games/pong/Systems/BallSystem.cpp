@@ -32,7 +32,7 @@ void BallSystem::update(const std::vector<Entity*>& entities){
 
     float ball_random = (rnd() % BALL_RANDOMNESS) / 1000.0;
 
-    switch(square->collision_side){
+    switch(square->collision_sides){
         case CollisionSide::RIGHT:
             v->v_x = -BALL_SPEED - ball_random;
             break;
@@ -61,5 +61,5 @@ void BallSystem::update(const std::vector<Entity*>& entities){
         PLAYER_SCORE += 1;
     }
     
-    Logger::log("ball collision: %d", square->collision_side);
+    Logger::log("ball collision: %d", square->collision_sides);
 }

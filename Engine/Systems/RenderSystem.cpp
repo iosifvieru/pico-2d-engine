@@ -6,6 +6,8 @@
 #include "Engine/Components/CameraComponent.h"
 #include "Engine/Components/TextComponent.h"
 
+#define COLL_DEBUG 0
+
 /* loading the text spritesheet. */
 TextureManager TextComponent::tm = TextureManager(font, FONT_SH_WIDTH, FONT_SH_HEIGHT, FONT_WIDTH, FONT_HEIGHT);
 
@@ -66,6 +68,8 @@ void RenderSystem::update(const std::vector<Entity*>& entities){
             }
         }
 
+        /* DEBUG DIRECTIVE */
+        #if COLL_DEBUG == 1
         /* rendering squares */
         SquareComponent* sq = (SquareComponent*) entity->get_component("SquareComponent");
         if(sq && p){
@@ -89,6 +93,7 @@ void RenderSystem::update(const std::vector<Entity*>& entities){
                 canvas->draw_rect(screen_x, screen_y, screen_w, screen_h, sq->get_color());
             }
         }
+        #endif
     
     }
     /* flushes to display. */

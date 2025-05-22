@@ -45,7 +45,7 @@ while getopts ${OPTSTRING} opt; do
             ;;
         l)
             LOGGING=true
-            echo "Logging enabled (_LOG_)."
+            echo "Logging enabled (LOG)."
             ;;
         ?)
             usage
@@ -54,21 +54,26 @@ while getopts ${OPTSTRING} opt; do
     esac
 done
 
+DEFINES=""
+
+if [ "$LOGGING" = true ]; then
+    DEFINES="${DEFINES} -DLOG=1"
+else
+    DEFINES="${DEFINES} -DLOG=0"
+fi
+
+if [ "$DEBUG" = true ]; then
+    DEFINES="${DEFINES} -DCOLL_DEBUG=1"
+else
+    DEFINES="${DEFINES} -DCOLL_DEBUG=0"
+fi
+
 # cmake
 if $QUIET; then
-    if $LOGGING; then
-        cmake -B build -S . -G Ninja D_LOG_=ON 2>&1
-    else
-        cmake -B build -S . -G Ninja 2>&1
-    fi
-    cmake build/ > /dev/null 2>&1
+    cmake -B build -S . -G Ninja $DEFINES > /dev/null 2>&1
 else
-    if $LOGGING; then
-        cmake -B build -S . -G Ninja D_LOG_=ON 2>&1
-    else
-        cmake -B build -S . -G Ninja 2>&1
-    fi
-    cmake build/
+    echo "CMAKE..."
+    cmake -B build -S . -G Ninja $DEFINES
 fi
 
 if [ $? -eq 0 ]; then
@@ -101,12 +106,12 @@ else
 fi
 
 # see what s going on
-if $DEBUG; then
-    sleep 1
-    sudo screen /dev/ttyACM0 115200 &
+# if $DEBUG; then
+#     sleep 1
+#     sudo screen /dev/ttyACM0 115200 &
 
-    if [ $? -eq 0 ]; then
-        echo "It seems to be an error accesing /dev/ttyACM0."
-        echo "Try running \"screen /dev/ttyACM0 115200\" manually insead."
-    fi
-fi
+#     if [ $? -eq 0 ]; then
+#         echo "It seems to be an error accesing /dev/ttyACM0."
+#         echo "Try running \"screen /dev/ttyACM0 115200\" manually insead."
+#     fi
+# fi

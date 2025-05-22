@@ -50,21 +50,23 @@ void CollisionSystem::update(const std::vector<Entity*>& entities) {
             square_component1->collided = square_component1->has_collided(...);
             */
 
-            CollisionSide collision_info = has_collided(square_component1, square_component2);
+            uint8_t collision_info = has_collided(square_component1, square_component2);
             if(collision_info != CollisionSide::NONE){
                 square_component1->collided = true;
-                square_component1->collision_side = collision_info;
+                square_component1->collision_sides = collision_info;
                 break;
             } else {
                 square_component1->collided = false;
-                square_component1->collision_side = CollisionSide::NONE;
+                square_component1->collision_sides = CollisionSide::NONE;
             }
         }
     }
 }
 
 /* this function takes two square components as input and returns true if collided. */
-CollisionSide has_collided(SquareComponent* e1, SquareComponent* e2){
+uint8_t has_collided(SquareComponent* e1, SquareComponent* e2){
+    uint8_t collision = CollisionSide::NONE;
+
     if(e1->get_max_x() < e2->get_x() || e1->get_x() > e2->get_max_x()) {
         return CollisionSide::NONE;
     }
@@ -84,15 +86,21 @@ CollisionSide has_collided(SquareComponent* e1, SquareComponent* e2){
 
     if(min_dx < min_dy){
         if(dx_right < dx_left){
-            return CollisionSide::RIGHT;
+            // return CollisionSide::RIGHT;
+            collision |= CollisionSide::RIGHT;
         } else {
-            return CollisionSide::LEFT;
+            // return CollisionSide::LEFT;
+            collision |= CollisionSide::LEFT;
         }
     } else {
         if(dy_bottom < dy_top){
-            return CollisionSide::BOTTOM;
+            // return CollisionSide::BOTTOM;
+            collision |= CollisionSide::BOTTOM;
         } else {
-            return CollisionSide::TOP;
+            // return CollisionSide::TOP;
+            collision |= CollisionSide::TOP;
         }
     }
+
+    return collision;
 }

@@ -34,6 +34,8 @@
 /*
 ST7735 is a singleton object that implements the "Display" interface.
 */
+extern uint8_t* bf;
+
 class ST7735: public Display {
 private:
     /* pins for SPI communication */
@@ -54,9 +56,6 @@ private:
 
     /* sends a command to display */
     void send_command(uint8_t command);
-
-    /* sends data to display */
-    void send_data(uint8_t data);
 
     void set_addr_window(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1);
 
@@ -109,6 +108,10 @@ public:
     uint16_t get_height() override{
         return ST7735_HEIGHT;
     }
+
+    /* sends data to display */
+    void send_data(uint8_t data);
+
 
     /* returns the width of the ST7735 display. */
     uint16_t get_width() override {

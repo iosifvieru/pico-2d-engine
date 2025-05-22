@@ -18,15 +18,15 @@ void apply_gravity(Entity* entity) {
 
     if (collision && collision->collided) {
         // Stop vertical motion only if falling downward and hit something below
-        if (collision->collision_side == CollisionSide::BOTTOM && velocity->v_y > 0) {
+        if (collision->collision_sides == CollisionSide::BOTTOM && velocity->v_y > 0) {
             velocity->v_y = 0;
             g->is_falling = false;
             g->is_grounded = true;
         }
 
         // Optional: stop horizontal motion if hitting wall
-        if ((collision->collision_side == CollisionSide::LEFT && velocity->v_x < 0) ||
-            (collision->collision_side == CollisionSide::RIGHT && velocity->v_x > 0)) {
+        if ((collision->collision_sides == CollisionSide::LEFT && velocity->v_x < 0) ||
+            (collision->collision_sides == CollisionSide::RIGHT && velocity->v_x > 0)) {
             velocity->v_x = 0;
         }
 

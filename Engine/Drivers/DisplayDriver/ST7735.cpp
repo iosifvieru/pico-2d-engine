@@ -6,6 +6,7 @@
 #include <string.h>
 
 ST7735* ST7735::instance = nullptr;
+uint8_t* bf = new uint8_t[ST7735_WIDTH * ST7735_HEIGHT * 2];
 
 inline void ST7735::set_mosi(bool level){
     gpio_put(this->mosi_pin, level);   
@@ -80,7 +81,7 @@ ST7735::ST7735(
         this->rst = rst;
         this->dc = dc;
 
-        spi_init(spi0, 10000 * 2000);
+        spi_init(spi0, 10000 * 2500);
         gpio_set_function(sck_pin, GPIO_FUNC_SPI);
         gpio_set_function(mosi_pin, GPIO_FUNC_SPI);
 
@@ -125,6 +126,7 @@ ST7735::ST7735(
         sleep_ms(120);
 
         set_addr_window(0, 0, ST7735_WIDTH-1, ST7735_HEIGHT-1);
+
     }
 
 void ST7735::set_addr_window(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1) {
@@ -152,31 +154,17 @@ void ST7735::set_addr_window(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1) {
 }
 
 /*
-    draws a buffer to the display
+    the st7735 display expects data in big endian,
+    spi_write_blocking sends data in little endian
+    that's why we need to change the byte order before sending the data to the screen
+
+    this function opens a spi channel and then sends the whole buffer before closing the communication
 */
 void ST7735::flush(const uint16_t* buffer){
-    /*
-    TODO: a better flush method. maybe a faster way to send the data correctly.
-
-    9.12.2024
-    I have managed to make a faster flush method by sending all the data once.
-    The old implementation looked sth. like this:
-    for(int i = 0; i < ST7735_WIDTH; i++){
-        for(int j = 0; j < ST7735_HEIGHT; j++){
-            this->send_data(buffer[i * ST7735_WIDTH + j] >> 8);
-            this->send_data(buffer[i * ST7735_WIDTH + j]);
-        }
-    }
-    */
-
-    static uint8_t bf[ST7735_WIDTH * ST7735_HEIGHT * 2];
-    uint8_t *bf_ptr = bf;
+    uint8_t* bf_ptr = bf;
 
     /* populating the bf with the pixel data in the correct order. */
     for (int i = 0; i < ST7735_HEIGHT * ST7735_WIDTH; i++) {
-        //bf[i * 2] = buffer[i] >> 8;
-        //bf[i * 2 + 1] = buffer[i];
-
         *bf_ptr++ = buffer[i] >> 8;
         *bf_ptr++ = buffer[i];
     }
@@ -185,7 +173,8 @@ void ST7735::flush(const uint16_t* buffer){
     this->set_dc(1);
 
     /* sending all of the data once. */
-    spi_write_blocking(spi0, bf, sizeof(bf));
+    spi_write_blocking(spi0, bf, ST7735_WIDTH * ST7735_HEIGHT * 2);
+
     this->set_cs(1);
 }
 

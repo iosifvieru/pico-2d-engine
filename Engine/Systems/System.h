@@ -5,6 +5,8 @@
 #include <vector>
 #include <memory>
 
+#define MAX_NO_SYSTEMS 50
+
 /*  
     interface for system.
     has an update function.

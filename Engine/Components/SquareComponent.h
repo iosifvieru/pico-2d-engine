@@ -4,11 +4,11 @@
 #include "Engine/Components/Component.h"
 
 enum CollisionSide {
-    NONE,
-    TOP,
-    RIGHT,
-    BOTTOM,
-    LEFT
+    NONE = 0,
+    TOP = 1 << 0,
+    RIGHT = 1 << 1,
+    BOTTOM = 1 << 2,
+    LEFT = 1 << 3
 };
 
 /* square collider component. */
@@ -21,10 +21,8 @@ private:
     uint16_t color = 0xFFFF;
 public:
     bool is_visible = true;
-
     bool collided = false;
-    CollisionSide collision_side = CollisionSide::NONE;
-    
+    uint8_t collision_sides = CollisionSide::NONE;
     bool is_solid = false;
 
     SquareComponent() {};

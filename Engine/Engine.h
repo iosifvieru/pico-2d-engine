@@ -37,8 +37,8 @@ public:
         the reserve function allocates in advance some memory for better performance.
     */
     void init(){
-        this->systems.reserve(20);
-        this->entities.reserve(500);
+        this->systems.reserve(MAX_NO_SYSTEMS);
+        this->entities.reserve(MAX_NO_ENTITIES);
     };
 
     /* adds an entity to the list. */

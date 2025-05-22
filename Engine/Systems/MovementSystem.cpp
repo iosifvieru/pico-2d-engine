@@ -22,10 +22,9 @@ void MovementSystem::update(const std::vector<Entity*>& entities){
         
         SquareComponent* collision = (SquareComponent*) (entity->get_component("SquareComponent"));
         if (collision) {
-            // Resolve movement based on which side the collision occurred
-            switch (collision->collision_side) {
+
+            switch (collision->collision_sides) {
                 case CollisionSide::BOTTOM:
-                    // Block vertical movement downwards
                     if (velocity->v_y > 0) velocity->v_y = 0;
                     break;
                 case CollisionSide::TOP:
@@ -41,7 +40,7 @@ void MovementSystem::update(const std::vector<Entity*>& entities){
                     break;
             }
 
-            Logger::log("collision: %d", collision->collision_side);
+            Logger::log("collision: %d", collision->collision_sides);
         }
 
         p->x += velocity->v_x;
