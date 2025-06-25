@@ -24,7 +24,7 @@ void load_level(const uint16_t* level, uint8_t width, uint8_t height){
 
         if(level[i] == 13 || level[i] == 12 || level[i] == 14 || level[i] == 15){
             SquareComponent* sq = new SquareComponent(x, y, 16, 16);
-            // sq->is_visible = false;
+            sq->is_visible = false;
             e->add_component(sq);
         }
 

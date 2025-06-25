@@ -21,14 +21,14 @@ private:
 public:
     RenderSystem(Canvas* canvas, Display* display);
     ~RenderSystem() {
-        if(this->camera){
-            delete camera;
-            camera = nullptr;
-        }
-        if (canvas) {
-            delete canvas;
-            canvas = nullptr;
-        }
+        // if(this->camera){
+        //     delete camera;
+        //     camera = nullptr;
+        // }
+        // if (canvas) {
+        //     delete canvas;
+        //     canvas = nullptr;
+        // }
     };
 
     /* system interface implementation */
